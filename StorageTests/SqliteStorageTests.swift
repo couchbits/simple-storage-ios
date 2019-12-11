@@ -1,0 +1,464 @@
+//
+//  SqliteStorageTests.swift
+//  presence
+//
+//  Created by Dominik Gauggel on 29.07.19.
+//  Copyright © 2019 couchbits GmbH. All rights reserved.
+//
+
+import Foundation
+import XCTest
+import SQLite3
+
+class SqliteStroageTests: XCTestCase {
+    var sut: SqliteStorage!
+    var idProvider: IdProviderStub!
+    var dateProvider: DateProviderStub!
+    var storageType = StorageType(name: "my_type", attributes: [StorageType.Attribute(name: "anyid", type: .uuid, nullable: false),
+                                                                StorageType.Attribute(name: "name", type: .string(255), nullable: false),
+                                                                StorageType.Attribute(name: "active", type: .bool, nullable: false),
+                                                                StorageType.Attribute(name: "value_int", type: .integer, nullable: false),
+                                                                StorageType.Attribute(name: "value_double", type: .double, nullable: false),
+                                                                StorageType.Attribute(name: "timestamp", type: .date, nullable: false),
+                                                                StorageType.Attribute(name: "any", type: .text, nullable: false)])
+
+    let url = URL(fileURLWithPath: "/tmp/StorageTests.sqlite")
+
+    override func setUp() {
+        super.setUp()
+        idProvider = IdProviderStub()
+        dateProvider = DateProviderStub()
+        sut = try? SqliteStorage(url: url, idProvider: idProvider,
+                                 dateProvider: dateProvider,
+                                 attributeDescriptionProvider: SqliteStorageAttributeDescriptionProvider(),
+                                 defaultValueDescriptionProvider: SqliteStorageAttributeDefaultValueDescriptionProvider())
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        sut = nil
+        do {
+            try FileManager.default.removeItem(at: url)
+        } catch {
+            print("Cleanup failed: \(error)")
+        }
+    }
+
+    func test_create_shouldCreateTheTable() throws {
+        //prepare
+        let helper = try SqliteTestHelper(path: url)
+
+        //execute
+        try sut.createStorageType(storageType: storageType)
+
+        //verify
+        XCTAssertEqual(try helper.existsTable(storageType.name), 1)
+    }
+
+    func test_create_shouldStoreSchemaVersion0() throws {
+        //execute
+        try sut.createStorageType(storageType: storageType)
+
+        //verify
+        XCTAssertEqual(try sut.storageTypeVersion(storageType: storageType), 0)
+    }
+
+    func test_incrementStorageTypeVersion_shouldStoreNextVersionNumber() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+
+        //execute
+        try sut.incrementStorageTypeVersion(storageType: storageType)
+
+        //verify
+        XCTAssertEqual(try sut.storageTypeVersion(storageType: storageType), 1)
+    }
+
+    func test_updateStorageType_shouldAddTheNewAttributes() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+        let item = try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text"]))
+
+        //execute
+        let newAttribute = StorageType.Attribute(name: "new_value_int", type: .integer, nullable: false)
+        let actualStorageType = try sut.addAttribute(storageType: storageType, attribute: newAttribute, defaultValue: 100)
+
+        //verify
+        XCTAssertEqual(try sut.object(storageType: actualStorageType, id: item.meta?.id ?? UUID()).value(index: 7), 100)
+    }
+
+    func test_create_shouldThrowErrorIfStorageTypeUseNotAllowedName_id() throws {
+        var storageType = self.storageType
+        storageType.attributes.append(StorageType.Attribute(name: "id", type: .uuid, nullable: false))
+
+        //execute & verify
+        XCTAssertThrowsError(try sut.createStorageType(storageType: storageType))
+    }
+
+    func test_create_shouldThrowErrorIfStorageTypeUseNotAllowedName_createdAt() throws {
+        var storageType = self.storageType
+        storageType.attributes.append(StorageType.Attribute(name: "createdAt", type: .date, nullable: false))
+
+        //execute & verify
+        XCTAssertThrowsError(try sut.createStorageType(storageType: storageType))
+    }
+
+    func test_create_shouldThrowErrorIfStorageTypeUseNotAllowedName_updatedAt() throws {
+        var storageType = self.storageType
+        storageType.attributes.append(StorageType.Attribute(name: "updatedAt", type: .date, nullable: false))
+
+        //execute & verify
+        XCTAssertThrowsError(try sut.createStorageType(storageType: storageType))
+    }
+
+    func test_create_shouldNotCreateTheTableIfAlreadyExists() throws {
+        //prepare
+        let helper = try SqliteTestHelper(path: url)
+        try sut.createStorageType(storageType: storageType)
+
+        //execute
+        try sut.createStorageType(storageType: storageType)
+
+        //verify
+        XCTAssertEqual(try helper.existsTable(storageType.name), 1)
+    }
+
+    func test_save_shouldStoreTheNewItem() throws {
+        //prepare
+        let helper = try SqliteTestHelper(path: url)
+        try sut.createStorageType(storageType: storageType)
+
+        //execute
+        try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text"]))
+
+        //verify
+        XCTAssertEqual(try helper.count(tableName: storageType.name), 1)
+    }
+
+    func test_save_shouldUpdateAnExistingItem() throws {
+        //prepare
+        let helper = try SqliteTestHelper(path: url)
+        try sut.createStorageType(storageType: storageType)
+        let createdAt = Date()
+        dateProvider.stubbedDate = createdAt
+        let item = try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text"]))
+
+        //execute
+        let uuid = UUID()
+        let updatedAt = Date()
+        dateProvider.stubbedDate = updatedAt
+        try sut.save(storageType: storageType, item: StorageItem(meta: item.meta, values: [uuid, "any-name-updated", false, 43, 600.6, Date(timeIntervalSince1970: 6000), "any-text-updated"]))
+
+        //verify
+        let id = item.meta?.id ?? UUID()
+        XCTAssertEqual(try helper.count(tableName: storageType.name), 1)
+        let updatedItem = try sut.object(storageType: storageType, id: id)
+
+        XCTAssertEqual(updatedItem.meta, StorageItem.Meta(id: id, createdAt: createdAt, updatedAt: updatedAt))
+        XCTAssertEqual(updatedItem.values[0] as? UUID, uuid)
+        XCTAssertEqual(updatedItem.values[1] as? String, "any-name-updated")
+        XCTAssertEqual(updatedItem.values[2] as? Bool, false)
+        XCTAssertEqual(updatedItem.values[3] as? Int, 43)
+        XCTAssertEqual(updatedItem.values[4] as? Double, 600.6)
+        XCTAssertEqual(updatedItem.values[5] as? Date, Date(timeIntervalSince1970: 6000))
+        XCTAssertEqual(updatedItem.values[6] as? String, "any-text-updated")
+    }
+
+    func test_all_shouldReadAllRows() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+        let anyId1 = UUID()
+        let anyId2 = UUID()
+        try sut.save(storageType: storageType, item: StorageItem(values: [anyId1, "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
+        idProvider.stubbedId = UUID()
+        dateProvider.stubbedDate = Date(timeIntervalSince1970: 5000)
+        try sut.save(storageType: storageType, item: StorageItem(values: [anyId2, "any-name-2", false, 43, 600.6, Date(timeIntervalSince1970: 6000), "any-text-2"]))
+
+        //execute
+        let values = try sut.all(storageType: storageType)
+
+        //verify
+        XCTAssertEqual(values.count, 2)
+        XCTAssertEqual(values[1].meta, StorageItem.Meta(id: idProvider.id, createdAt: dateProvider.currentDate, updatedAt: dateProvider.currentDate))
+        XCTAssertEqual(values[1].values[0] as? UUID, anyId2)
+        XCTAssertEqual(values[1].values[1] as? String, "any-name-2")
+        XCTAssertEqual(values[1].values[2] as? Bool, false)
+        XCTAssertEqual(values[1].values[3] as? Int, 43)
+        XCTAssertEqual(values[1].values[4] as? Double, 600.6)
+        XCTAssertEqual(values[1].values[5] as? Date, Date(timeIntervalSince1970: 6000))
+        XCTAssertEqual(values[1].values[6] as? String, "any-text-2")
+    }
+
+    func test_object_shouldReadTheObjectWithTheGivenId() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+        let anyId = UUID()
+        try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
+        idProvider.stubbedId = UUID()
+        dateProvider.stubbedDate = Date(timeIntervalSince1970: 5000)
+        try sut.save(storageType: storageType, item: StorageItem(values: [anyId, "any-name-2", false, 43, 600.6, Date(timeIntervalSince1970: 6000), "any-text-2"]))
+
+        //execute
+        let values = try sut.object(storageType: storageType, id: idProvider.id)
+
+        //verify
+        XCTAssertEqual(values.meta, StorageItem.Meta(id: idProvider.id, createdAt: dateProvider.currentDate, updatedAt: dateProvider.currentDate))
+        XCTAssertEqual(values.values[0] as? UUID, anyId)
+        XCTAssertEqual(values.values[1] as? String, "any-name-2")
+        XCTAssertEqual(values.values[2] as? Bool, false)
+        XCTAssertEqual(values.values[3] as? Int, 43)
+        XCTAssertEqual(values.values[4] as? Double, 600.6)
+        XCTAssertEqual(values.values[5] as? Date, Date(timeIntervalSince1970: 6000))
+        XCTAssertEqual(values.values[6] as? String, "any-text-2")
+    }
+
+    func test_object_shouldReadTheObjectWithNullableValues() throws {
+        //prepare
+        dateProvider.stubbedDate = Date()
+        var storageType = self.storageType
+        storageType.attributes = self.storageType.attributes.map { StorageType.Attribute(name: $0.name, type: $0.type, nullable: true) }
+        try sut.createStorageType(storageType: storageType)
+
+        let values: [Any] = [nil as UUID? as Any, nil as String? as Any, nil as Bool? as Any, nil as Int? as Any, nil as Double? as Any, nil as Date? as Any, nil as String? as Any]
+        idProvider.stubbedId = UUID()
+        try sut.save(storageType: storageType, item: StorageItem(values: values))
+
+        //execute
+        let object = try sut.object(storageType: storageType, id: idProvider.id)
+
+        //verify
+        XCTAssertEqual(object.meta, StorageItem.Meta(id: idProvider.id, createdAt: dateProvider.currentDate, updatedAt: dateProvider.currentDate))
+        XCTAssertNil(object.values[0] as? UUID)
+        XCTAssertNil(object.values[1] as? String)
+        XCTAssertNil(object.values[2] as? Bool)
+        XCTAssertNil(object.values[3] as? Int)
+        XCTAssertNil(object.values[4] as? Double)
+        XCTAssertNil(object.values[5] as? Date)
+        XCTAssertNil(object.values[6] as? String)
+    }
+
+    func test_object_shouldThrowNotFoundErrorIfObjectWithIdIsNotAvailable() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+
+        //execute & verify
+        XCTAssertThrowsError(try sut.object(storageType: storageType, id: UUID()), "") { (error) in
+            guard case StorageError.notFound(_) = error else {
+                XCTFail("wrong error: \(error)")
+                return
+            }
+        }
+    }
+
+    func test_delete_shouldDeleteTheObject() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+        let object = try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
+
+        //execute
+        try sut.delete(storageType: storageType, id: object.meta?.id ?? UUID())
+
+        //verify
+        XCTAssertEqual(try sut.all(storageType: storageType).count, 0)
+    }
+
+    func test_delete_shouldOnlyDeleteTheObjectAndNotTouchOtherObjects() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+        let object = try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
+        let object2 = try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
+
+        //execute
+        try sut.delete(storageType: storageType, id: object.meta?.id ?? UUID())
+
+        //verify
+        let all = try sut.all(storageType: storageType) 
+        XCTAssertEqual(all.count, 1)
+        XCTAssertEqual(all.first?.meta?.id, object2.meta?.id)
+    }
+
+    //relationship
+    var relatedStorageType = StorageType(name: "my_releated_type", attributes: [StorageType.Attribute(name: "name", type: .string(255), nullable: false),
+                                                                                StorageType.Attribute(name: "my_type_id", type: .relationship("my_type"), nullable: false)])
+
+    func test_initialize_shouldTheRelatedTable() throws {
+        //prepare
+        let helper = try SqliteTestHelper(path: url)
+        try sut.createStorageType(storageType: storageType)
+
+        //execute
+        try sut.createStorageType(storageType: relatedStorageType)
+
+        //verify
+        XCTAssertEqual(try helper.existsTable(relatedStorageType.name), 1)
+    }
+
+    func test_releated_shouldDeleteReferencedTypeIfRelatedObjectsGetsDeleted() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+        try sut.createStorageType(storageType: relatedStorageType)
+
+        let object = try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
+        try sut.save(storageType: relatedStorageType, item: StorageItem(values: ["any-related-name", object.meta?.id ?? UUID()]))
+
+        //execute
+        try sut.delete(storageType: storageType, id: object.meta?.id ?? UUID())
+
+        //verify
+        XCTAssertEqual(try sut.all(storageType: relatedStorageType).count, 0)
+    }
+
+    func test_releated_shouldSetNullIfRelatedObjectsGetsDeleted() throws {
+        //prepare
+        var relatedStorageType = self.relatedStorageType
+        relatedStorageType.attributes[1].nullable = true
+        try sut.createStorageType(storageType: storageType)
+        try sut.createStorageType(storageType: relatedStorageType)
+
+        let object = try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
+        try sut.save(storageType: relatedStorageType, item: StorageItem(values: ["any-related-name", object.meta?.id ?? UUID()]))
+
+        //execute
+        try sut.delete(storageType: storageType, id: object.meta?.id ?? UUID())
+
+        //verify
+        let all = try sut.all(storageType: relatedStorageType)
+        XCTAssertEqual(all.count, 1)
+        let nullableId: UUID? = try all.first?.value(index: 1)
+        XCTAssertNil(nullableId)
+    }
+
+    func test_releated_shouldNotDeleteRelatedTypeIfRelatedIfReferencedTypeGetsDelete() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+        try sut.createStorageType(storageType: relatedStorageType)
+
+        let object = try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
+        let object2 = try sut.save(storageType: relatedStorageType, item: StorageItem(values: ["any-related-name", object.meta?.id ?? UUID()]))
+
+        //execute
+        try sut.delete(storageType: relatedStorageType, id: object2.meta?.id ?? UUID())
+
+        //verify
+        XCTAssertEqual(try sut.all(storageType: relatedStorageType).count, 0)
+        XCTAssertEqual(try sut.all(storageType: storageType).count, 1)
+    }
+
+    func test_find_shouldReturnOnlyTheItemsWhichIncludesTheConstraints() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+        let uuidToFind = UUID()
+        try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [uuidToFind, "any-name-to-find", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-2"]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name-to-find", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-3"]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [uuidToFind, "any-name-2", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-4"]))
+
+        //execute
+        let items = try sut.find(storageType: storageType, by: [StorageConstraint(attribute: StorageType.Attribute(name: "anyid", type: .uuid, nullable: false), value: uuidToFind),
+                                                                StorageConstraint(attribute: StorageType.Attribute(name: "name", type: .text, nullable: false), value: "any-name-to-find")])
+
+        //verify
+        XCTAssertEqual(items.count, 1)
+        XCTAssertEqual(items.first?.values[0] as? UUID, uuidToFind)
+        XCTAssertEqual(items.first?.values[1] as? String, "any-name-to-find")
+    }
+
+    func test_find_shouldReturnOnlyTheItemsWhichIncludesTheConstraints_nullable() throws {
+        //prepare
+        var storageType = self.storageType
+        storageType.attributes[1].nullable = true
+        try sut.createStorageType(storageType: storageType)
+        let uuidToFind = UUID()
+        try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [uuidToFind, nil as String? as Any, true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-2"]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), nil as String? as Any, true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-3"]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [uuidToFind, "any-name-2", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-4"]))
+
+        //execute
+        let items = try sut.find(storageType: storageType, by: [StorageConstraint(attribute: StorageType.Attribute(name: "name", type: .text, nullable: true), value: nil as String? as Any),
+                                                                StorageConstraint(attribute: StorageType.Attribute(name: "anyid", type: .uuid, nullable: false), value: uuidToFind)])
+
+        //verify
+        XCTAssertEqual(items.count, 1)
+        XCTAssertEqual(items.first?.values[0] as? UUID, uuidToFind)
+        XCTAssertNil(items.first?.values[1] as? String)
+    }
+}
+
+class SqliteTestHelper {
+    var handle: OpaquePointer?
+
+    init(path: URL) throws {
+        try open(path: path)
+    }
+
+    func open(path: URL) throws {
+        let flags = SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX
+        guard sqlite3_open_v2(path.absoluteString, &handle, flags, nil) == SQLITE_OK else {
+            throw ErrorStub()
+        }
+    }
+
+    func perform(_ statement: String) throws {
+        var createTableStatement: OpaquePointer?
+
+        defer {
+            sqlite3_finalize(createTableStatement)
+        }
+
+        if sqlite3_prepare_v2(handle, statement, -1, &createTableStatement, nil) == SQLITE_OK {
+            if sqlite3_step(createTableStatement) == SQLITE_DONE {
+                print("Contact table created.")
+            } else {
+                throw ErrorStub()
+            }
+        } else {
+            throw ErrorStub()
+        }
+    }
+
+    func existsTable(_ tableName: String) throws -> Int {
+        return try count(tableName: "sqlite_master", whereClause: "type='table' AND name='\(tableName)'")
+    }
+
+    func count(tableName: String, whereClause: String? = nil) throws -> Int {
+        var statement: OpaquePointer?
+
+        defer {
+            sqlite3_finalize(statement)
+        }
+
+        var select = "SELECT count(*) FROM \(tableName)"
+        if let whereClause = whereClause {
+            select += " WHERE \(whereClause)"
+        }
+        select += ";"
+
+        if sqlite3_prepare_v2(handle, select, -1, &statement, nil) == SQLITE_OK {
+            if sqlite3_step(statement) == SQLITE_ROW {
+                return Int(sqlite3_column_int(statement, 0))
+            }
+        }
+        throw ErrorStub()
+    }
+
+    func schemaVersion(name: String) throws -> Int {
+        var statement: OpaquePointer?
+
+        defer {
+            sqlite3_finalize(statement)
+        }
+
+        let select = "SELECT * FROM storage_type_schema_version WHERE name='\(name)';"
+        if sqlite3_prepare_v2(handle, select, -1, &statement, nil) == SQLITE_OK {
+            if sqlite3_step(statement) == SQLITE_ROW {
+                return Int(sqlite3_column_int(statement, 4))
+            }
+        }
+        throw ErrorStub()
+    }
+
+    deinit {
+        sqlite3_close(handle)
+    }
+}
