@@ -9,6 +9,6 @@ Pod::Spec.new do |spec|
   spec.swift_version  = "5.1"
   spec.source         = { :git => "https://github.com/couchbits/simple-storage-ios.git", :tag => "#{spec.version}" }
 
-  spec.source_files   = "SimpleStorage", "Storage/**/*.{h,m,swift}"
+  spec.source_files   = "SimpleStorage", "SimpleStorage/**/*.{h,m,swift}"
   spec.exclude_files  = "SimpleStorage/Exclude"
 end
