@@ -25,7 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FFE1DD9023A1050200C5BB12 /* StorageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StorageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFE1DD9023A1050200C5BB12 /* SimpleStorageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleStorageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFE1DD9523A1050200C5BB12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FFE1DDA623A105CE00C5BB12 /* SqliteStorageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteStorageTests.swift; sourceTree = "<group>"; };
 		FFE1DDA723A105CE00C5BB12 /* SqliteStorageAttributeDescriptionProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteStorageAttributeDescriptionProviderTests.swift; sourceTree = "<group>"; };
@@ -58,8 +58,8 @@
 		FFE1DD7D23A1048B00C5BB12 = {
 			isa = PBXGroup;
 			children = (
-				FFE1DDAC23A105E100C5BB12 /* Storage */,
-				FFE1DD9223A1050200C5BB12 /* StorageTests */,
+				FFE1DDAC23A105E100C5BB12 /* SimpleStorage */,
+				FFE1DD9223A1050200C5BB12 /* SimpleStorageTests */,
 				FFE1DD9123A1050200C5BB12 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -67,12 +67,12 @@
 		FFE1DD9123A1050200C5BB12 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FFE1DD9023A1050200C5BB12 /* StorageTests.xctest */,
+				FFE1DD9023A1050200C5BB12 /* SimpleStorageTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FFE1DD9223A1050200C5BB12 /* StorageTests */ = {
+		FFE1DD9223A1050200C5BB12 /* SimpleStorageTests */ = {
 			isa = PBXGroup;
 			children = (
 				FFE1DDC023A11D8000C5BB12 /* Stubs */,
@@ -81,10 +81,10 @@
 				FFE1DDA823A105CE00C5BB12 /* StorageItemTests.swift */,
 				FFE1DD9523A1050200C5BB12 /* Info.plist */,
 			);
-			path = StorageTests;
+			path = SimpleStorageTests;
 			sourceTree = "<group>";
 		};
-		FFE1DDAC23A105E100C5BB12 /* Storage */ = {
+		FFE1DDAC23A105E100C5BB12 /* SimpleStorage */ = {
 			isa = PBXGroup;
 			children = (
 				FFE1DDBB23A11B6000C5BB12 /* Common */,
@@ -96,7 +96,7 @@
 				FFE1DDB223A105E100C5BB12 /* StorageType.swift */,
 				FFE1DDB323A105E100C5BB12 /* StorageItem.swift */,
 			);
-			path = Storage;
+			path = SimpleStorage;
 			sourceTree = "<group>";
 		};
 		FFE1DDBB23A11B6000C5BB12 /* Common */ = {
@@ -121,9 +121,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FFE1DD8F23A1050200C5BB12 /* StorageTests */ = {
+		FFE1DD8F23A1050200C5BB12 /* SimpleStorageTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FFE1DD9623A1050200C5BB12 /* Build configuration list for PBXNativeTarget "StorageTests" */;
+			buildConfigurationList = FFE1DD9623A1050200C5BB12 /* Build configuration list for PBXNativeTarget "SimpleStorageTests" */;
 			buildPhases = (
 				FFE1DD8C23A1050200C5BB12 /* Sources */,
 				FFE1DD8D23A1050200C5BB12 /* Frameworks */,
@@ -133,9 +133,9 @@
 			);
 			dependencies = (
 			);
-			name = StorageTests;
+			name = SimpleStorageTests;
 			productName = StorageTests;
-			productReference = FFE1DD9023A1050200C5BB12 /* StorageTests.xctest */;
+			productReference = FFE1DD9023A1050200C5BB12 /* SimpleStorageTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -153,7 +153,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FFE1DD8123A1048B00C5BB12 /* Build configuration list for PBXProject "Storage" */;
+			buildConfigurationList = FFE1DD8123A1048B00C5BB12 /* Build configuration list for PBXProject "SimpleStorage" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -166,7 +166,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FFE1DD8F23A1050200C5BB12 /* StorageTests */,
+				FFE1DD8F23A1050200C5BB12 /* SimpleStorageTests */,
 			);
 		};
 /* End PBXProject section */
@@ -271,7 +271,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = StorageTests/Info.plist;
+				INFOPLIST_FILE = SimpleStorageTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -337,7 +337,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = StorageTests/Info.plist;
+				INFOPLIST_FILE = SimpleStorageTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -360,7 +360,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FFE1DD8123A1048B00C5BB12 /* Build configuration list for PBXProject "Storage" */ = {
+		FFE1DD8123A1048B00C5BB12 /* Build configuration list for PBXProject "SimpleStorage" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FFE1DD8223A1048B00C5BB12 /* Debug */,
@@ -369,7 +369,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FFE1DD9623A1050200C5BB12 /* Build configuration list for PBXNativeTarget "StorageTests" */ = {
+		FFE1DD9623A1050200C5BB12 /* Build configuration list for PBXNativeTarget "SimpleStorageTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FFE1DD9723A1050200C5BB12 /* Debug */,
