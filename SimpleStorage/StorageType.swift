@@ -11,7 +11,7 @@ public struct StorageType: Equatable {
     public let name: String
     public let attributes: [Attribute]
 
-    init(name: String, attributes: [Attribute]) {
+    public init(name: String, attributes: [Attribute]) {
         self.name = name
         self.attributes = attributes
     }

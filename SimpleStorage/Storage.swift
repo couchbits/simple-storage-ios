@@ -38,4 +38,5 @@ public protocol Storage {
     func delete(storageType: StorageType, id: UUID) throws
 
     func find(storageType: StorageType, by constraints: [StorageConstraint]) throws -> [StorageItem]
+    func delete(storageType: StorageType, by constraints: [StorageConstraint]) throws
 }

@@ -461,7 +461,7 @@ extension SqliteStorage: Storage {
             sqlite3_finalize(statement)
         }
         try bindUUID(id, statement: statement, index: 1, nullable: false)
-        try performStatement(statement: statement, finalize: false)
+        try performStatement(statement: statement)
     }
 
     public func find(storageType: StorageType, by constraints: [StorageConstraint]) throws -> [StorageItem] {
@@ -473,6 +473,16 @@ extension SqliteStorage: Storage {
         try bindValues(attributes: constraintsToBind.map { $0.attribute }, values: constraintsToBind.map { $0.value }, statement: statement)
 
         return try read(statement: statement, storageType: storageType)
+    }
+
+    public func delete(storageType: StorageType, by constraints: [StorageConstraint]) throws {
+        let constraintString = try constraints.map { try self.constraintString($0) }.joined(separator: " AND ")
+        let statement = try prepareStatement(sql: "DELETE FROM \(storageType.name) WHERE \(constraintString)")
+
+        let constraintsToBind = constraints.filter { !isNull(value: $0.value, attribute: $0.attribute) }
+        try bindValues(attributes: constraintsToBind.map { $0.attribute }, values: constraintsToBind.map { $0.value }, statement: statement)
+
+        return try performStatement(statement: statement)
     }
 }
 

@@ -355,6 +355,25 @@ class SqliteStroageTests: XCTestCase {
         XCTAssertEqual(items.first?.values[1] as? String, "any-name-to-find")
     }
 
+    func test_delete_shouldDeleteOnlyTheItemsWhichIncludesTheConstraints() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+        let uuidToFind = UUID()
+        try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
+        let toDelete = try sut.save(storageType: storageType, item: StorageItem(values: [uuidToFind, "any-name-to-find", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-2"]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name-to-find", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-3"]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [uuidToFind, "any-name-2", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-4"]))
+
+        //execute
+        try sut.delete(storageType: storageType, by: [StorageConstraint(attribute: StorageType.Attribute(name: "anyid", type: .uuid, nullable: false), value: uuidToFind),
+                                                      StorageConstraint(attribute: StorageType.Attribute(name: "name", type: .text, nullable: false), value: "any-name-to-find")])
+
+        //verify
+        let items = try sut.all(storageType: storageType)
+        XCTAssertEqual(items.count, 3)
+        XCTAssertEqual(items.filter { $0.meta?.id == toDelete.meta?.id }.count, 0)
+    }
+
     func test_find_shouldReturnOnlyTheItemsWhichIncludesTheConstraints_nullable() throws {
         //prepare
         var attributes = self.storageType.attributes
