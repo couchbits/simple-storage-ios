@@ -6,7 +6,7 @@ Pod::Spec.new do |spec|
   spec.license         = { :type => 'MIT' }
   spec.author       = { "Dominik Gauggel" => "dominik@couchbits.com" }
   spec.platform     = :ios, "9.0"
-  spec.source       = { :git => "https://github.com/couchbits/Storage.git", :tag => "#{spec.version}" }
+  spec.source       = { :git => "https://github.com/couchbits/storage-ios.git", :tag => "#{spec.version}" }
 
   spec.source_files  = "Storage", "Storage/**/*.{h,m,swift}"
   spec.exclude_files = "Storage/Exclude"
