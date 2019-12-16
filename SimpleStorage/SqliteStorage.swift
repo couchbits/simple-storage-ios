@@ -377,10 +377,7 @@ extension SqliteStorage: Storage {
             throw StorageError.perform(errorMessage)
         }
 
-        var acutalStorageType = storageType
-        acutalStorageType.attributes.append(attribute)
-
-        return acutalStorageType
+        return StorageType(name: storageType.name, attributes: storageType.attributes + [attribute])
     }
 
     public func storageTypeVersion(storageType: StorageType) throws -> Int {

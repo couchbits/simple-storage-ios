@@ -88,27 +88,18 @@ class SqliteStroageTests: XCTestCase {
     }
 
     func test_create_shouldThrowErrorIfStorageTypeUseNotAllowedName_id() throws {
-        var storageType = self.storageType
-        storageType.attributes.append(StorageType.Attribute(name: "id", type: .uuid, nullable: false))
-
         //execute & verify
-        XCTAssertThrowsError(try sut.createStorageType(storageType: storageType))
+        XCTAssertThrowsError(try sut.createStorageType(storageType: StorageType(name: "any", attributes: [StorageType.Attribute(name: "id", type: .uuid, nullable: false)])))
     }
 
     func test_create_shouldThrowErrorIfStorageTypeUseNotAllowedName_createdAt() throws {
-        var storageType = self.storageType
-        storageType.attributes.append(StorageType.Attribute(name: "createdAt", type: .date, nullable: false))
-
         //execute & verify
-        XCTAssertThrowsError(try sut.createStorageType(storageType: storageType))
+        XCTAssertThrowsError(try sut.createStorageType(storageType: StorageType(name: "any", attributes: [StorageType.Attribute(name: "createdAt", type: .date, nullable: false)])))
     }
 
     func test_create_shouldThrowErrorIfStorageTypeUseNotAllowedName_updatedAt() throws {
-        var storageType = self.storageType
-        storageType.attributes.append(StorageType.Attribute(name: "updatedAt", type: .date, nullable: false))
-
         //execute & verify
-        XCTAssertThrowsError(try sut.createStorageType(storageType: storageType))
+        XCTAssertThrowsError(try sut.createStorageType(storageType: StorageType(name: "any", attributes: [StorageType.Attribute(name: "updatedAt", type: .date, nullable: false)])))
     }
 
     func test_create_shouldNotCreateTheTableIfAlreadyExists() throws {
@@ -215,8 +206,7 @@ class SqliteStroageTests: XCTestCase {
     func test_object_shouldReadTheObjectWithNullableValues() throws {
         //prepare
         dateProvider.stubbedDate = Date()
-        var storageType = self.storageType
-        storageType.attributes = self.storageType.attributes.map { StorageType.Attribute(name: $0.name, type: $0.type, nullable: true) }
+        let storageType = StorageType(name: self.storageType.name, attributes: self.storageType.attributes.map { StorageType.Attribute(name: $0.name, type: $0.type, nullable: true) })
         try sut.createStorageType(storageType: storageType)
 
         let values: [Any] = [nil as UUID? as Any, nil as String? as Any, nil as Bool? as Any, nil as Int? as Any, nil as Double? as Any, nil as Date? as Any, nil as String? as Any]
@@ -310,8 +300,10 @@ class SqliteStroageTests: XCTestCase {
 
     func test_releated_shouldSetNullIfRelatedObjectsGetsDeleted() throws {
         //prepare
-        var relatedStorageType = self.relatedStorageType
-        relatedStorageType.attributes[1].nullable = true
+        var attributes = self.relatedStorageType.attributes
+        attributes[1] = StorageType.Attribute(name: attributes[1].name, type: attributes[1].type, nullable: true)
+        let relatedStorageType = StorageType(name: self.relatedStorageType.name, attributes: attributes)
+
         try sut.createStorageType(storageType: storageType)
         try sut.createStorageType(storageType: relatedStorageType)
 
@@ -365,8 +357,10 @@ class SqliteStroageTests: XCTestCase {
 
     func test_find_shouldReturnOnlyTheItemsWhichIncludesTheConstraints_nullable() throws {
         //prepare
-        var storageType = self.storageType
-        storageType.attributes[1].nullable = true
+        var attributes = self.storageType.attributes
+        attributes[1] = StorageType.Attribute(name: attributes[1].name, type: attributes[1].type, nullable: true)
+        let storageType = StorageType(name: self.storageType.name, attributes: attributes)
+
         try sut.createStorageType(storageType: storageType)
         let uuidToFind = UUID()
         try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
