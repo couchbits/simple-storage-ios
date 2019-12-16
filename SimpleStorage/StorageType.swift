@@ -8,13 +8,24 @@
 import Foundation
 
 public struct StorageType: Equatable {
-    public var name: String
-    public var attributes: [Attribute]
+    public let name: String
+    public let attributes: [Attribute]
+
+    init(name: String, attributes: [Attribute]) {
+        self.name = name
+        self.attributes = attributes
+    }
 
     public struct Attribute: Equatable {
-        public var name: String
-        public var type: AttributeType
-        public var nullable: Bool
+        public let name: String
+        public let type: AttributeType
+        public let nullable: Bool
+
+        public init(name: String, type: AttributeType, nullable: Bool) {
+            self.name = name
+            self.type = type
+            self.nullable = nullable
+        }
     }
 
     public enum AttributeType: Equatable {
