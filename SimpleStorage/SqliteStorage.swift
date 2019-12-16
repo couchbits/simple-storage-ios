@@ -461,7 +461,7 @@ extension SqliteStorage: Storage {
             sqlite3_finalize(statement)
         }
         try bindUUID(id, statement: statement, index: 1, nullable: false)
-        try performStatement(statement: statement)
+        try performStatement(statement: statement, finalize: false)
     }
 
     public func find(storageType: StorageType, by constraints: [StorageConstraint]) throws -> [StorageItem] {
