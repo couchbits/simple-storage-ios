@@ -396,6 +396,95 @@ class SqliteStroageTests: XCTestCase {
         XCTAssertEqual(items.first?.values[0] as? UUID, uuidToFind)
         XCTAssertNil(items.first?.values[1] as? String)
     }
+
+    func test_find_constraint() throws {
+        //prepare
+        var attributes = self.storageType.attributes
+        attributes[1] = StorageType.Attribute(name: attributes[1].name, type: attributes[1].type, nullable: true)
+        let storageType = StorageType(name: self.storageType.name, attributes: attributes)
+
+        try sut.createStorageType(storageType: storageType)
+        let uuidToFind = UUID()
+        try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [uuidToFind, nil as String? as Any, true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-2"]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), nil as String? as Any, true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-3"]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [uuidToFind, "any-name-2", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-4"]))
+
+        //execute
+        let items = try sut.find(storageType: storageType, by: [StorageConstraint(attribute: StorageType.Attribute(name: "name", type: .text, nullable: true), value: nil as String? as Any),
+                                                                StorageConstraint(attribute: StorageType.Attribute(name: "anyid", type: .uuid, nullable: false), value: uuidToFind)])
+
+        //verify
+        XCTAssertEqual(items.count, 1)
+        XCTAssertEqual(items.first?.values[0] as? UUID, uuidToFind)
+        XCTAssertNil(items.first?.values[1] as? String)
+    }
+
+    func createConstraintData() throws -> StorageType {
+        let storageType = StorageType(name: "simple", attributes: [StorageType.Attribute(name: "any", type: .integer, nullable: false)])
+        try sut.createStorageType(storageType: storageType)
+        try sut.save(storageType: storageType, item: StorageItem(values: [0]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [2]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [5]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [7]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [10]))
+
+        return storageType
+    }
+
+    func test_find_constraintOperator_greaterThan_returnsOnlyCorrectResult() throws {
+        //prepare
+        let storageType = try createConstraintData()
+
+        //execute
+        let result = try sut.find(storageType: storageType, by: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .greaterThan)])
+
+        //verify
+        XCTAssertEqual(result.count, 2)
+        XCTAssertEqual(try result[0].value(index: 0) as Int, 7)
+        XCTAssertEqual(try result[1].value(index: 0) as Int, 10)
+    }
+
+    func test_find_constraintOperator_greaterThanOrEqual_returnsOnlyCorrectResult() throws {
+        //prepare
+        let storageType = try createConstraintData()
+
+        //execute
+        let result = try sut.find(storageType: storageType, by: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .greaterThanOrEqual)])
+
+        //verify
+        XCTAssertEqual(result.count, 3)
+        XCTAssertEqual(try result[0].value(index: 0) as Int, 5)
+        XCTAssertEqual(try result[1].value(index: 0) as Int, 7)
+        XCTAssertEqual(try result[2].value(index: 0) as Int, 10)
+    }
+
+    func test_find_constraintOperator_lessThan_returnsOnlyCorrectResult() throws {
+        //prepare
+        let storageType = try createConstraintData()
+
+        //execute
+        let result = try sut.find(storageType: storageType, by: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .lessThan)])
+
+        //verify
+        XCTAssertEqual(result.count, 2)
+        XCTAssertEqual(try result[0].value(index: 0) as Int, 0)
+        XCTAssertEqual(try result[1].value(index: 0) as Int, 2)
+    }
+
+    func test_find_constraintOperator_lessThanOrEqual_returnsOnlyCorrectResult() throws {
+        //prepare
+        let storageType = try createConstraintData()
+
+        //execute
+        let result = try sut.find(storageType: storageType, by: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .lessThanOrEqual)])
+
+        //verify
+        XCTAssertEqual(result.count, 3)
+        XCTAssertEqual(try result[0].value(index: 0) as Int, 0)
+        XCTAssertEqual(try result[1].value(index: 0) as Int, 2)
+        XCTAssertEqual(try result[2].value(index: 0) as Int, 5)
+    }
 }
 
 class SqliteTestHelper {

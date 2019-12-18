@@ -310,14 +310,43 @@ public class SqliteStorage {
         }
     }
 
-    func constraintString(_ constraint: StorageConstraint) throws -> String {
+    func buildConstraintString(_ constraint: StorageConstraint) throws -> String {
         if isNull(value: constraint.value, attribute: constraint.attribute) && constraint.attribute.nullable {
+            guard constraint.contstraintOperator == .equal else { throw StorageError.invalidData("Attribute \(constraint.attribute.name) nil is only allowed with equals") }
             return "\(constraint.attribute.name) IS NULL"
         } else if isNull(value: constraint.value, attribute: constraint.attribute) {
             throw StorageError.invalidData("Attribute \(constraint.attribute.name) is nil but not nullable")
         } else {
-            return "\(constraint.attribute.name) = ?"
+            switch constraint.contstraintOperator {
+            case .equal:
+                return "\(constraint.attribute.name) = ?"
+            case .greaterThan:
+                try checkNumericConstraint(constraint)
+                return "\(constraint.attribute.name) > ?"
+            case .greaterThanOrEqual:
+                try checkNumericConstraint(constraint)
+                return "\(constraint.attribute.name) >= ?"
+            case .lessThan:
+                try checkNumericConstraint(constraint)
+                return "\(constraint.attribute.name) < ?"
+            case .lessThanOrEqual:
+                try checkNumericConstraint(constraint)
+                return "\(constraint.attribute.name) <= ?"
+            }
         }
+    }
+
+    func checkNumericConstraint(_ constraint: StorageConstraint) throws {
+        switch constraint.attribute.type {
+        case .uuid, .string, .text, .relationship:
+            throw StorageError.invalidData("Operator \(constraint.contstraintOperator) is not allowed on character fields")
+        case .bool, .integer, .double, .date:
+            return
+        }
+    }
+
+    func buildConstraintString(constraints: [StorageConstraint]) throws -> String {
+        return try constraints.map { try self.buildConstraintString($0) }.joined(separator: " AND ")
     }
 
     func isNull(value: Any, attribute: StorageType.Attribute) -> Bool {
@@ -466,8 +495,7 @@ extension SqliteStorage: Storage {
 
     public func find(storageType: StorageType, by constraints: [StorageConstraint]) throws -> [StorageItem] {
         let namesString = metaAndTypeAttributes(storageType.attributes).map { $0.name }.joined(separator: ", ")
-        let constraintString = try constraints.map { try self.constraintString($0) }.joined(separator: " AND ")
-        let statement = try prepareStatement(sql: "SELECT \(namesString) FROM \(storageType.name) WHERE \(constraintString)")
+        let statement = try prepareStatement(sql: "SELECT \(namesString) FROM \(storageType.name) WHERE \(buildConstraintString(constraints: constraints))")
 
         let constraintsToBind = constraints.filter { !isNull(value: $0.value, attribute: $0.attribute) }
         try bindValues(attributes: constraintsToBind.map { $0.attribute }, values: constraintsToBind.map { $0.value }, statement: statement)
@@ -476,8 +504,7 @@ extension SqliteStorage: Storage {
     }
 
     public func delete(storageType: StorageType, by constraints: [StorageConstraint]) throws {
-        let constraintString = try constraints.map { try self.constraintString($0) }.joined(separator: " AND ")
-        let statement = try prepareStatement(sql: "DELETE FROM \(storageType.name) WHERE \(constraintString)")
+        let statement = try prepareStatement(sql: "DELETE FROM \(storageType.name) WHERE \(buildConstraintString(constraints: constraints))")
 
         let constraintsToBind = constraints.filter { !isNull(value: $0.value, attribute: $0.attribute) }
         try bindValues(attributes: constraintsToBind.map { $0.attribute }, values: constraintsToBind.map { $0.value }, statement: statement)

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF265CA423AA991400D70725 /* StorageConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF265CA323AA991400D70725 /* StorageConstraint.swift */; };
 		FFE1DDA923A105CE00C5BB12 /* SqliteStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDA623A105CE00C5BB12 /* SqliteStorageTests.swift */; };
 		FFE1DDAA23A105CE00C5BB12 /* SqliteStorageAttributeDescriptionProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDA723A105CE00C5BB12 /* SqliteStorageAttributeDescriptionProviderTests.swift */; };
 		FFE1DDAB23A105CE00C5BB12 /* StorageItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDA823A105CE00C5BB12 /* StorageItemTests.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FF265CA323AA991400D70725 /* StorageConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageConstraint.swift; sourceTree = "<group>"; };
 		FFE1DD9023A1050200C5BB12 /* SimpleStorageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleStorageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFE1DD9523A1050200C5BB12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FFE1DDA623A105CE00C5BB12 /* SqliteStorageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteStorageTests.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 				FFE1DDB123A105E100C5BB12 /* StorageError.swift */,
 				FFE1DDB223A105E100C5BB12 /* StorageType.swift */,
 				FFE1DDB323A105E100C5BB12 /* StorageItem.swift */,
+				FF265CA323AA991400D70725 /* StorageConstraint.swift */,
 			);
 			path = SimpleStorage;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 				FFE1DDAB23A105CE00C5BB12 /* StorageItemTests.swift in Sources */,
 				FFE1DDB623A105E100C5BB12 /* StorageAttributeDefaultValueDescriptionProvider.swift in Sources */,
 				FFE1DDBA23A105E100C5BB12 /* StorageItem.swift in Sources */,
+				FF265CA423AA991400D70725 /* StorageConstraint.swift in Sources */,
 				FFE1DDBF23A11B9200C5BB12 /* DateProvider.swift in Sources */,
 				FFE1DDC423A11D9400C5BB12 /* DateProviderStub.swift in Sources */,
 				FFE1DDB523A105E100C5BB12 /* SqliteStorage.swift in Sources */,

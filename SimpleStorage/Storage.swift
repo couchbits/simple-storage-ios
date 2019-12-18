@@ -8,20 +8,6 @@
 
 import Foundation
 
-public struct StorageConstraint: Equatable {
-    public var attribute: StorageType.Attribute
-    public var value: Any
-
-    public init(attribute: StorageType.Attribute, value: Any) {
-        self.attribute = attribute
-        self.value = value
-    }
-
-    public static func == (lhs: StorageConstraint, rhs: StorageConstraint) -> Bool {
-        return lhs.attribute == rhs.attribute
-    }
-}
-
 public protocol Storage {
     func createStorageType(storageType: StorageType) throws
 
