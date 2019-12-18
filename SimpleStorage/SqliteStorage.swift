@@ -423,45 +423,64 @@ extension SqliteStorage: Storage {
 
     @discardableResult
     public func save(storageType: StorageType, item: StorageItem) throws -> StorageItem {
-        guard storageType.attributes.count == item.values.count else {
+        guard let item = try save(storageType: storageType, items: [item]).first else {
+            throw StorageError.unexpected
+        }
+        return item
+    }
+
+    @discardableResult
+    public func save(storageType: StorageType, items: [StorageItem]) throws -> [StorageItem] {
+        let metaAndTypeAttributes = self.metaAndTypeAttributes(storageType.attributes)
+        let namesString = metaAndTypeAttributes.map { $0.name }.joined(separator: ", ")
+
+        let insertValuesString = metaAndTypeAttributes.map { _ in "?" }.joined(separator: ", ")
+        let insertStatement = try prepareStatement(sql: "INSERT INTO \(storageType.name) (\(namesString)) VALUES (\(insertValuesString))")
+        defer {
+            sqlite3_finalize(insertStatement)
+        }
+
+        let updateValuesString = metaAndTypeAttributes.map { "\($0.name) = ?" }.joined(separator: ", ")
+        let updateStatement = try prepareStatement(sql: "UPDATE \(storageType.name) SET \(updateValuesString) WHERE id = ?")
+        defer {
+            sqlite3_finalize(updateStatement)
+        }
+
+        guard items.filter({ $0.values.count != storageType.attributes.count}).count == 0 else {
             throw StorageError.invalidData("Attributes and values have different size")
         }
 
-        let currentDate = dateProvider.currentDate
-        let meta = StorageItem.Meta(id: item.meta?.id ?? idProvider.id,
-                                    createdAt: item.meta?.createdAt ?? currentDate,
-                                    updatedAt: currentDate)
+        return try items.map { item in
+            let currentDate = dateProvider.currentDate
+            let meta = StorageItem.Meta(id: item.meta?.id ?? idProvider.id,
+                                        createdAt: item.meta?.createdAt ?? currentDate,
+                                        updatedAt: currentDate)
+            let metaAndTypeValues = self.metaAndTypeValues(meta: meta, values: item.values)
 
-        let metaAndTypeAttributes = self.metaAndTypeAttributes(storageType.attributes)
-        let namesString = metaAndTypeAttributes.map { $0.name }.joined(separator: ", ")
-        let metaAndTypeValues = self.metaAndTypeValues(meta: meta, values: item.values)
-
-        let statement: OpaquePointer?
-        if try isNew(storageType: storageType, item: item) {
-            let valuesString = metaAndTypeValues.map { _ in "?" }.joined(separator: ", ")
-            statement = try prepareStatement(sql: "INSERT INTO \(storageType.name) (\(namesString)) VALUES (\(valuesString))")
-        } else {
-            let valuesString = metaAndTypeAttributes.map { "\($0.name) = ?" }.joined(separator: ", ")
-            statement = try prepareStatement(sql: "UPDATE \(storageType.name) SET \(valuesString) WHERE id = ?")
-            try bindUUID(meta.id, statement: statement, index: metaAndTypeAttributes.count + 1, nullable: false)
-        }
-
-        defer {
-            sqlite3_finalize(statement)
-        }
-
-        try bindValues(attributes: metaAndTypeAttributes, values: metaAndTypeValues, statement: statement)
-
-        guard sqlite3_step(statement) == SQLITE_DONE else {
-            if #available(iOS 10.0, *) {
-                print(String(cString: sqlite3_expanded_sql(statement)))
+            var statement: OpaquePointer?
+            if try isNew(storageType: storageType, item: item) {
+                statement = insertStatement
+                try bindValues(attributes: metaAndTypeAttributes, values: metaAndTypeValues, statement: statement)
             } else {
-                // Fallback on earlier versions
+                statement = updateStatement
+                try bindValues(attributes: metaAndTypeAttributes, values: metaAndTypeValues, statement: statement)
+                try bindUUID(meta.id, statement: statement, index: metaAndTypeAttributes.count + 1, nullable: false)
             }
-            throw StorageError.perform(errorMessage)
-        }
 
-        return StorageItem(meta: meta, attributes: item.values)
+            guard sqlite3_step(statement) == SQLITE_DONE else {
+                if #available(iOS 10.0, *) {
+                    print(String(cString: sqlite3_expanded_sql(statement)))
+                } else {
+                    // Fallback on earlier versions
+                }
+                throw StorageError.perform(errorMessage)
+            }
+
+            sqlite3_clear_bindings(statement)
+            sqlite3_reset(statement)
+
+            return StorageItem(meta: meta, attributes: item.values)
+        }
     }
 
     public func all(storageType: StorageType) throws -> [StorageItem] {

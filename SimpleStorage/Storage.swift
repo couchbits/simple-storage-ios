@@ -18,6 +18,8 @@ public protocol Storage {
 
     @discardableResult
     func save(storageType: StorageType, item: StorageItem) throws -> StorageItem
+    @discardableResult
+    func save(storageType: StorageType, items: [StorageItem]) throws -> [StorageItem]
 
     func all(storageType: StorageType) throws -> [StorageItem]
     func object(storageType: StorageType, id: UUID) throws -> StorageItem
