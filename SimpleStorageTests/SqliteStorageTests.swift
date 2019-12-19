@@ -141,6 +141,24 @@ class SqliteStroageTests: XCTestCase {
         XCTAssertEqual(try helper.count(tableName: storageType.name), 3)
     }
 
+    func test_save_batch_shouldStoreTheNewItems2() throws {
+        //prepare
+        let helper = try SqliteTestHelper(path: url)
+        try sut.createStorageType(storageType: storageType)
+
+        //execute
+        var items = [StorageItem]()
+        for i in 0...11000 {
+            items.append(StorageItem(values: [UUID(), "any-name", true, i, 500.5, Date(timeIntervalSince1970: 5000), "any-text"]))
+        }
+        print("PERSIST START: \(Date())")
+        try sut.save(storageType: storageType, items: items)
+        print("PERSIST END: \(Date())")
+
+        //verify
+        XCTAssertEqual(try helper.count(tableName: storageType.name), 11001)
+    }
+
     func test_save_shouldUpdateAnExistingItem() throws {
         //prepare
         let helper = try SqliteTestHelper(path: url)

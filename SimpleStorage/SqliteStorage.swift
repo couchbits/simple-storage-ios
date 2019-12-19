@@ -450,36 +450,51 @@ extension SqliteStorage: Storage {
             throw StorageError.invalidData("Attributes and values have different size")
         }
 
-        return try items.map { item in
-            let currentDate = dateProvider.currentDate
-            let meta = StorageItem.Meta(id: item.meta?.id ?? idProvider.id,
-                                        createdAt: item.meta?.createdAt ?? currentDate,
-                                        updatedAt: currentDate)
-            let metaAndTypeValues = self.metaAndTypeValues(meta: meta, values: item.values)
+        guard sqlite3_exec(handle, "BEGIN TRANSACTION", nil, nil, nil) == SQLITE_OK else {
+            throw StorageError.perform(errorMessage)
+        }
 
-            var statement: OpaquePointer?
-            if try isNew(storageType: storageType, item: item) {
-                statement = insertStatement
-                try bindValues(attributes: metaAndTypeAttributes, values: metaAndTypeValues, statement: statement)
-            } else {
-                statement = updateStatement
-                try bindValues(attributes: metaAndTypeAttributes, values: metaAndTypeValues, statement: statement)
-                try bindUUID(meta.id, statement: statement, index: metaAndTypeAttributes.count + 1, nullable: false)
+        do {
+            let storedItems: [StorageItem] = try items.map { item in
+                let currentDate = self.dateProvider.currentDate
+                let meta = StorageItem.Meta(id: item.meta?.id ?? idProvider.id,
+                                            createdAt: item.meta?.createdAt ?? currentDate,
+                                            updatedAt: currentDate)
+                let metaAndTypeValues = self.metaAndTypeValues(meta: meta, values: item.values)
+
+                var statement: OpaquePointer?
+                if try isNew(storageType: storageType, item: item) {
+                    statement = insertStatement
+                    try bindValues(attributes: metaAndTypeAttributes, values: metaAndTypeValues, statement: statement)
+                } else {
+                    statement = updateStatement
+                    try bindValues(attributes: metaAndTypeAttributes, values: metaAndTypeValues, statement: statement)
+                    try bindUUID(meta.id, statement: statement, index: metaAndTypeAttributes.count + 1, nullable: false)
+                }
+
+                guard sqlite3_step(statement) == SQLITE_DONE else {
+                    if #available(iOS 10.0, *) {
+                        print(String(cString: sqlite3_expanded_sql(statement)))
+                    } else {
+                        // Fallback on earlier versions
+                    }
+                    throw StorageError.perform(errorMessage)
+                }
+
+                sqlite3_clear_bindings(statement)
+                sqlite3_reset(statement)
+
+                return StorageItem(meta: meta, attributes: item.values)
             }
 
-            guard sqlite3_step(statement) == SQLITE_DONE else {
-                if #available(iOS 10.0, *) {
-                    print(String(cString: sqlite3_expanded_sql(statement)))
-                } else {
-                    // Fallback on earlier versions
-                }
+            guard sqlite3_exec(handle, "COMMIT TRANSACTION", nil, nil, nil) == SQLITE_OK else {
                 throw StorageError.perform(errorMessage)
             }
 
-            sqlite3_clear_bindings(statement)
-            sqlite3_reset(statement)
-
-            return StorageItem(meta: meta, attributes: item.values)
+            return storedItems
+        } catch {
+            sqlite3_exec(handle, "ROLLBACK TRANSACTION", nil, nil, nil)
+            throw error
         }
     }
 
