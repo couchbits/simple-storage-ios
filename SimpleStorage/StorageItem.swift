@@ -16,6 +16,12 @@ public struct StorageItem: Equatable {
         public let id: UUID
         public let createdAt: Date
         public let updatedAt: Date
+
+        public init(id: UUID, createdAt: Date, updatedAt: Date) {
+            self.id = id
+            self.createdAt = createdAt
+            self.updatedAt = updatedAt
+        }
     }
 
     public init(meta: Meta? = nil, values: [Any]) {

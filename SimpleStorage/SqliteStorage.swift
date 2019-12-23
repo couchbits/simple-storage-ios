@@ -25,18 +25,18 @@ public class SqliteStorage {
 
     public convenience init(url: URL) throws {
         try self.init(url: url,
-                  idProvider: DefaultIdProvider(),
-                  dateProvider: DefaultDateProvider(),
-                  attributeDescriptionProvider: SqliteStorageAttributeDescriptionProvider(),
-                  defaultValueDescriptionProvider: SqliteStorageAttributeDefaultValueDescriptionProvider())
+                      idProvider: DefaultIdProvider(),
+                      dateProvider: DefaultDateProvider(),
+                      attributeDescriptionProvider: SqliteStorageAttributeDescriptionProvider(),
+                      defaultValueDescriptionProvider: SqliteStorageAttributeDefaultValueDescriptionProvider())
     }
 
     public convenience init(url: URL, idProvider: IdProvider, dateProvider: DateProvider) throws {
         try self.init(url: url,
-                  idProvider: idProvider,
-                  dateProvider: dateProvider,
-                  attributeDescriptionProvider: SqliteStorageAttributeDescriptionProvider(),
-                  defaultValueDescriptionProvider: SqliteStorageAttributeDefaultValueDescriptionProvider())
+                      idProvider: idProvider,
+                      dateProvider: dateProvider,
+                      attributeDescriptionProvider: SqliteStorageAttributeDescriptionProvider(),
+                      defaultValueDescriptionProvider: SqliteStorageAttributeDefaultValueDescriptionProvider())
     }
 
     public init(url: URL,

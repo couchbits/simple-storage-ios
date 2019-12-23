@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum StorageError: Error {
+public enum StorageError: Error {
     case open(String)
     case invalidDefinition(String)
     case perform(String)
