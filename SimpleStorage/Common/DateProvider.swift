@@ -14,5 +14,5 @@ public protocol DateProvider {
 
 class DefaultDateProvider {}
 extension DefaultDateProvider: DateProvider {
-    var currentDate: Date { Date() }
+    var currentDate: Date { return Date() }
 }
