@@ -13,10 +13,10 @@ public protocol IdProvider {
 }
 
 extension UUID {
-    var idString: String { uuidString.lowercased() }
+    var idString: String { return uuidString.lowercased() }
 }
 
 class DefaultIdProvider {}
 extension DefaultIdProvider: IdProvider {
-    var id: UUID { UUID() }
+    var id: UUID { return UUID() }
 }
