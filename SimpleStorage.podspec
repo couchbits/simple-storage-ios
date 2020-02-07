@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name           = "SimpleStorage"
-  spec.version        = "1.2.4"
+  spec.version        = "1.2.5"
   spec.summary        = "A simple Storage library based on SQLite"
   spec.homepage       = "https://github.com/couchbits/simple-storage-ios"
   spec.license        = { :type => 'MIT' }
