@@ -11,7 +11,7 @@ import XCTest
 import SQLite3
 
 class SqliteStroageTests: XCTestCase {
-    var sut: SqliteStorage!
+    var sut: Storage!
     var idProvider: IdProviderStub!
     var dateProvider: DateProviderStub!
     var storageType = StorageType(name: "my_type", attributes: [StorageType.Attribute(name: "anyid", type: .uuid, nullable: false),

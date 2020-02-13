@@ -389,7 +389,7 @@ public class SqliteStorage {
     }
 }
 
-extension SqliteStorage: Storage {
+extension SqliteStorage: StorageTypeCreateable {
     public func createStorageType(storageType: StorageType) throws {
         try assertAttributeNames(storageType.attributes)
 
@@ -438,7 +438,9 @@ extension SqliteStorage: Storage {
     public func incrementStorageTypeVersion(storageType: StorageType) throws {
         try storeSchemaVersion(storageType: storageType, version: storageTypeVersion(storageType: storageType) + 1)
     }
+}
 
+extension SqliteStorage: StorageStoreable {
     @discardableResult
     public func save(storageType: StorageType, item: StorageItem) throws -> StorageItem {
         guard let item = try save(storageType: storageType, items: [item]).first else {
@@ -517,7 +519,9 @@ extension SqliteStorage: Storage {
             }
         }
     }
+}
 
+extension SqliteStorage: StorageReadeable {
     public func all(storageType: StorageType) throws -> [StorageItem] {
         let namesString = metaAndTypeAttributes(storageType.attributes).map { $0.name }.joined(separator: ", ")
         var select = "SELECT \(namesString) FROM \(storageType.name)"
@@ -538,6 +542,18 @@ extension SqliteStorage: Storage {
         return value
     }
 
+    public func find(storageType: StorageType, by constraints: [StorageConstraint]) throws -> [StorageItem] {
+        let namesString = metaAndTypeAttributes(storageType.attributes).map { $0.name }.joined(separator: ", ")
+        let statement = try prepareStatement(sql: "SELECT \(namesString) FROM \(storageType.name) WHERE \(buildConstraintString(constraints: constraints))")
+
+        let constraintsToBind = constraints.filter { !isNull(value: $0.value, attribute: $0.attribute) }
+        try bindValues(attributes: constraintsToBind.map { $0.attribute }, values: constraintsToBind.map { $0.value }, statement: statement)
+
+        return try read(statement: statement, storageType: storageType)
+    }
+}
+
+extension SqliteStorage: StorageDeleteable {
     public func delete(storageType: StorageType, id: UUID) throws {
         try syncRunner.run {
             let statement = try prepareStatement(sql: "DELETE FROM \(storageType.name) WHERE id = ?")
@@ -549,14 +565,8 @@ extension SqliteStorage: Storage {
         }
     }
 
-    public func find(storageType: StorageType, by constraints: [StorageConstraint]) throws -> [StorageItem] {
-        let namesString = metaAndTypeAttributes(storageType.attributes).map { $0.name }.joined(separator: ", ")
-        let statement = try prepareStatement(sql: "SELECT \(namesString) FROM \(storageType.name) WHERE \(buildConstraintString(constraints: constraints))")
+    public func delete(storageType: StorageType, ids: [UUID]) throws {
 
-        let constraintsToBind = constraints.filter { !isNull(value: $0.value, attribute: $0.attribute) }
-        try bindValues(attributes: constraintsToBind.map { $0.attribute }, values: constraintsToBind.map { $0.value }, statement: statement)
-
-        return try read(statement: statement, storageType: storageType)
     }
 
     public func delete(storageType: StorageType, by constraints: [StorageConstraint]) throws {
