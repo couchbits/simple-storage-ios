@@ -407,6 +407,24 @@ class SqliteStroageTests: XCTestCase {
         XCTAssertEqual(items.filter { $0.meta?.id == toDelete.meta?.id }.count, 0)
     }
 
+    func test_delete_mulitpleIds_shouldDeleteTheRowsWithGivenIds() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+        let object1 = try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
+        let object2 = try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
+        let object3 = try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
+
+        //execute
+        try sut.delete(storageType: storageType, ids: [object1.meta?.id, object2.meta?.id].compactMap { $0 })
+
+        //verify
+        XCTAssertThrowsError(try sut.object(storageType: storageType, id: object1.meta?.id ?? UUID()))
+        XCTAssertThrowsError(try sut.object(storageType: storageType, id: object2.meta?.id ?? UUID()))
+        let all = try sut.all(storageType: storageType)
+        XCTAssertEqual(all.count, 1)
+        XCTAssertEqual(all.first?.meta?.id, object3.meta?.id)
+    }
+
     func test_find_shouldReturnOnlyTheItemsWhichIncludesTheConstraints_nullable() throws {
         //prepare
         var attributes = self.storageType.attributes

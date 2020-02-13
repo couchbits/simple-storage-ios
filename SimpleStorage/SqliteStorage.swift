@@ -566,7 +566,17 @@ extension SqliteStorage: StorageDeleteable {
     }
 
     public func delete(storageType: StorageType, ids: [UUID]) throws {
-
+        try syncRunner.run {
+            let idsTemplate = ids.map({_ in "?"}).joined(separator: ",")
+            let statement = try prepareStatement(sql: "DELETE FROM \(storageType.name) WHERE id IN (\(idsTemplate))")
+            defer {
+                sqlite3_finalize(statement)
+            }
+            for (index, id) in ids.enumerated() {
+                try bindUUID(id, statement: statement, index: index + 1, nullable: false)
+            }
+            try performStatement(statement: statement, finalize: false)
+        }
     }
 
     public func delete(storageType: StorageType, by constraints: [StorageConstraint]) throws {
