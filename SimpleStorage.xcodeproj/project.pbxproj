@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF2E112123F69C4E002E3909 /* SimpleStorage.podspec in Resources */ = {isa = PBXBuildFile; fileRef = FF2E112023F69C4E002E3909 /* SimpleStorage.podspec */; };
 		FFB590A523C4C01B00C738AB /* SimpleStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = FFB590A323C4C01B00C738AB /* SimpleStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFB590A923C4C02F00C738AB /* StorageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDB323A105E100C5BB12 /* StorageItem.swift */; };
 		FFB590AA23C4C02F00C738AB /* SqliteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDAE23A105E100C5BB12 /* SqliteStorage.swift */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		FF265CA323AA991400D70725 /* StorageConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageConstraint.swift; sourceTree = "<group>"; };
+		FF2E112023F69C4E002E3909 /* SimpleStorage.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SimpleStorage.podspec; sourceTree = "<group>"; };
 		FFB590A123C4C01A00C738AB /* SimpleStorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SimpleStorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFB590A323C4C01B00C738AB /* SimpleStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleStorage.h; sourceTree = "<group>"; };
 		FFB590A423C4C01B00C738AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 		FFE1DD7D23A1048B00C5BB12 = {
 			isa = PBXGroup;
 			children = (
+				FF2E112023F69C4E002E3909 /* SimpleStorage.podspec */,
 				FFB590A223C4C01B00C738AB /* SimpleStorage */,
 				FFE1DD9223A1050200C5BB12 /* SimpleStorageTests */,
 				FFE1DD9123A1050200C5BB12 /* Products */,
@@ -240,6 +243,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF2E112123F69C4E002E3909 /* SimpleStorage.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
