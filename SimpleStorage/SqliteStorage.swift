@@ -136,6 +136,17 @@ public class SqliteStorage {
         try performStatement(statement: try prepareStatement(sql: sql))
     }
 
+    fileprivate func performCountStatement(_ statement: OpaquePointer?) throws -> Int {
+        defer {
+            sqlite3_finalize(statement)
+        }
+
+        if sqlite3_step(statement) == SQLITE_ROW {
+            return Int(sqlite3_column_int(statement, 0))
+        }
+        throw StorageError.perform(errorMessage)
+    }
+
     private func performStatement(statement: OpaquePointer?, finalize: Bool = true) throws {
         defer {
             if finalize {
@@ -546,10 +557,29 @@ extension SqliteStorage: StorageReadeable {
         let namesString = metaAndTypeAttributes(storageType.attributes).map { $0.name }.joined(separator: ", ")
         let statement = try prepareStatement(sql: "SELECT \(namesString) FROM \(storageType.name) WHERE \(buildConstraintString(constraints: constraints))")
 
+        defer {
+            sqlite3_finalize(statement)
+        }
+
         let constraintsToBind = constraints.filter { !isNull(value: $0.value, attribute: $0.attribute) }
         try bindValues(attributes: constraintsToBind.map { $0.attribute }, values: constraintsToBind.map { $0.value }, statement: statement)
 
         return try read(statement: statement, storageType: storageType)
+    }
+
+    public func count(storageType: StorageType) throws -> Int {
+        let statement = try prepareStatement(sql: "SELECT COUNT(*) FROM \(storageType.name)")
+
+        return try performCountStatement(statement)
+    }
+
+    public func count(storageType: StorageType, by constraints: [StorageConstraint]) throws -> Int {
+        let statement = try prepareStatement(sql: "SELECT COUNT(*) FROM \(storageType.name) WHERE \(buildConstraintString(constraints: constraints))")
+
+        let constraintsToBind = constraints.filter { !isNull(value: $0.value, attribute: $0.attribute) }
+        try bindValues(attributes: constraintsToBind.map { $0.attribute }, values: constraintsToBind.map { $0.value }, statement: statement)
+
+        return try performCountStatement(statement)
     }
 }
 

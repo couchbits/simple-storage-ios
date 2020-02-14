@@ -44,6 +44,11 @@ class SqliteStroageTests: XCTestCase {
         }
     }
 
+    @discardableResult
+    fileprivate func createRow() throws -> StorageItem {
+        return try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
+    }
+
     func test_create_shouldCreateTheTable() throws {
         //prepare
         let helper = try SqliteTestHelper(path: url)
@@ -535,6 +540,31 @@ class SqliteStroageTests: XCTestCase {
         XCTAssertEqual(try result[0].value(index: 0) as Int, 0)
         XCTAssertEqual(try result[1].value(index: 0) as Int, 2)
         XCTAssertEqual(try result[2].value(index: 0) as Int, 5)
+    }
+
+    func test_count_shouldReturnTheRowCount() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+        try createRow()
+        try createRow()
+        try createRow()
+
+        //execute
+        let count = try sut.count(storageType: storageType)
+
+        //verify
+        XCTAssertEqual(count, 3)
+    }
+
+    func test_countConditional_shouldReturnCorrectCount() throws {
+        //prepare
+        let storageType = try createConstraintData()
+
+        //execute
+        let count = try sut.count(storageType: storageType, by: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .lessThanOrEqual)])
+
+        //verify
+        XCTAssertEqual(count, 3)
     }
 }
 
