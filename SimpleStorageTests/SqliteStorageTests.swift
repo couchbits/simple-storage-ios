@@ -71,12 +71,13 @@ class SqliteStroageTests: XCTestCase {
     func test_incrementStorageTypeVersion_shouldStoreNextVersionNumber() throws {
         //prepare
         try sut.createStorageType(storageType: storageType)
+        try sut.incrementStorageTypeVersion(storageType: storageType)
 
         //execute
         try sut.incrementStorageTypeVersion(storageType: storageType)
 
         //verify
-        XCTAssertEqual(try sut.storageTypeVersion(storageType: storageType), 1)
+        XCTAssertEqual(try sut.storageTypeVersion(storageType: storageType), 2)
     }
 
     func test_updateStorageType_shouldAddTheNewAttributes() throws {

@@ -395,8 +395,13 @@ public class SqliteStorage {
         }
     }
 
+    func findSchemaVersion(storageType: StorageType) throws -> StorageItem? {
+        return try find(storageType: schemaVersionsStorageType,
+                        by: [StorageConstraint(attribute: schameVersionStorageTypeNameAttribute, value: storageType.name)]).first
+    }
+
     func storeSchemaVersion(storageType: StorageType, version: Int) throws {
-        try save(storageType: schemaVersionsStorageType, item: StorageItem(values: [storageType.name, version]))
+        try save(storageType: schemaVersionsStorageType, item: StorageItem(meta: findSchemaVersion(storageType: storageType)?.meta, values: [storageType.name, version]))
     }
 }
 
@@ -439,8 +444,7 @@ extension SqliteStorage: StorageTypeCreateable {
     }
 
     public func storageTypeVersion(storageType: StorageType) throws -> Int {
-        guard let schemaVersion = try find(storageType: schemaVersionsStorageType,
-                                           by: [StorageConstraint(attribute: schameVersionStorageTypeNameAttribute, value: storageType.name)]).first else {
+        guard let schemaVersion = try findSchemaVersion(storageType: storageType) else {
             return 0
         }
         return try schemaVersion.value(index: 1)
