@@ -184,13 +184,13 @@ class SqliteStroageTests: XCTestCase {
         let updatedItem = try sut.object(storageType: storageType, id: id)
 
         XCTAssertEqual(updatedItem.meta, StorageItem.Meta(id: id, createdAt: createdAt, updatedAt: updatedAt))
-        XCTAssertEqual(updatedItem.values[0] as? UUID, uuid)
-        XCTAssertEqual(updatedItem.values[1] as? String, "any-name-updated")
-        XCTAssertEqual(updatedItem.values[2] as? Bool, false)
-        XCTAssertEqual(updatedItem.values[3] as? Int, 43)
-        XCTAssertEqual(updatedItem.values[4] as? Double, 600.6)
-        XCTAssertEqual(updatedItem.values[5] as? Date, Date(timeIntervalSince1970: 6000))
-        XCTAssertEqual(updatedItem.values[6] as? String, "any-text-updated")
+        XCTAssertEqual(try updatedItem.value(index: 0) as UUID, uuid)
+        XCTAssertEqual(try updatedItem.value(index: 1) as String, "any-name-updated")
+        XCTAssertEqual(try updatedItem.value(index: 2) as Bool, false)
+        XCTAssertEqual(try updatedItem.value(index: 3) as Int, 43)
+        XCTAssertEqual(try updatedItem.value(index: 4) as Double, 600.6)
+        XCTAssertEqual(try updatedItem.value(index: 5) as Date, Date(timeIntervalSince1970: 6000))
+        XCTAssertEqual(try updatedItem.value(index: 6) as String, "any-text-updated")
     }
 
     func test_all_shouldReadAllRows() throws {
@@ -209,13 +209,13 @@ class SqliteStroageTests: XCTestCase {
         //verify
         XCTAssertEqual(values.count, 2)
         XCTAssertEqual(values[1].meta, StorageItem.Meta(id: idProvider.id, createdAt: dateProvider.currentDate, updatedAt: dateProvider.currentDate))
-        XCTAssertEqual(values[1].values[0] as? UUID, anyId2)
-        XCTAssertEqual(values[1].values[1] as? String, "any-name-2")
-        XCTAssertEqual(values[1].values[2] as? Bool, false)
-        XCTAssertEqual(values[1].values[3] as? Int, 43)
-        XCTAssertEqual(values[1].values[4] as? Double, 600.6)
-        XCTAssertEqual(values[1].values[5] as? Date, Date(timeIntervalSince1970: 6000))
-        XCTAssertEqual(values[1].values[6] as? String, "any-text-2")
+        XCTAssertEqual(try values[1].value(index: 0) as UUID, anyId2)
+        XCTAssertEqual(try values[1].value(index: 1) as String, "any-name-2")
+        XCTAssertEqual(try values[1].value(index: 2) as Bool, false)
+        XCTAssertEqual(try values[1].value(index: 3) as Int, 43)
+        XCTAssertEqual(try values[1].value(index: 4) as Double, 600.6)
+        XCTAssertEqual(try values[1].value(index: 5) as Date, Date(timeIntervalSince1970: 6000))
+        XCTAssertEqual(try values[1].value(index: 6) as String, "any-text-2")
     }
 
     func test_object_shouldReadTheObjectWithTheGivenId() throws {
@@ -232,13 +232,13 @@ class SqliteStroageTests: XCTestCase {
 
         //verify
         XCTAssertEqual(values.meta, StorageItem.Meta(id: idProvider.id, createdAt: dateProvider.currentDate, updatedAt: dateProvider.currentDate))
-        XCTAssertEqual(values.values[0] as? UUID, anyId)
-        XCTAssertEqual(values.values[1] as? String, "any-name-2")
-        XCTAssertEqual(values.values[2] as? Bool, false)
-        XCTAssertEqual(values.values[3] as? Int, 43)
-        XCTAssertEqual(values.values[4] as? Double, 600.6)
-        XCTAssertEqual(values.values[5] as? Date, Date(timeIntervalSince1970: 6000))
-        XCTAssertEqual(values.values[6] as? String, "any-text-2")
+        XCTAssertEqual(try values.value(index: 0) as UUID, anyId)
+        XCTAssertEqual(try values.value(index: 1) as String, "any-name-2")
+        XCTAssertEqual(try values.value(index: 2) as Bool, false)
+        XCTAssertEqual(try values.value(index: 3) as Int, 43)
+        XCTAssertEqual(try values.value(index: 4) as Double, 600.6)
+        XCTAssertEqual(try values.value(index: 5) as Date, Date(timeIntervalSince1970: 6000))
+        XCTAssertEqual(try values.value(index: 6) as String, "any-text-2")
     }
 
     func test_object_shouldReadTheObjectWithNullableValues() throws {
@@ -256,13 +256,13 @@ class SqliteStroageTests: XCTestCase {
 
         //verify
         XCTAssertEqual(object.meta, StorageItem.Meta(id: idProvider.id, createdAt: dateProvider.currentDate, updatedAt: dateProvider.currentDate))
-        XCTAssertNil(object.values[0] as? UUID)
-        XCTAssertNil(object.values[1] as? String)
-        XCTAssertNil(object.values[2] as? Bool)
-        XCTAssertNil(object.values[3] as? Int)
-        XCTAssertNil(object.values[4] as? Double)
-        XCTAssertNil(object.values[5] as? Date)
-        XCTAssertNil(object.values[6] as? String)
+        XCTAssertNil(try object.value(index: 0) as Optional<UUID>)
+        XCTAssertNil(try object.value(index: 1) as Optional<String>)
+        XCTAssertNil(try object.value(index: 2) as Optional<Bool>)
+        XCTAssertNil(try object.value(index: 3) as Optional<Int>)
+        XCTAssertNil(try object.value(index: 4) as Optional<Double>)
+        XCTAssertNil(try object.value(index: 5) as Optional<Date>)
+        XCTAssertNil(try object.value(index: 6) as Optional<String>)
     }
 
     func test_object_shouldThrowNotFoundErrorIfObjectWithIdIsNotAvailable() throws {
@@ -449,8 +449,9 @@ class SqliteStroageTests: XCTestCase {
 
         //verify
         XCTAssertEqual(items.count, 1)
-        XCTAssertEqual(items.first?.values[0] as? UUID, uuidToFind)
-        XCTAssertNil(items.first?.values[1] as? String)
+        let first = items.first!
+        XCTAssertEqual(try first.value(index: 0) as UUID, uuidToFind)
+        XCTAssertNil(try first.value(index: 1) as Optional<String>)
     }
 
     func test_find_constraint() throws {
@@ -565,6 +566,59 @@ class SqliteStroageTests: XCTestCase {
 
         //verify
         XCTAssertEqual(count, 3)
+    }
+
+    func test_removeAttribute_shouldRemoveTheAttribute() throws {
+        //prepare
+        let helper = try SqliteTestHelper(path: url)
+        try sut.createStorageType(storageType: storageType)
+        let anyId = UUID()
+        try sut.save(storageType: storageType, item: StorageItem(values: [anyId, "any-name", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text"]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text"]))
+
+        //execute
+        guard let nameAttribute = storageType.attributes.first(where: { $0.name == "name" }) else { throw ErrorStub() }
+        let actualStorageType = try sut.removeAttribute(storageType: storageType, attribute: nameAttribute)
+
+        //verify
+        XCTAssertEqual(actualStorageType.attributes.count, 6)
+        XCTAssertNil(actualStorageType.attributes.first { $0.name == "name" })
+        XCTAssertEqual(try helper.count(tableName: storageType.name), 2)
+
+        let first = try sut.all(storageType: actualStorageType).first!
+        XCTAssertEqual(try first.value(index: 0) as UUID, anyId)
+        XCTAssertEqual(try first.value(index: 1) as Bool, true)
+        XCTAssertEqual(try first.value(index: 2) as Int, 42)
+        XCTAssertEqual(try first.value(index: 3) as Double, 500.5)
+        XCTAssertEqual(try first.value(index: 4) as Date, Date(timeIntervalSince1970: 5000))
+        XCTAssertEqual(try first.value(index: 5) as String, "any-text")
+    }
+
+    func test_removeAttribute_shouldAllowToAddNewRecord() throws {
+        //prepare
+        let helper = try SqliteTestHelper(path: url)
+        try sut.createStorageType(storageType: storageType)
+        try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text"]))
+
+        //execute
+        guard let nameAttribute = storageType.attributes.first(where: { $0.name == "name" }) else { throw ErrorStub() }
+        let actualStorageType = try sut.removeAttribute(storageType: storageType, attribute: nameAttribute)
+
+        let anyId = UUID()
+        try sut.save(storageType: actualStorageType, item: StorageItem(values: [anyId, false, 43, 600.6, Date(timeIntervalSince1970: 6000), "any-text-2"]))
+
+        //verify
+        XCTAssertEqual(actualStorageType.attributes.count, 6)
+        XCTAssertNil(actualStorageType.attributes.first { $0.name == "name" })
+        XCTAssertEqual(try helper.count(tableName: storageType.name), 2)
+
+        let first = try sut.all(storageType: actualStorageType).last!
+        XCTAssertEqual(try first.value(index: 0) as UUID, anyId)
+        XCTAssertEqual(try first.value(index: 1) as Bool, false)
+        XCTAssertEqual(try first.value(index: 2) as Int, 43)
+        XCTAssertEqual(try first.value(index: 3) as Double, 600.6)
+        XCTAssertEqual(try first.value(index: 4) as Date, Date(timeIntervalSince1970: 6000))
+        XCTAssertEqual(try first.value(index: 5) as String, "any-text-2")
     }
 }
 

@@ -14,6 +14,7 @@ public protocol StorageTypeCreateable {
     func incrementStorageTypeVersion(storageType: StorageType) throws
     @discardableResult
     func addAttribute(storageType: StorageType, attribute: StorageType.Attribute, defaultValue: Any) throws -> StorageType
+    func removeAttribute(storageType: StorageType, attribute: StorageType.Attribute) throws -> StorageType
 }
 
 public protocol StorageStoreable {

@@ -449,6 +449,41 @@ extension SqliteStorage: StorageTypeCreateable {
     public func incrementStorageTypeVersion(storageType: StorageType) throws {
         try storeSchemaVersion(storageType: storageType, version: storageTypeVersion(storageType: storageType) + 1)
     }
+
+    public func removeAttribute(storageType: StorageType, attribute: StorageType.Attribute) throws -> StorageType {
+        return try syncRunner.run {
+            try performStatement(sql: "PRAGMA foreign_keys = OFF")
+
+            guard sqlite3_exec(handle, "BEGIN TRANSACTION", nil, nil, nil) == SQLITE_OK else {
+                throw StorageError.perform(errorMessage)
+            }
+
+            do {
+                let newStorageTypeAttributes = storageType.attributes.filter { $0.name != attribute.name}
+                let temporaryStorageType = StorageType(name: "temporary_storage_type_\(storageType.name)", attributes: newStorageTypeAttributes)
+                try createStorageType(storageType: temporaryStorageType)
+
+                let metaAndTypeAttributes = self.metaAndTypeAttributes(newStorageTypeAttributes)
+                let namesString = metaAndTypeAttributes.map { $0.name }.joined(separator: ", ")
+
+                try performStatement(sql: "INSERT INTO \(temporaryStorageType.name)(\(namesString)) SELECT \(namesString) FROM \(storageType.name)")
+                try performStatement(sql: "DROP TABLE \(storageType.name)")
+                try performStatement(sql: "ALTER TABLE \(temporaryStorageType.name) RENAME TO \(storageType.name)")
+
+                guard sqlite3_exec(handle, "COMMIT TRANSACTION", nil, nil, nil) == SQLITE_OK else {
+                    throw StorageError.perform(errorMessage)
+                }
+
+                try performStatement(sql: "PRAGMA foreign_keys = ON")
+                return StorageType(name: storageType.name, attributes: newStorageTypeAttributes)
+            } catch {
+                sqlite3_exec(handle, "ROLLBACK TRANSACTION", nil, nil, nil)
+                try performStatement(sql: "PRAGMA foreign_keys = ON")
+
+                throw error
+            }
+        }
+    }
 }
 
 extension SqliteStorage: StorageStoreable {

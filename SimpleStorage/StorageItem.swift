@@ -10,7 +10,7 @@ import Foundation
 
 public struct StorageItem: Equatable {
     public let meta: Meta?
-    public var values: [Any]
+    var values: [Any]
 
     public struct Meta: Equatable {
         public let id: UUID
