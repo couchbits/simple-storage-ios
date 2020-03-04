@@ -35,6 +35,12 @@ public struct StorageItem: Equatable {
         guard let value = values[index] as? T else { throw StorageError.invalidData("Value \(values[index]) is not of type \(T.self)") }
         return value
     }
+
+    public mutating func setValue<T>(index: Int, value: T) throws {
+        guard index >= 0 else { throw StorageError.invalidData("Negative index isn't allowed") }
+        guard index < values.count else { throw StorageError.invalidData("Index out of bounds: \(index)") }
+        values[index] = value
+    }
 }
 
 public func == (lhs: StorageItem, rhs: StorageItem) -> Bool {
