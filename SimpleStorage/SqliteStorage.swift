@@ -427,7 +427,11 @@ extension SqliteStorage: StorageTypeCreateable {
         }
     }
 
-    public func addAttribute(storageType: StorageType, attribute: StorageType.Attribute, defaultValue: Any) throws -> StorageType {
+    public func addAttribute(storageType: StorageType, attribute: StorageType.Attribute, defaultValue: Any, onSchemaVersion: Int) throws -> StorageType {
+        let newStorageType = StorageType(name: storageType.name, attributes: storageType.attributes + [attribute])
+        let schemaVersion = try storageTypeVersion(storageType: storageType)
+        guard schemaVersion >= onSchemaVersion else { throw StorageError.migrationFailed("Cannot migrate attribute \(attribute.name) for version \(onSchemaVersion) on version \(schemaVersion)") }
+        guard schemaVersion == onSchemaVersion else { return newStorageType }
         let defaultValueDescription = defaultValueDescriptionProvider.description(attribute, defaultValue: defaultValue)
 
         let statement = try prepareStatement(sql: "ALTER TABLE \(storageType.name) ADD COLUMN \(attributeDescriptionProvider.description(attribute)) DEFAULT \(defaultValueDescription)")
@@ -440,7 +444,7 @@ extension SqliteStorage: StorageTypeCreateable {
             throw StorageError.perform(errorMessage)
         }
 
-        return StorageType(name: storageType.name, attributes: storageType.attributes + [attribute])
+        return newStorageType
     }
 
     public func storageTypeVersion(storageType: StorageType) throws -> Int {
@@ -454,8 +458,14 @@ extension SqliteStorage: StorageTypeCreateable {
         try storeSchemaVersion(storageType: storageType, version: storageTypeVersion(storageType: storageType) + 1)
     }
 
-    public func removeAttribute(storageType: StorageType, attribute: StorageType.Attribute) throws -> StorageType {
+    public func removeAttribute(storageType: StorageType, attribute: StorageType.Attribute, onSchemaVersion: Int) throws -> StorageType {
         return try syncRunner.run {
+            let newStorageTypeAttributes = storageType.attributes.filter { $0.name != attribute.name}
+            let newStorageType = StorageType(name: storageType.name, attributes: newStorageTypeAttributes)
+            let schemaVersion = try storageTypeVersion(storageType: storageType)
+            guard schemaVersion >= onSchemaVersion else { throw StorageError.migrationFailed("Cannot migrate attribute \(attribute.name) for version \(onSchemaVersion) on version \(schemaVersion)") }
+            guard schemaVersion == onSchemaVersion else { return newStorageType }
+
             try performStatement(sql: "PRAGMA foreign_keys = OFF")
 
             guard sqlite3_exec(handle, "BEGIN TRANSACTION", nil, nil, nil) == SQLITE_OK else {
@@ -463,7 +473,6 @@ extension SqliteStorage: StorageTypeCreateable {
             }
 
             do {
-                let newStorageTypeAttributes = storageType.attributes.filter { $0.name != attribute.name}
                 let temporaryStorageType = StorageType(name: "temporary_storage_type_\(storageType.name)", attributes: newStorageTypeAttributes)
                 try createStorageType(storageType: temporaryStorageType)
 
@@ -479,7 +488,7 @@ extension SqliteStorage: StorageTypeCreateable {
                 }
 
                 try performStatement(sql: "PRAGMA foreign_keys = ON")
-                return StorageType(name: storageType.name, attributes: newStorageTypeAttributes)
+                return newStorageType
             } catch {
                 sqlite3_exec(handle, "ROLLBACK TRANSACTION", nil, nil, nil)
                 try performStatement(sql: "PRAGMA foreign_keys = ON")

@@ -87,7 +87,7 @@ class SqliteStroageTests: XCTestCase {
 
         //execute
         let newAttribute = StorageType.Attribute(name: "new_value_int", type: .integer, nullable: false)
-        let actualStorageType = try sut.addAttribute(storageType: storageType, attribute: newAttribute, defaultValue: 100)
+        let actualStorageType = try sut.addAttribute(storageType: storageType, attribute: newAttribute, defaultValue: 100, onSchemaVersion: 0)
 
         //verify
         XCTAssertEqual(try sut.object(storageType: actualStorageType, id: item.meta?.id ?? UUID()).value(index: 7), 100)
@@ -579,7 +579,7 @@ class SqliteStroageTests: XCTestCase {
 
         //execute
         guard let nameAttribute = storageType.attributes.first(where: { $0.name == "name" }) else { throw ErrorStub() }
-        let actualStorageType = try sut.removeAttribute(storageType: storageType, attribute: nameAttribute)
+        let actualStorageType = try sut.removeAttribute(storageType: storageType, attribute: nameAttribute, onSchemaVersion: 0)
 
         //verify
         XCTAssertEqual(actualStorageType.attributes.count, 6)
@@ -603,7 +603,7 @@ class SqliteStroageTests: XCTestCase {
 
         //execute
         guard let nameAttribute = storageType.attributes.first(where: { $0.name == "name" }) else { throw ErrorStub() }
-        let actualStorageType = try sut.removeAttribute(storageType: storageType, attribute: nameAttribute)
+        let actualStorageType = try sut.removeAttribute(storageType: storageType, attribute: nameAttribute, onSchemaVersion: 0)
 
         let anyId = UUID()
         try sut.save(storageType: actualStorageType, item: StorageItem(values: [anyId, false, 43, 600.6, Date(timeIntervalSince1970: 6000), "any-text-2"]))
@@ -620,6 +620,48 @@ class SqliteStroageTests: XCTestCase {
         XCTAssertEqual(try first.value(index: 3) as Double, 600.6)
         XCTAssertEqual(try first.value(index: 4) as Date, Date(timeIntervalSince1970: 6000))
         XCTAssertEqual(try first.value(index: 5) as String, "any-text-2")
+    }
+
+    func test_removeAttribute_shouldThrowErrorIfSchemaVersionIsNotReached() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+        guard let nameAttribute = storageType.attributes.first(where: { $0.name == "name" }) else { throw ErrorStub() }
+
+        //execute & verify
+        XCTAssertThrowsError(try sut.removeAttribute(storageType: storageType, attribute: nameAttribute, onSchemaVersion: 1))
+    }
+
+    func test_removeAttribute_shouldReturnTheNewStorageTypeIfSchemaVersionWasAlreadyReached() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+        guard let nameAttribute = storageType.attributes.first(where: { $0.name == "name" }) else { throw ErrorStub() }
+        try sut.removeAttribute(storageType: storageType, attribute: nameAttribute, onSchemaVersion: 0)
+        try sut.incrementStorageTypeVersion(storageType: storageType)
+
+        //execute
+        let actualStorageType = try sut.removeAttribute(storageType: storageType, attribute: nameAttribute, onSchemaVersion: 0)
+        XCTAssertNil(actualStorageType.attributes.first(where: { $0.name == "name" }))
+    }
+
+    func test_addAttribute_shouldThrowErrorIfSchemaVersionIsNotReached() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+        let newAttribute = StorageType.Attribute(name: "new_attribute", type: .integer, nullable: false)
+
+        //execute & verify
+        XCTAssertThrowsError(try sut.addAttribute(storageType: storageType, attribute: newAttribute, defaultValue: 0, onSchemaVersion: 1))
+    }
+
+    func test_addAttribute_shouldReturnTheNewStorageTypeIfSchemaVersionWasAlreadyReached() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+        let newAttribute = StorageType.Attribute(name: "new_attribute", type: .integer, nullable: false)
+        try sut.addAttribute(storageType: storageType, attribute: newAttribute, defaultValue: 1, onSchemaVersion: 0)
+        try sut.incrementStorageTypeVersion(storageType: storageType)
+
+        //execute
+        let actualStorageType = try sut.addAttribute(storageType: storageType, attribute: newAttribute, defaultValue: 0, onSchemaVersion: 0)
+        XCTAssertNotNil(actualStorageType.attributes.first(where: { $0.name == "new_attribute" }))
     }
 }
 
