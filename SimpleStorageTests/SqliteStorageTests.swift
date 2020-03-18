@@ -221,23 +221,6 @@ class SqliteStroageTests: XCTestCase {
         XCTAssertEqual(try values[1].value(index: 6) as String, "any-text-2")
     }
 
-    func test_all_shouldReadAllRows_andSortByGivenSortOrder() throws {
-        //prepare
-        try sut.createStorageType(storageType: storageType)
-        let anyId1 = UUID()
-        let anyId2 = UUID()
-        try sut.save(storageType: storageType, item: StorageItem(values: [anyId1, "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
-        try sut.save(storageType: storageType, item: StorageItem(values: [anyId2, "any-name-2", false, 43, 600.6, Date(timeIntervalSince1970: 6000), "any-text-2"]))
-
-        //execute
-        let values = try sut.all(storageType: storageType, sortedBy: [StorageSortBy(attribute: storageType.attributes[1], sortOrder: .descending)])
-
-        //verify
-        XCTAssertEqual(values.count, 2)
-        XCTAssertEqual(try values[0].value(index: 1) as String, "any-name-2")
-        XCTAssertEqual(try values[1].value(index: 1) as String, "any-name-1")
-    }
-
     func test_object_shouldReadTheObjectWithTheGivenId() throws {
         //prepare
         try sut.createStorageType(storageType: storageType)
@@ -404,8 +387,8 @@ class SqliteStroageTests: XCTestCase {
         try sut.save(storageType: storageType, item: StorageItem(values: [uuidToFind, "any-name-2", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-4"]))
 
         //execute
-        let items = try sut.find(storageType: storageType, by: [StorageConstraint(attribute: StorageType.Attribute(name: "anyid", type: .uuid, nullable: false), value: uuidToFind),
-                                                                StorageConstraint(attribute: StorageType.Attribute(name: "name", type: .text, nullable: false), value: "any-name-to-find")])
+        let items = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: StorageType.Attribute(name: "anyid", type: .uuid, nullable: false), value: uuidToFind),
+                                                                                                       StorageConstraint(attribute: StorageType.Attribute(name: "name", type: .text, nullable: false), value: "any-name-to-find")]))
 
         //verify
         XCTAssertEqual(items.count, 1)
@@ -464,8 +447,8 @@ class SqliteStroageTests: XCTestCase {
         try sut.save(storageType: storageType, item: StorageItem(values: [uuidToFind, "any-name-2", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-4"]))
 
         //execute
-        let items = try sut.find(storageType: storageType, by: [StorageConstraint(attribute: StorageType.Attribute(name: "name", type: .text, nullable: true), value: nil as String? as Any),
-                                                                StorageConstraint(attribute: StorageType.Attribute(name: "anyid", type: .uuid, nullable: false), value: uuidToFind)])
+        let items = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: StorageType.Attribute(name: "name", type: .text, nullable: true), value: nil as String? as Any),
+                                                                                                       StorageConstraint(attribute: StorageType.Attribute(name: "anyid", type: .uuid, nullable: false), value: uuidToFind)]))
 
         //verify
         XCTAssertEqual(items.count, 1)
@@ -488,8 +471,8 @@ class SqliteStroageTests: XCTestCase {
         try sut.save(storageType: storageType, item: StorageItem(values: [uuidToFind, "any-name-2", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-4"]))
 
         //execute
-        let items = try sut.find(storageType: storageType, by: [StorageConstraint(attribute: StorageType.Attribute(name: "name", type: .text, nullable: true), value: nil as String? as Any),
-                                                                StorageConstraint(attribute: StorageType.Attribute(name: "anyid", type: .uuid, nullable: false), value: uuidToFind)])
+        let items = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: StorageType.Attribute(name: "name", type: .text, nullable: true), value: nil as String? as Any),
+                                                                                                       StorageConstraint(attribute: StorageType.Attribute(name: "anyid", type: .uuid, nullable: false), value: uuidToFind)]))
 
         //verify
         XCTAssertEqual(items.count, 1)
@@ -514,7 +497,7 @@ class SqliteStroageTests: XCTestCase {
         let storageType = try createConstraintData()
 
         //execute
-        let result = try sut.find(storageType: storageType, by: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .greaterThan)])
+        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .greaterThan)]))
 
         //verify
         XCTAssertEqual(result.count, 2)
@@ -527,9 +510,8 @@ class SqliteStroageTests: XCTestCase {
         let storageType = try createConstraintData()
 
         //execute
-        let result = try sut.find(storageType: storageType,
-                                  by: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .greaterThan)],
-                                  sortedBy: [StorageSortBy(attribute: storageType.attributes[0], sortOrder: .descending)])
+        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .greaterThan)],
+                                                                                          sortedBy: [StorageExpression.SortBy(attribute: storageType.attributes[0], sortOrder: .descending)]))
 
         //verify
         XCTAssertEqual(result.count, 2)
@@ -537,12 +519,40 @@ class SqliteStroageTests: XCTestCase {
         XCTAssertEqual(try result[1].value(index: 0) as Int, 7)
     }
 
+    func test_find_limitsIfLimitIsSet() throws {
+        //prepare
+        let storageType = try createConstraintData()
+
+        //execute
+        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .greaterThan)],
+                                                                                          sortedBy: [StorageExpression.SortBy(attribute: storageType.attributes[0], sortOrder: .descending)],
+                                                                                          limit: StorageExpression.Limit(limit: 1)))
+
+        //verify
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(try result[0].value(index: 0) as Int, 10)
+    }
+
+    func test_find_limitsAndStartsAtOffset() throws {
+        //prepare
+        let storageType = try createConstraintData()
+
+        //execute
+        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .greaterThan)],
+                                                                                          sortedBy: [StorageExpression.SortBy(attribute: storageType.attributes[0], sortOrder: .descending)],
+                                                                                          limit: StorageExpression.Limit(limit: 1, offset: 1)))
+
+        //verify
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(try result[0].value(index: 0) as Int, 7)
+    }
+
     func test_find_constraintOperator_greaterThanOrEqual_returnsOnlyCorrectResult() throws {
         //prepare
         let storageType = try createConstraintData()
 
         //execute
-        let result = try sut.find(storageType: storageType, by: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .greaterThanOrEqual)])
+        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .greaterThanOrEqual)]))
 
         //verify
         XCTAssertEqual(result.count, 3)
@@ -556,7 +566,7 @@ class SqliteStroageTests: XCTestCase {
         let storageType = try createConstraintData()
 
         //execute
-        let result = try sut.find(storageType: storageType, by: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .lessThan)])
+        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .lessThan)]))
 
         //verify
         XCTAssertEqual(result.count, 2)
@@ -569,7 +579,7 @@ class SqliteStroageTests: XCTestCase {
         let storageType = try createConstraintData()
 
         //execute
-        let result = try sut.find(storageType: storageType, by: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .lessThanOrEqual)])
+        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .lessThanOrEqual)]))
 
         //verify
         XCTAssertEqual(result.count, 3)

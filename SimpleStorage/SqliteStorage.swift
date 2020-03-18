@@ -396,8 +396,7 @@ public class SqliteStorage {
     }
 
     func findSchemaVersion(storageType: StorageType) throws -> StorageItem? {
-        return try find(storageType: schemaVersionsStorageType,
-                        by: [StorageConstraint(attribute: schameVersionStorageTypeNameAttribute, value: storageType.name)]).first
+        return try find(storageType: schemaVersionsStorageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: schameVersionStorageTypeNameAttribute, value: storageType.name)])).first
     }
 
     func storeSchemaVersion(storageType: StorageType, version: Int) throws {
@@ -581,44 +580,43 @@ extension SqliteStorage: StorageStoreable {
 }
 
 extension SqliteStorage: StorageReadeable {
-    public func all(storageType: StorageType) throws -> [StorageItem] {
-        return try all(storageType: storageType, sortedBy: [])
-    }
-
-    public func all(storageType: StorageType, sortedBy: [StorageSortBy]) throws -> [StorageItem] {
-        let namesString = metaAndTypeAttributes(storageType.attributes).map { $0.name }.joined(separator: ", ")
-        var select = "SELECT \(namesString) FROM \(storageType.name) \(sortByStringProvider.sortByString(sortedBy))"
-        let statement = try prepareStatement(sql: select)
-
-        defer {
-            sqlite3_finalize(statement)
-        }
-
-        return try read(statement: statement, storageType: storageType)
-    }
-
     public func object(storageType: StorageType, id: UUID) throws -> StorageItem {
-        guard let value = try find(storageType: storageType, by: [StorageConstraint(attribute: StorageType.metaAttributes.id, value: id)]).first else {
+        var expression = StorageExpression()
+        expression.constraints = [StorageConstraint(attribute: StorageType.metaAttributes.id, value: id)]
+        guard let value = try find(storageType: storageType, expression: expression).first else {
             throw StorageError.notFound("Object \(storageType.name) with id \(id) not found")
         }
 
         return value
     }
 
-    public func find(storageType: StorageType, by constraints: [StorageConstraint]) throws -> [StorageItem] {
-        return try find(storageType: storageType, by: constraints, sortedBy: [])
+    public func all(storageType: StorageType) throws -> [StorageItem] {
+        return try find(storageType: storageType, expression: StorageExpression.empty)
     }
 
-    public func find(storageType: StorageType, by constraints: [StorageConstraint], sortedBy: [StorageSortBy]) throws -> [StorageItem] {
+    public func find(storageType: StorageType, expression: StorageExpression) throws -> [StorageItem] {
         let namesString = metaAndTypeAttributes(storageType.attributes).map { $0.name }.joined(separator: ", ")
-        let statement = try prepareStatement(sql: "SELECT \(namesString) FROM \(storageType.name) WHERE \(buildConstraintString(constraints: constraints)) \(sortByStringProvider.sortByString(sortedBy))")
+        var select = "SELECT \(namesString) FROM \(storageType.name)"
+        if expression.constraints.count > 0 {
+            select += " WHERE \(try buildConstraintString(constraints:expression.constraints))"
+        }
+        select += " \(sortByStringProvider.sortByString(expression.sortedBy))"
+        if let limit = expression.limit {
+            select += " LIMIT \(limit.limit)"
+            if let offset = limit.offset {
+                select += " OFFSET \(offset)"
+            }
+        }
+        let statement = try prepareStatement(sql: select)
 
         defer {
             sqlite3_finalize(statement)
         }
 
-        let constraintsToBind = constraints.filter { !isNull(value: $0.value, attribute: $0.attribute) }
-        try bindValues(attributes: constraintsToBind.map { $0.attribute }, values: constraintsToBind.map { $0.value }, statement: statement)
+        if expression.constraints.count > 0 {
+            let constraintsToBind = expression.constraints.filter { !isNull(value: $0.value, attribute: $0.attribute) }
+            try bindValues(attributes: constraintsToBind.map { $0.attribute }, values: constraintsToBind.map { $0.value }, statement: statement)
+        }
 
         return try read(statement: statement, storageType: storageType)
     }

@@ -9,13 +9,13 @@
 import Foundation
 
 public protocol StorageSortByStringProvider {
-    func sortByString(_ sortyBys: [StorageSortBy]) -> String
+    func sortByString(_ sortyBys: [StorageExpression.SortBy]) -> String
 
 
 }
 
 class SqliteStorageSortByStringProvider {
-    func value(_ sortOrder: StorageSortBy.SortOrder) -> String {
+    func value(_ sortOrder: StorageExpression.SortBy.SortOrder) -> String {
         switch sortOrder {
         case .ascening:
             return "ASC"
@@ -25,10 +25,10 @@ class SqliteStorageSortByStringProvider {
     }
 }
 extension SqliteStorageSortByStringProvider: StorageSortByStringProvider {
-    func sortByString(_ sortyBys: [StorageSortBy]) -> String {
+    func sortByString(_ sortyBys: [StorageExpression.SortBy]) -> String {
         var sortBys = sortyBys
         if !sortyBys.contains(where: { $0.attribute.name == StorageType.metaAttributes.createdAt.name }) {
-            sortBys += [StorageSortBy(attribute: StorageType.metaAttributes.createdAt, sortOrder: .ascening)]
+            sortBys += [StorageExpression.SortBy(attribute: StorageType.metaAttributes.createdAt, sortOrder: .ascening)]
         }
         return "ORDER BY \(sortBys.map { "\($0.attribute.name) \(value($0.sortOrder))"}.joined(separator: ", "))"
     }
