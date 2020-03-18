@@ -26,8 +26,10 @@ public protocol StorageStoreable {
 
 public protocol StorageReadeable {
     func all(storageType: StorageType) throws -> [StorageItem]
+    func all(storageType: StorageType, sortedBy: [StorageSortBy]) throws -> [StorageItem]
     func object(storageType: StorageType, id: UUID) throws -> StorageItem
     func find(storageType: StorageType, by constraints: [StorageConstraint]) throws -> [StorageItem]
+    func find(storageType: StorageType, by constraints: [StorageConstraint], sortedBy: [StorageSortBy]) throws -> [StorageItem]
     func count(storageType: StorageType) throws -> Int
     func count(storageType: StorageType, by constraints: [StorageConstraint]) throws -> Int
 }

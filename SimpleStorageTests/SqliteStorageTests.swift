@@ -31,7 +31,8 @@ class SqliteStroageTests: XCTestCase {
         sut = try? SqliteStorage(url: url, idProvider: idProvider,
                                  dateProvider: dateProvider,
                                  attributeDescriptionProvider: SqliteStorageAttributeDescriptionProvider(),
-                                 defaultValueDescriptionProvider: SqliteStorageAttributeDefaultValueDescriptionProvider())
+                                 defaultValueDescriptionProvider: SqliteStorageAttributeDefaultValueDescriptionProvider(),
+                                 sortByStringProvider: SqliteStorageSortByStringProvider())
     }
 
     override func tearDown() {
@@ -194,11 +195,12 @@ class SqliteStroageTests: XCTestCase {
         XCTAssertEqual(try updatedItem.value(index: 6) as String, "any-text-updated")
     }
 
-    func test_all_shouldReadAllRows() throws {
+    func test_all_shouldReadAllRows_andSortDefaultByCreatedAtASC() throws {
         //prepare
         try sut.createStorageType(storageType: storageType)
         let anyId1 = UUID()
         let anyId2 = UUID()
+        dateProvider.stubbedDate = Date(timeIntervalSince1970: 4500)
         try sut.save(storageType: storageType, item: StorageItem(values: [anyId1, "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
         idProvider.stubbedId = UUID()
         dateProvider.stubbedDate = Date(timeIntervalSince1970: 5000)
@@ -217,6 +219,23 @@ class SqliteStroageTests: XCTestCase {
         XCTAssertEqual(try values[1].value(index: 4) as Double, 600.6)
         XCTAssertEqual(try values[1].value(index: 5) as Date, Date(timeIntervalSince1970: 6000))
         XCTAssertEqual(try values[1].value(index: 6) as String, "any-text-2")
+    }
+
+    func test_all_shouldReadAllRows_andSortByGivenSortOrder() throws {
+        //prepare
+        try sut.createStorageType(storageType: storageType)
+        let anyId1 = UUID()
+        let anyId2 = UUID()
+        try sut.save(storageType: storageType, item: StorageItem(values: [anyId1, "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [anyId2, "any-name-2", false, 43, 600.6, Date(timeIntervalSince1970: 6000), "any-text-2"]))
+
+        //execute
+        let values = try sut.all(storageType: storageType, sortedBy: [StorageSortBy(attribute: storageType.attributes[1], sortOrder: .descending)])
+
+        //verify
+        XCTAssertEqual(values.count, 2)
+        XCTAssertEqual(try values[0].value(index: 1) as String, "any-name-2")
+        XCTAssertEqual(try values[1].value(index: 1) as String, "any-name-1")
     }
 
     func test_object_shouldReadTheObjectWithTheGivenId() throws {
@@ -490,7 +509,7 @@ class SqliteStroageTests: XCTestCase {
         return storageType
     }
 
-    func test_find_constraintOperator_greaterThan_returnsOnlyCorrectResult() throws {
+    func test_find_constraintOperator_greaterThan_returnsOnlyCorrectResult_andSortsDefaultByCreatedAtASC() throws {
         //prepare
         let storageType = try createConstraintData()
 
@@ -501,6 +520,21 @@ class SqliteStroageTests: XCTestCase {
         XCTAssertEqual(result.count, 2)
         XCTAssertEqual(try result[0].value(index: 0) as Int, 7)
         XCTAssertEqual(try result[1].value(index: 0) as Int, 10)
+    }
+
+    func test_find_constraintOperator_greaterThan_returnsOnlyCorrectResult_andSortsBySortOrder() throws {
+        //prepare
+        let storageType = try createConstraintData()
+
+        //execute
+        let result = try sut.find(storageType: storageType,
+                                  by: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .greaterThan)],
+                                  sortedBy: [StorageSortBy(attribute: storageType.attributes[0], sortOrder: .descending)])
+
+        //verify
+        XCTAssertEqual(result.count, 2)
+        XCTAssertEqual(try result[0].value(index: 0) as Int, 10)
+        XCTAssertEqual(try result[1].value(index: 0) as Int, 7)
     }
 
     func test_find_constraintOperator_greaterThanOrEqual_returnsOnlyCorrectResult() throws {

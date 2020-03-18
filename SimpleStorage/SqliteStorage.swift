@@ -14,11 +14,9 @@ public class SqliteStorage {
     let dateProvider: DateProvider
     let attributeDescriptionProvider: StorageAttributeDescriptionProvider
     let defaultValueDescriptionProvider: StorageAttributeDefaultValueDescriptionProvider
+    let sortByStringProvider: StorageSortByStringProvider
     let syncRunner: SyncRunner
-
-    let idAttribute = StorageType.Attribute(name: "id", type: .uuid, nullable: false)
-    let metaAttributes: [StorageType.Attribute]
-
+    
     let schameVersionStorageTypeNameAttribute = StorageType.Attribute(name: "name", type: .text, nullable: false)
     let schemaVersionsStorageType: StorageType
 
@@ -30,6 +28,7 @@ public class SqliteStorage {
                       dateProvider: DefaultDateProvider(),
                       attributeDescriptionProvider: SqliteStorageAttributeDescriptionProvider(),
                       defaultValueDescriptionProvider: SqliteStorageAttributeDefaultValueDescriptionProvider(),
+                      sortByStringProvider: SqliteStorageSortByStringProvider(),
                       syncRunner: DefaultSyncRunner())
     }
 
@@ -39,6 +38,7 @@ public class SqliteStorage {
                       dateProvider: dateProvider,
                       attributeDescriptionProvider: SqliteStorageAttributeDescriptionProvider(),
                       defaultValueDescriptionProvider: SqliteStorageAttributeDefaultValueDescriptionProvider(),
+                      sortByStringProvider: SqliteStorageSortByStringProvider(),
                       syncRunner: DefaultSyncRunner())
     }
 
@@ -46,12 +46,14 @@ public class SqliteStorage {
                             idProvider: IdProvider,
                             dateProvider: DateProvider,
                             attributeDescriptionProvider: StorageAttributeDescriptionProvider,
-                            defaultValueDescriptionProvider: StorageAttributeDefaultValueDescriptionProvider) throws {
+                            defaultValueDescriptionProvider: StorageAttributeDefaultValueDescriptionProvider,
+                            sortByStringProvider: StorageSortByStringProvider) throws {
         try self.init(url: url,
               idProvider: idProvider,
               dateProvider: dateProvider,
               attributeDescriptionProvider: attributeDescriptionProvider,
               defaultValueDescriptionProvider: defaultValueDescriptionProvider,
+              sortByStringProvider: sortByStringProvider,
               syncRunner: DefaultSyncRunner())
     }
 
@@ -60,20 +62,18 @@ public class SqliteStorage {
                 dateProvider: DateProvider,
                 attributeDescriptionProvider: StorageAttributeDescriptionProvider,
                 defaultValueDescriptionProvider: StorageAttributeDefaultValueDescriptionProvider,
+                sortByStringProvider: StorageSortByStringProvider,
                 syncRunner: SyncRunner) throws {
         self.idProvider = idProvider
         self.dateProvider = dateProvider
         self.attributeDescriptionProvider = attributeDescriptionProvider
         self.defaultValueDescriptionProvider = defaultValueDescriptionProvider
+        self.sortByStringProvider = sortByStringProvider
         self.syncRunner = syncRunner
 
         schemaVersionsStorageType = StorageType(name: "storage_type_schema_version",
                                                 attributes: [schameVersionStorageTypeNameAttribute,
                                                              StorageType.Attribute(name: "version", type: .integer, nullable: false)])
-
-        metaAttributes = [idAttribute,
-                          StorageType.Attribute(name: "createdAt", type: .date, nullable: false),
-                          StorageType.Attribute(name: "updatedAt", type: .date, nullable: false)]
 
         let flags = SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX
         guard sqlite3_open_v2(url.absoluteString, &handle, flags, nil) == SQLITE_OK else {
@@ -168,7 +168,7 @@ public class SqliteStorage {
     }
 
     private func assertAttributeNames(_ attributes: [StorageType.Attribute]) throws {
-        let metaAttributeNames = metaAttributes.map { $0.name }
+        let metaAttributeNames = StorageType.metaAttributes.all.map { $0.name }
 
         for metaAttributeName in metaAttributeNames {
             guard attributes.filter({ $0.name == metaAttributeName }).isEmpty else {
@@ -178,7 +178,7 @@ public class SqliteStorage {
     }
 
     private func metaAndTypeAttributes(_ attributes: [StorageType.Attribute]) -> [StorageType.Attribute] {
-        return metaAttributes + attributes
+        return StorageType.metaAttributes.all + attributes
     }
 
     private func metaAndTypeValues(meta: StorageItem.Meta, values: [Any]) -> [Any] {
@@ -409,7 +409,7 @@ extension SqliteStorage: StorageTypeCreateable {
     public func createStorageType(storageType: StorageType) throws {
         try assertAttributeNames(storageType.attributes)
 
-        var metaAttributes = self.metaAttributes.map(attributeDescriptionProvider.description)
+        var metaAttributes = StorageType.metaAttributes.all.map(attributeDescriptionProvider.description)
         if let idAttribute = metaAttributes.first {
             metaAttributes[0] = "\(idAttribute) PRIMARY KEY"
         }
@@ -582,8 +582,12 @@ extension SqliteStorage: StorageStoreable {
 
 extension SqliteStorage: StorageReadeable {
     public func all(storageType: StorageType) throws -> [StorageItem] {
+        return try all(storageType: storageType, sortedBy: [])
+    }
+
+    public func all(storageType: StorageType, sortedBy: [StorageSortBy]) throws -> [StorageItem] {
         let namesString = metaAndTypeAttributes(storageType.attributes).map { $0.name }.joined(separator: ", ")
-        var select = "SELECT \(namesString) FROM \(storageType.name)"
+        var select = "SELECT \(namesString) FROM \(storageType.name) \(sortByStringProvider.sortByString(sortedBy))"
         let statement = try prepareStatement(sql: select)
 
         defer {
@@ -594,7 +598,7 @@ extension SqliteStorage: StorageReadeable {
     }
 
     public func object(storageType: StorageType, id: UUID) throws -> StorageItem {
-        guard let value = try find(storageType: storageType, by: [StorageConstraint(attribute: idAttribute, value: id)]).first else {
+        guard let value = try find(storageType: storageType, by: [StorageConstraint(attribute: StorageType.metaAttributes.id, value: id)]).first else {
             throw StorageError.notFound("Object \(storageType.name) with id \(id) not found")
         }
 
@@ -602,8 +606,12 @@ extension SqliteStorage: StorageReadeable {
     }
 
     public func find(storageType: StorageType, by constraints: [StorageConstraint]) throws -> [StorageItem] {
+        return try find(storageType: storageType, by: constraints, sortedBy: [])
+    }
+
+    public func find(storageType: StorageType, by constraints: [StorageConstraint], sortedBy: [StorageSortBy]) throws -> [StorageItem] {
         let namesString = metaAndTypeAttributes(storageType.attributes).map { $0.name }.joined(separator: ", ")
-        let statement = try prepareStatement(sql: "SELECT \(namesString) FROM \(storageType.name) WHERE \(buildConstraintString(constraints: constraints))")
+        let statement = try prepareStatement(sql: "SELECT \(namesString) FROM \(storageType.name) WHERE \(buildConstraintString(constraints: constraints)) \(sortByStringProvider.sortByString(sortedBy))")
 
         defer {
             sqlite3_finalize(statement)

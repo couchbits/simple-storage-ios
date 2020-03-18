@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		FF2E112123F69C4E002E3909 /* SimpleStorage.podspec in Resources */ = {isa = PBXBuildFile; fileRef = FF2E112023F69C4E002E3909 /* SimpleStorage.podspec */; };
+		FF342A1524224AE6009EAC9C /* SqliteStorageSortByStringProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF342A1424224AE6009EAC9C /* SqliteStorageSortByStringProviderTests.swift */; };
 		FFB590A523C4C01B00C738AB /* SimpleStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = FFB590A323C4C01B00C738AB /* SimpleStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFB590A923C4C02F00C738AB /* StorageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDB323A105E100C5BB12 /* StorageItem.swift */; };
 		FFB590AA23C4C02F00C738AB /* SqliteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDAE23A105E100C5BB12 /* SqliteStorage.swift */; };
@@ -29,6 +30,10 @@
 		FFB590BA23C4C04600C738AB /* StorageConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF265CA323AA991400D70725 /* StorageConstraint.swift */; };
 		FFC2162D23EBF9C900D15FC1 /* SyncRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC2162C23EBF9C900D15FC1 /* SyncRunner.swift */; };
 		FFC2162E23EBFC0F00D15FC1 /* SyncRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC2162C23EBF9C900D15FC1 /* SyncRunner.swift */; };
+		FFDF248A24221FD900261087 /* StorageSortBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF248924221FD900261087 /* StorageSortBy.swift */; };
+		FFDF248B2422229200261087 /* StorageSortBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF248924221FD900261087 /* StorageSortBy.swift */; };
+		FFDF248D242245AC00261087 /* StorageSortByStringProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF248C242245AC00261087 /* StorageSortByStringProvider.swift */; };
+		FFDF248E242246E500261087 /* StorageSortByStringProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF248C242245AC00261087 /* StorageSortByStringProvider.swift */; };
 		FFE1DDA923A105CE00C5BB12 /* SqliteStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDA623A105CE00C5BB12 /* SqliteStorageTests.swift */; };
 		FFE1DDAA23A105CE00C5BB12 /* SqliteStorageAttributeDescriptionProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDA723A105CE00C5BB12 /* SqliteStorageAttributeDescriptionProviderTests.swift */; };
 		FFE1DDAB23A105CE00C5BB12 /* StorageItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDA823A105CE00C5BB12 /* StorageItemTests.swift */; };
@@ -42,10 +47,13 @@
 /* Begin PBXFileReference section */
 		FF265CA323AA991400D70725 /* StorageConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageConstraint.swift; sourceTree = "<group>"; };
 		FF2E112023F69C4E002E3909 /* SimpleStorage.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SimpleStorage.podspec; sourceTree = "<group>"; };
+		FF342A1424224AE6009EAC9C /* SqliteStorageSortByStringProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqliteStorageSortByStringProviderTests.swift; sourceTree = "<group>"; };
 		FFB590A123C4C01A00C738AB /* SimpleStorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SimpleStorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFB590A323C4C01B00C738AB /* SimpleStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleStorage.h; sourceTree = "<group>"; };
 		FFB590A423C4C01B00C738AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FFC2162C23EBF9C900D15FC1 /* SyncRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncRunner.swift; sourceTree = "<group>"; };
+		FFDF248924221FD900261087 /* StorageSortBy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageSortBy.swift; sourceTree = "<group>"; };
+		FFDF248C242245AC00261087 /* StorageSortByStringProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageSortByStringProvider.swift; sourceTree = "<group>"; };
 		FFE1DD9023A1050200C5BB12 /* SimpleStorageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleStorageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFE1DD9523A1050200C5BB12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FFE1DDA623A105CE00C5BB12 /* SqliteStorageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteStorageTests.swift; sourceTree = "<group>"; };
@@ -91,9 +99,11 @@
 				FFE1DDAE23A105E100C5BB12 /* SqliteStorage.swift */,
 				FFE1DDAF23A105E100C5BB12 /* StorageAttributeDefaultValueDescriptionProvider.swift */,
 				FFE1DDB023A105E100C5BB12 /* StorageAttributeDescriptionProvider.swift */,
+				FFDF248C242245AC00261087 /* StorageSortByStringProvider.swift */,
 				FFE1DDB123A105E100C5BB12 /* StorageError.swift */,
 				FFE1DDB223A105E100C5BB12 /* StorageType.swift */,
 				FFE1DDB323A105E100C5BB12 /* StorageItem.swift */,
+				FFDF248924221FD900261087 /* StorageSortBy.swift */,
 				FF265CA323AA991400D70725 /* StorageConstraint.swift */,
 				FFC2162C23EBF9C900D15FC1 /* SyncRunner.swift */,
 				FFB590A323C4C01B00C738AB /* SimpleStorage.h */,
@@ -126,6 +136,7 @@
 			children = (
 				FFE1DDC023A11D8000C5BB12 /* Stubs */,
 				FFE1DDA723A105CE00C5BB12 /* SqliteStorageAttributeDescriptionProviderTests.swift */,
+				FF342A1424224AE6009EAC9C /* SqliteStorageSortByStringProviderTests.swift */,
 				FFE1DDA623A105CE00C5BB12 /* SqliteStorageTests.swift */,
 				FFE1DDA823A105CE00C5BB12 /* StorageItemTests.swift */,
 				FFE1DD9523A1050200C5BB12 /* Info.plist */,
@@ -209,6 +220,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1120;
 				LastUpgradeCheck = 1120;
+				ORGANIZATIONNAME = "couchbits GmbH";
 				TargetAttributes = {
 					FFB590A023C4C01A00C738AB = {
 						CreatedOnToolsVersion = 11.2.1;
@@ -263,6 +275,7 @@
 			files = (
 				FFB590AC23C4C02F00C738AB /* StorageConstraint.swift in Sources */,
 				FFB590AF23C4C02F00C738AB /* Storage.swift in Sources */,
+				FFDF248A24221FD900261087 /* StorageSortBy.swift in Sources */,
 				FFB590A923C4C02F00C738AB /* StorageItem.swift in Sources */,
 				FFB590B123C4C03E00C738AB /* IdProvider.swift in Sources */,
 				FFB590B023C4C02F00C738AB /* StorageType.swift in Sources */,
@@ -270,6 +283,7 @@
 				FFB590B223C4C03E00C738AB /* DateProvider.swift in Sources */,
 				FFB590AD23C4C02F00C738AB /* StorageAttributeDescriptionProvider.swift in Sources */,
 				FFC2162D23EBF9C900D15FC1 /* SyncRunner.swift in Sources */,
+				FFDF248D242245AC00261087 /* StorageSortByStringProvider.swift in Sources */,
 				FFB590AE23C4C02F00C738AB /* StorageAttributeDefaultValueDescriptionProvider.swift in Sources */,
 				FFB590AB23C4C02F00C738AB /* StorageError.swift in Sources */,
 			);
@@ -281,6 +295,7 @@
 			files = (
 				FFB590B523C4C04600C738AB /* StorageAttributeDefaultValueDescriptionProvider.swift in Sources */,
 				FFB590B823C4C04600C738AB /* StorageType.swift in Sources */,
+				FFDF248B2422229200261087 /* StorageSortBy.swift in Sources */,
 				FFE1DDC223A11D8900C5BB12 /* IdProviderStub.swift in Sources */,
 				FFB590B723C4C04600C738AB /* StorageError.swift in Sources */,
 				FFE1DDAA23A105CE00C5BB12 /* SqliteStorageAttributeDescriptionProviderTests.swift in Sources */,
@@ -288,6 +303,8 @@
 				FFE1DDA923A105CE00C5BB12 /* SqliteStorageTests.swift in Sources */,
 				FFE1DDC623A11E2500C5BB12 /* ErrorStub.swift in Sources */,
 				FFB590B923C4C04600C738AB /* StorageItem.swift in Sources */,
+				FF342A1524224AE6009EAC9C /* SqliteStorageSortByStringProviderTests.swift in Sources */,
+				FFDF248E242246E500261087 /* StorageSortByStringProvider.swift in Sources */,
 				FFB590B323C4C04600C738AB /* Storage.swift in Sources */,
 				FFE1DDAB23A105CE00C5BB12 /* StorageItemTests.swift in Sources */,
 				FFC2162E23EBFC0F00D15FC1 /* SyncRunner.swift in Sources */,

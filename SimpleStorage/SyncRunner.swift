@@ -3,6 +3,7 @@
 //  SimpleStorage
 //
 //  Created by Dominik Gauggel on 06.02.20.
+//  Copyright © 2019 couchbits GmbH. All rights reserved.
 //
 
 import Foundation
