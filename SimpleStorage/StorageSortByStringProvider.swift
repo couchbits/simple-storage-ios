@@ -17,7 +17,7 @@ public protocol StorageSortByStringProvider {
 class SqliteStorageSortByStringProvider {
     func value(_ sortOrder: StorageExpression.SortBy.SortOrder) -> String {
         switch sortOrder {
-        case .ascening:
+        case .ascending:
             return "ASC"
         case .descending:
             return "DESC"
@@ -28,7 +28,7 @@ extension SqliteStorageSortByStringProvider: StorageSortByStringProvider {
     func sortByString(_ sortyBys: [StorageExpression.SortBy]) -> String {
         var sortBys = sortyBys
         if !sortyBys.contains(where: { $0.attribute.name == StorageType.metaAttributes.createdAt.name }) {
-            sortBys += [StorageExpression.SortBy(attribute: StorageType.metaAttributes.createdAt, sortOrder: .ascening)]
+            sortBys += [StorageExpression.SortBy(attribute: StorageType.metaAttributes.createdAt, sortOrder: .ascending)]
         }
         return "ORDER BY \(sortBys.map { "\($0.attribute.name) \(value($0.sortOrder))"}.joined(separator: ", "))"
     }

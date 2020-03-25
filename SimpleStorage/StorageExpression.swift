@@ -26,7 +26,7 @@ public struct StorageExpression: Equatable {
         public let sortOrder: SortOrder
 
         public enum SortOrder {
-            case ascening
+            case ascending
             case descending
         }
 
