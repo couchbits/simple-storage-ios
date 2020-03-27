@@ -341,12 +341,12 @@ public class SqliteStorage {
 
     func buildConstraintString(_ constraint: StorageConstraint) throws -> String {
         if isNull(value: constraint.value, attribute: constraint.attribute) && constraint.attribute.nullable {
-            guard constraint.contstraintOperator == .equal else { throw StorageError.invalidData("Attribute \(constraint.attribute.name) nil is only allowed with equals") }
+            guard constraint.constraintOperator == .equal else { throw StorageError.invalidData("Attribute \(constraint.attribute.name) nil is only allowed with equals") }
             return "\(constraint.attribute.name) IS NULL"
         } else if isNull(value: constraint.value, attribute: constraint.attribute) {
             throw StorageError.invalidData("Attribute \(constraint.attribute.name) is nil but not nullable")
         } else {
-            switch constraint.contstraintOperator {
+            switch constraint.constraintOperator {
             case .equal:
                 return "\(constraint.attribute.name) = ?"
             case .greaterThan:
@@ -368,7 +368,7 @@ public class SqliteStorage {
     func checkNumericConstraint(_ constraint: StorageConstraint) throws {
         switch constraint.attribute.type {
         case .uuid, .string, .text, .relationship:
-            throw StorageError.invalidData("Operator \(constraint.contstraintOperator) is not allowed on character fields")
+            throw StorageError.invalidData("Operator \(constraint.constraintOperator) is not allowed on character fields")
         case .bool, .integer, .double, .date:
             return
         }
