@@ -13,10 +13,10 @@ public struct StorageConstraint: Equatable {
     public var value: Any
     public var constraintOperator: ConstraintOperator
 
-    public init(attribute: StorageType.Attribute, value: Any, contstraintOperator: ConstraintOperator = .equal) {
+    public init(attribute: StorageType.Attribute, value: Any, constraintOperator: ConstraintOperator = .equal) {
         self.attribute = attribute
         self.value = value
-        self.constraintOperator = contstraintOperator
+        self.constraintOperator = constraintOperator
     }
 
     public static func == (lhs: StorageConstraint, rhs: StorageConstraint) -> Bool {

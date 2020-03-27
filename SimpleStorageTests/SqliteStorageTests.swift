@@ -497,7 +497,7 @@ class SqliteStroageTests: XCTestCase {
         let storageType = try createConstraintData()
 
         //execute
-        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .greaterThan)]))
+        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, constraintOperator: .greaterThan)]))
 
         //verify
         XCTAssertEqual(result.count, 2)
@@ -510,7 +510,7 @@ class SqliteStroageTests: XCTestCase {
         let storageType = try createConstraintData()
 
         //execute
-        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .greaterThan)],
+        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, constraintOperator: .greaterThan)],
                                                                                           sortedBy: [StorageExpression.SortBy(attribute: storageType.attributes[0], sortOrder: .descending)]))
 
         //verify
@@ -524,7 +524,7 @@ class SqliteStroageTests: XCTestCase {
         let storageType = try createConstraintData()
 
         //execute
-        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .greaterThan)],
+        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, constraintOperator: .greaterThan)],
                                                                                           sortedBy: [StorageExpression.SortBy(attribute: storageType.attributes[0], sortOrder: .descending)],
                                                                                           limit: StorageExpression.Limit(limit: 1)))
 
@@ -538,7 +538,7 @@ class SqliteStroageTests: XCTestCase {
         let storageType = try createConstraintData()
 
         //execute
-        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .greaterThan)],
+        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, constraintOperator: .greaterThan)],
                                                                                           sortedBy: [StorageExpression.SortBy(attribute: storageType.attributes[0], sortOrder: .descending)],
                                                                                           limit: StorageExpression.Limit(limit: 1, offset: 1)))
 
@@ -552,7 +552,7 @@ class SqliteStroageTests: XCTestCase {
         let storageType = try createConstraintData()
 
         //execute
-        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .greaterThanOrEqual)]))
+        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, constraintOperator: .greaterThanOrEqual)]))
 
         //verify
         XCTAssertEqual(result.count, 3)
@@ -566,7 +566,7 @@ class SqliteStroageTests: XCTestCase {
         let storageType = try createConstraintData()
 
         //execute
-        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .lessThan)]))
+        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, constraintOperator: .lessThan)]))
 
         //verify
         XCTAssertEqual(result.count, 2)
@@ -579,7 +579,7 @@ class SqliteStroageTests: XCTestCase {
         let storageType = try createConstraintData()
 
         //execute
-        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .lessThanOrEqual)]))
+        let result = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: storageType.attributes[0], value: 5, constraintOperator: .lessThanOrEqual)]))
 
         //verify
         XCTAssertEqual(result.count, 3)
@@ -607,7 +607,7 @@ class SqliteStroageTests: XCTestCase {
         let storageType = try createConstraintData()
 
         //execute
-        let count = try sut.count(storageType: storageType, by: [StorageConstraint(attribute: storageType.attributes[0], value: 5, contstraintOperator: .lessThanOrEqual)])
+        let count = try sut.count(storageType: storageType, by: [StorageConstraint(attribute: storageType.attributes[0], value: 5, constraintOperator: .lessThanOrEqual)])
 
         //verify
         XCTAssertEqual(count, 3)
