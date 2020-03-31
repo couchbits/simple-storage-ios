@@ -32,7 +32,8 @@ class SqliteStroageTests: XCTestCase {
                                  dateProvider: dateProvider,
                                  attributeDescriptionProvider: SqliteStorageAttributeDescriptionProvider(),
                                  defaultValueDescriptionProvider: SqliteStorageAttributeDefaultValueDescriptionProvider(),
-                                 sortByStringProvider: SqliteStorageSortByStringProvider())
+                                 sortByStringProvider: SqliteStorageSortByStringProvider(),
+                                 syncRunner: DefaultSyncRunner())
     }
 
     override func tearDown() {

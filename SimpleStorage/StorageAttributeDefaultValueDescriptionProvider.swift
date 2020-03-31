@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol StorageAttributeDefaultValueDescriptionProvider {
+protocol StorageAttributeDefaultValueDescriptionProvider {
     func description(_ attribute: StorageType.Attribute, defaultValue: Any) -> String
 }
 

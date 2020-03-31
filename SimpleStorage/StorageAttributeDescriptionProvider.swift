@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol StorageAttributeDescriptionProvider {
+protocol StorageAttributeDescriptionProvider {
     func description(_ attribute: StorageType.Attribute) -> String
 }
 

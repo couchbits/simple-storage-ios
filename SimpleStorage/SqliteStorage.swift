@@ -25,11 +25,7 @@ public class SqliteStorage {
     public convenience init(url: URL) throws {
         try self.init(url: url,
                       idProvider: DefaultIdProvider(),
-                      dateProvider: DefaultDateProvider(),
-                      attributeDescriptionProvider: SqliteStorageAttributeDescriptionProvider(),
-                      defaultValueDescriptionProvider: SqliteStorageAttributeDefaultValueDescriptionProvider(),
-                      sortByStringProvider: SqliteStorageSortByStringProvider(),
-                      syncRunner: DefaultSyncRunner())
+                      dateProvider: DefaultDateProvider())
     }
 
     public convenience init(url: URL, idProvider: IdProvider, dateProvider: DateProvider) throws {
@@ -42,28 +38,13 @@ public class SqliteStorage {
                       syncRunner: DefaultSyncRunner())
     }
 
-    public convenience init(url: URL,
-                            idProvider: IdProvider,
-                            dateProvider: DateProvider,
-                            attributeDescriptionProvider: StorageAttributeDescriptionProvider,
-                            defaultValueDescriptionProvider: StorageAttributeDefaultValueDescriptionProvider,
-                            sortByStringProvider: StorageSortByStringProvider) throws {
-        try self.init(url: url,
-              idProvider: idProvider,
-              dateProvider: dateProvider,
-              attributeDescriptionProvider: attributeDescriptionProvider,
-              defaultValueDescriptionProvider: defaultValueDescriptionProvider,
-              sortByStringProvider: sortByStringProvider,
-              syncRunner: DefaultSyncRunner())
-    }
-
     init(url: URL,
-                idProvider: IdProvider,
-                dateProvider: DateProvider,
-                attributeDescriptionProvider: StorageAttributeDescriptionProvider,
-                defaultValueDescriptionProvider: StorageAttributeDefaultValueDescriptionProvider,
-                sortByStringProvider: StorageSortByStringProvider,
-                syncRunner: SyncRunner) throws {
+         idProvider: IdProvider,
+         dateProvider: DateProvider,
+         attributeDescriptionProvider: StorageAttributeDescriptionProvider,
+         defaultValueDescriptionProvider: StorageAttributeDefaultValueDescriptionProvider,
+         sortByStringProvider: StorageSortByStringProvider,
+         syncRunner: SyncRunner) throws {
         self.idProvider = idProvider
         self.dateProvider = dateProvider
         self.attributeDescriptionProvider = attributeDescriptionProvider
