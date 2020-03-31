@@ -56,7 +56,7 @@ public class SqliteStorage {
                                                 attributes: [schameVersionStorageTypeNameAttribute,
                                                              StorageType.Attribute(name: "version", type: .integer, nullable: false)])
 
-        let flags = SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX
+        let flags = SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX | SQLITE_OPEN_FILEPROTECTION_NONE
         guard sqlite3_open_v2(url.absoluteString, &handle, flags, nil) == SQLITE_OK else {
             throw StorageError.open(errorMessage)
         }
