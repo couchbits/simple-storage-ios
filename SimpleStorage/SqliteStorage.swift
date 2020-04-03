@@ -470,9 +470,14 @@ extension SqliteStorage: StorageTypeCreateable {
                 try performStatement(sql: "PRAGMA foreign_keys = ON")
                 return newStorageType
             } catch {
-                sqlite3_exec(handle, "ROLLBACK TRANSACTION", nil, nil, nil)
-                try performStatement(sql: "PRAGMA foreign_keys = ON")
-
+                let throwingDefer = {
+                    try self.performStatement(sql: "PRAGMA foreign_keys = ON")
+                }
+                guard sqlite3_exec(handle, "ROLLBACK TRANSACTION", nil, nil, nil) == SQLITE_OK else {
+                    try throwingDefer()
+                    throw StorageError.fatal(message: errorMessage, error: error)
+                }
+                try throwingDefer()
                 throw error
             }
         }
@@ -553,7 +558,9 @@ extension SqliteStorage: StorageStoreable {
 
                 return storedItems
             } catch {
-                sqlite3_exec(handle, "ROLLBACK TRANSACTION", nil, nil, nil)
+                guard sqlite3_exec(handle, "ROLLBACK TRANSACTION", nil, nil, nil) == SQLITE_OK else {
+                    throw StorageError.fatal(message: errorMessage, error: error)
+                }
                 throw error
             }
         }

@@ -16,5 +16,6 @@ public enum StorageError: Error {
     case invalidData(String)
     case notFound(String)
     case migrationFailed(String)
+    case fatal(message: String, error: Error)
     case unexpected
 }
