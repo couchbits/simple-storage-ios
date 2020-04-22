@@ -27,10 +27,10 @@ class StorageItemTests: XCTestCase {
     }
 
     func testValue_shouldThrowErrorIfIndexOutOfBounds() throws {
-        XCTAssertThrowsError(try sut.value(index: 3) as Any)
+        XCTAssertThrowsError(try sut.value(index: 3) as Optional<String>)
     }
 
     func testValue_shouldThrowErrorIfIndexIsNegative() throws {
-        XCTAssertThrowsError(try sut.value(index: -1) as Any)
+        XCTAssertThrowsError(try sut.value(index: -1) as Optional<String>)
     }
 }

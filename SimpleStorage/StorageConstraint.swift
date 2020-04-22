@@ -10,10 +10,10 @@ import Foundation
 
 public struct StorageConstraint: Equatable {
     public var attribute: StorageType.Attribute
-    public var value: Any
+    public var value: StorableType?
     public var constraintOperator: ConstraintOperator
 
-    public init(attribute: StorageType.Attribute, value: Any, constraintOperator: ConstraintOperator = .equal) {
+    public init(attribute: StorageType.Attribute, value: StorableType?, constraintOperator: ConstraintOperator = .equal) {
         self.attribute = attribute
         self.value = value
         self.constraintOperator = constraintOperator

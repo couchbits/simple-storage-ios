@@ -251,7 +251,7 @@ class SqliteStroageTests: XCTestCase {
         let storageType = StorageType(name: self.storageType.name, attributes: self.storageType.attributes.map { StorageType.Attribute(name: $0.name, type: $0.type, nullable: true) })
         try sut.createStorageType(storageType: storageType)
 
-        let values: [Any] = [nil as UUID? as Any, nil as String? as Any, nil as Bool? as Any, nil as Int? as Any, nil as Double? as Any, nil as Date? as Any, nil as String? as Any]
+        let values: [StorableType?] = [nil, nil, nil, nil, nil, nil, nil]
         idProvider.stubbedId = UUID()
         try sut.save(storageType: storageType, item: StorageItem(values: values))
 
@@ -260,13 +260,13 @@ class SqliteStroageTests: XCTestCase {
 
         //verify
         XCTAssertEqual(object.meta, StorageItem.Meta(id: idProvider.id, createdAt: dateProvider.currentDate, updatedAt: dateProvider.currentDate))
-        XCTAssertNil(try object.value(index: 0) as Optional<UUID>)
-        XCTAssertNil(try object.value(index: 1) as Optional<String>)
-        XCTAssertNil(try object.value(index: 2) as Optional<Bool>)
-        XCTAssertNil(try object.value(index: 3) as Optional<Int>)
-        XCTAssertNil(try object.value(index: 4) as Optional<Double>)
-        XCTAssertNil(try object.value(index: 5) as Optional<Date>)
-        XCTAssertNil(try object.value(index: 6) as Optional<String>)
+        XCTAssertNil(try object.value(index: 0) as UUID?)
+        XCTAssertNil(try object.value(index: 1) as String?)
+        XCTAssertNil(try object.value(index: 2) as Bool?)
+        XCTAssertNil(try object.value(index: 3) as Int?)
+        XCTAssertNil(try object.value(index: 4) as Double?)
+        XCTAssertNil(try object.value(index: 5) as Date?)
+        XCTAssertNil(try object.value(index: 6) as String?)
     }
 
     func test_object_shouldThrowNotFoundErrorIfObjectWithIdIsNotAvailable() throws {
@@ -443,12 +443,12 @@ class SqliteStroageTests: XCTestCase {
         try sut.createStorageType(storageType: storageType)
         let uuidToFind = UUID()
         try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
-        try sut.save(storageType: storageType, item: StorageItem(values: [uuidToFind, nil as String? as Any, true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-2"]))
-        try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), nil as String? as Any, true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-3"]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [uuidToFind, nil, true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-2"]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), nil, true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-3"]))
         try sut.save(storageType: storageType, item: StorageItem(values: [uuidToFind, "any-name-2", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-4"]))
 
         //execute
-        let items = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: StorageType.Attribute(name: "name", type: .text, nullable: true), value: nil as String? as Any),
+        let items = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: StorageType.Attribute(name: "name", type: .text, nullable: true), value: nil),
                                                                                                        StorageConstraint(attribute: StorageType.Attribute(name: "anyid", type: .uuid, nullable: false), value: uuidToFind)]))
 
         //verify
@@ -467,12 +467,12 @@ class SqliteStroageTests: XCTestCase {
         try sut.createStorageType(storageType: storageType)
         let uuidToFind = UUID()
         try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name-1", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-1"]))
-        try sut.save(storageType: storageType, item: StorageItem(values: [uuidToFind, nil as String? as Any, true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-2"]))
-        try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), nil as String? as Any, true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-3"]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [uuidToFind, nil, true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-2"]))
+        try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), nil, true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-3"]))
         try sut.save(storageType: storageType, item: StorageItem(values: [uuidToFind, "any-name-2", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text-4"]))
 
         //execute
-        let items = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: StorageType.Attribute(name: "name", type: .text, nullable: true), value: nil as String? as Any),
+        let items = try sut.find(storageType: storageType, expression: StorageExpression(constraints: [StorageConstraint(attribute: StorageType.Attribute(name: "name", type: .text, nullable: true), value: nil),
                                                                                                        StorageConstraint(attribute: StorageType.Attribute(name: "anyid", type: .uuid, nullable: false), value: uuidToFind)]))
 
         //verify

@@ -55,3 +55,11 @@ public struct StorageType: Equatable {
         case relationship(String)
     }
 }
+
+public protocol StorableType {}
+extension Int: StorableType {}
+extension String: StorableType {}
+extension Bool: StorableType {}
+extension Double: StorableType {}
+extension Date: StorableType {}
+extension UUID: StorableType {}

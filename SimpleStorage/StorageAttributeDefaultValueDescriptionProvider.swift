@@ -9,23 +9,20 @@
 import Foundation
 
 protocol StorageAttributeDefaultValueDescriptionProvider {
-    func description(_ attribute: StorageType.Attribute, defaultValue: Any) -> String
+    func description(_ attribute: StorageType.Attribute, defaultValue: StorableType?) -> String
 }
 
 class SqliteStorageAttributeDefaultValueDescriptionProvider {}
 
 extension SqliteStorageAttributeDefaultValueDescriptionProvider: StorageAttributeDefaultValueDescriptionProvider {
-    func description(_ attribute: StorageType.Attribute, defaultValue: Any) -> String {
+    func description(_ attribute: StorageType.Attribute, defaultValue: StorableType?) -> String {
+        guard let defaultValue = defaultValue else { return "NULL" }
         switch attribute.type {
         case .uuid:
             if let value = defaultValue as? UUID {
                 return "'\(value.uuidString)'"
             }
-        case .string(_):
-            if let value = defaultValue as? String {
-                return "'\(value)'"
-            }
-        case .text:
+        case .string(_), .text:
             if let value = defaultValue as? String {
                 return "'\(value)'"
             }
@@ -36,9 +33,13 @@ extension SqliteStorageAttributeDefaultValueDescriptionProvider: StorageAttribut
         case .integer:
             if let value = defaultValue as? Int {
                 return "'\(value)'"
+            } else if let value = defaultValue as? Double {
+                return "'\(Int(value))'"
             }
         case .double:
             if let value = defaultValue as? Double {
+                return "'\(value)'"
+            } else if let value = defaultValue as? Int {
                 return "'\(value)'"
             }
         case .date:

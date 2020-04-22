@@ -49,9 +49,7 @@ extension SqliteStorageAttributeDescriptionProvider: StorageAttributeDescription
             return "INT(1)"
         case .integer:
             return "INT"
-        case .double:
-            return "DOUBLE"
-        case .date:
+        case .double, .date:
             return "DOUBLE"
         }
     }

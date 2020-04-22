@@ -73,31 +73,31 @@ public class SqliteStorage {
         var rows = [StorageItem]()
 
         while sqlite3_step(statement) == SQLITE_ROW {
-            var row = [Any]()
+            var row = [StorableType?]()
             for (index, attribute) in metaAndTypeAttributes(storageType.attributes).enumerated() {
                 switch attribute.type {
                 case .uuid, .relationship:
-                    row.append(try readUUID(statement: statement, index: index, nullable: attribute.nullable) as Any)
+                    row.append(try readUUID(statement: statement, index: index, nullable: attribute.nullable) as StorableType?)
                 case .string, .text:
-                    row.append(try readString(statement: statement, index: index, nullable: attribute.nullable) as Any)
+                    row.append(try readString(statement: statement, index: index, nullable: attribute.nullable) as StorableType?)
                 case .bool:
-                    row.append(try readBool(statement: statement, index: index, nullable: attribute.nullable) as Any)
+                    row.append(try readBool(statement: statement, index: index, nullable: attribute.nullable) as StorableType?)
                 case .integer:
-                    row.append(try readInt(statement: statement, index: index, nullable: attribute.nullable) as Any)
+                    row.append(try readInt(statement: statement, index: index, nullable: attribute.nullable) as StorableType?)
                 case .double:
-                    row.append(try readDouble(statement: statement, index: index, nullable: attribute.nullable) as Any)
+                    row.append(try readDouble(statement: statement, index: index, nullable: attribute.nullable) as StorableType?)
                 case .date:
-                    row.append(try readDate(statement: statement, index: index, nullable: attribute.nullable) as Any)
+                    row.append(try readDate(statement: statement, index: index, nullable: attribute.nullable) as StorableType?)
                 }
             }
 
-            rows.append(StorageItem(meta: StorageItem.Meta(id: try value(row[0]), createdAt: try value(row[1]), updatedAt: try value(row[2])), attributes: Array(row.suffix(from: 3))))
+            rows.append(StorageItem(meta: StorageItem.Meta(id: try value(row[0]), createdAt: try value(row[1]), updatedAt: try value(row[2])), attributes: Array<StorableType?>(row.suffix(from: 3))))
         }
 
         return rows
     }
 
-    private func value<T>(_ value: Any) throws -> T {
+    private func value<T>(_ value: StorableType?) throws -> T {
         guard let castedValue = value as? T else {
             throw StorageError.invalidData("Value \(value) isn't of type \(T.self)")
         }
@@ -162,7 +162,7 @@ public class SqliteStorage {
         return StorageType.metaAttributes.all + attributes
     }
 
-    private func metaAndTypeValues(meta: StorageItem.Meta, values: [Any]) -> [Any] {
+    private func metaAndTypeValues(meta: StorageItem.Meta, values: [StorableType?]) -> [StorableType?] {
         return [meta.id, meta.createdAt, meta.updatedAt] + values
     }
 
@@ -300,7 +300,7 @@ public class SqliteStorage {
         }
     }
 
-    func bindValues(attributes: [StorageType.Attribute], values: [Any], statement: OpaquePointer?) throws {
+    func bindValues(attributes: [StorageType.Attribute], values: [StorableType?], statement: OpaquePointer?) throws {
         for (index, attribute) in attributes.enumerated() {
             let statementIndex = index + 1
             switch attribute.type {
@@ -359,7 +359,7 @@ public class SqliteStorage {
         return try constraints.map { try self.buildConstraintString($0) }.joined(separator: " AND ")
     }
 
-    func isNull(value: Any, attribute: StorageType.Attribute) -> Bool {
+    func isNull(value: StorableType?, attribute: StorageType.Attribute) -> Bool {
         switch attribute.type {
         case .uuid, .relationship:
             return value as? UUID == nil
@@ -407,7 +407,7 @@ extension SqliteStorage: StorageTypeCreateable {
         }
     }
 
-    public func addAttribute(storageType: StorageType, attribute: StorageType.Attribute, defaultValue: Any, onSchemaVersion: Int) throws -> StorageType {
+    public func addAttribute(storageType: StorageType, attribute: StorageType.Attribute, defaultValue: StorableType?, onSchemaVersion: Int) throws -> StorageType {
         let newStorageType = StorageType(name: storageType.name, attributes: storageType.attributes + [attribute])
         let schemaVersion = try storageTypeVersion(storageType: storageType)
         guard schemaVersion >= onSchemaVersion else { throw StorageError.migrationFailed("Cannot migrate attribute \(attribute.name) for version \(onSchemaVersion) on version \(schemaVersion)") }
@@ -664,7 +664,7 @@ extension SqliteStorage: StorageDeleteable {
 }
 
 fileprivate extension StorageItem {
-    init(meta: StorageItem.Meta, attributes: [Any]) {
+    init(meta: StorageItem.Meta, attributes: [StorableType?]) {
         self.meta = meta
         self.values = attributes
     }
