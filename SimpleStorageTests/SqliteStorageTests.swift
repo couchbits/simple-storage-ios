@@ -680,7 +680,7 @@ class SqliteStroageTests: XCTestCase {
         //prepare
         try sut.createStorageType(storageType: storageType)
         guard let nameAttribute = storageType.attributes.first(where: { $0.name == "name" }) else { throw ErrorStub() }
-        try sut.removeAttribute(storageType: storageType, attribute: nameAttribute, onSchemaVersion: 0)
+        _ = try sut.removeAttribute(storageType: storageType, attribute: nameAttribute, onSchemaVersion: 0)
         try sut.incrementStorageTypeVersion(storageType: storageType)
 
         //execute

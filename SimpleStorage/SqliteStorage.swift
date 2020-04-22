@@ -99,7 +99,7 @@ public class SqliteStorage {
 
     private func value<T>(_ value: StorableType?) throws -> T {
         guard let castedValue = value as? T else {
-            throw StorageError.invalidData("Value \(value) isn't of type \(T.self)")
+            throw StorageError.invalidData("Value \(value ?? "nil") isn't of type \(T.self)")
         }
         return castedValue
     }
