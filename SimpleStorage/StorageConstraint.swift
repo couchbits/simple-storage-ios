@@ -25,6 +25,7 @@ public struct StorageConstraint: Equatable {
 
     public enum ConstraintOperator {
         case equal
+        case notEqual
         case greaterThan
         case greaterThanOrEqual
         case lessThan

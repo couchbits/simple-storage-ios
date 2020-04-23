@@ -33,6 +33,7 @@ class SqliteStroageTests: XCTestCase {
                                  attributeDescriptionProvider: SqliteStorageAttributeDescriptionProvider(),
                                  defaultValueDescriptionProvider: SqliteStorageAttributeDefaultValueDescriptionProvider(),
                                  sortByStringProvider: SqliteStorageSortByStringProvider(),
+                                 constraintStringProvider: SqliteStorageConstraintStringProvider(),
                                  syncRunner: DefaultSyncRunner())
     }
 

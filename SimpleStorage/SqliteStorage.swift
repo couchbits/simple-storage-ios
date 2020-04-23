@@ -15,6 +15,7 @@ public class SqliteStorage {
     let attributeDescriptionProvider: StorageAttributeDescriptionProvider
     let defaultValueDescriptionProvider: StorageAttributeDefaultValueDescriptionProvider
     let sortByStringProvider: StorageSortByStringProvider
+    let constraintStringProvider: StorageConstraintStringProvider
     let syncRunner: SyncRunner
     
     let schameVersionStorageTypeNameAttribute = StorageType.Attribute(name: "name", type: .text, nullable: false)
@@ -35,6 +36,7 @@ public class SqliteStorage {
                       attributeDescriptionProvider: SqliteStorageAttributeDescriptionProvider(),
                       defaultValueDescriptionProvider: SqliteStorageAttributeDefaultValueDescriptionProvider(),
                       sortByStringProvider: SqliteStorageSortByStringProvider(),
+                      constraintStringProvider: SqliteStorageConstraintStringProvider(),
                       syncRunner: DefaultSyncRunner())
     }
 
@@ -44,12 +46,14 @@ public class SqliteStorage {
          attributeDescriptionProvider: StorageAttributeDescriptionProvider,
          defaultValueDescriptionProvider: StorageAttributeDefaultValueDescriptionProvider,
          sortByStringProvider: StorageSortByStringProvider,
+         constraintStringProvider: SqliteStorageConstraintStringProvider,
          syncRunner: SyncRunner) throws {
         self.idProvider = idProvider
         self.dateProvider = dateProvider
         self.attributeDescriptionProvider = attributeDescriptionProvider
         self.defaultValueDescriptionProvider = defaultValueDescriptionProvider
         self.sortByStringProvider = sortByStringProvider
+        self.constraintStringProvider = constraintStringProvider
         self.syncRunner = syncRunner
 
         schemaVersionsStorageType = StorageType(name: "storage_type_schema_version",
@@ -320,43 +324,8 @@ public class SqliteStorage {
         }
     }
 
-    func buildConstraintString(_ constraint: StorageConstraint) throws -> String {
-        if isNull(value: constraint.value, attribute: constraint.attribute) && constraint.attribute.nullable {
-            guard constraint.constraintOperator == .equal else { throw StorageError.invalidData("Attribute \(constraint.attribute.name) nil is only allowed with equals") }
-            return "\(constraint.attribute.name) IS NULL"
-        } else if isNull(value: constraint.value, attribute: constraint.attribute) {
-            throw StorageError.invalidData("Attribute \(constraint.attribute.name) is nil but not nullable")
-        } else {
-            switch constraint.constraintOperator {
-            case .equal:
-                return "\(constraint.attribute.name) = ?"
-            case .greaterThan:
-                try checkNumericConstraint(constraint)
-                return "\(constraint.attribute.name) > ?"
-            case .greaterThanOrEqual:
-                try checkNumericConstraint(constraint)
-                return "\(constraint.attribute.name) >= ?"
-            case .lessThan:
-                try checkNumericConstraint(constraint)
-                return "\(constraint.attribute.name) < ?"
-            case .lessThanOrEqual:
-                try checkNumericConstraint(constraint)
-                return "\(constraint.attribute.name) <= ?"
-            }
-        }
-    }
-
-    func checkNumericConstraint(_ constraint: StorageConstraint) throws {
-        switch constraint.attribute.type {
-        case .uuid, .string, .text, .relationship:
-            throw StorageError.invalidData("Operator \(constraint.constraintOperator) is not allowed on character fields")
-        case .bool, .integer, .double, .date:
-            return
-        }
-    }
-
     func buildConstraintString(constraints: [StorageConstraint]) throws -> String {
-        return try constraints.map { try self.buildConstraintString($0) }.joined(separator: " AND ")
+        return try constraints.map { try self.constraintStringProvider.string(constraint: $0) }.joined(separator: " AND ")
     }
 
     func isNull(value: StorableType?, attribute: StorageType.Attribute) -> Bool {
