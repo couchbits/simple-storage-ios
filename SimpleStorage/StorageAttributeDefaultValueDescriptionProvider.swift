@@ -9,13 +9,13 @@
 import Foundation
 
 protocol StorageAttributeDefaultValueDescriptionProvider {
-    func description(_ attribute: StorageType.Attribute, defaultValue: StorableType?) -> String
+    func description(_ attribute: StorageType.Attribute, defaultValue: StorageStorableType?) -> String
 }
 
 class SqliteStorageAttributeDefaultValueDescriptionProvider {}
 
 extension SqliteStorageAttributeDefaultValueDescriptionProvider: StorageAttributeDefaultValueDescriptionProvider {
-    func description(_ attribute: StorageType.Attribute, defaultValue: StorableType?) -> String {
+    func description(_ attribute: StorageType.Attribute, defaultValue: StorageStorableType?) -> String {
         guard let defaultValue = defaultValue else { return "NULL" }
         switch attribute.type {
         case .uuid:

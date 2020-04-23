@@ -252,7 +252,7 @@ class SqliteStroageTests: XCTestCase {
         let storageType = StorageType(name: self.storageType.name, attributes: self.storageType.attributes.map { StorageType.Attribute(name: $0.name, type: $0.type, nullable: true) })
         try sut.createStorageType(storageType: storageType)
 
-        let values: [StorableType?] = [nil, nil, nil, nil, nil, nil, nil]
+        let values: [StorageStorableType?] = [nil, nil, nil, nil, nil, nil, nil]
         idProvider.stubbedId = UUID()
         try sut.save(storageType: storageType, item: StorageItem(values: values))
 

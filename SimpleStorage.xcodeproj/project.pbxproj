@@ -35,6 +35,8 @@
 		FFDA4D2124518C4B009AC614 /* StorageConstraintStringProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDA4D2024518C4B009AC614 /* StorageConstraintStringProvider.swift */; };
 		FFDA4D2324518CB6009AC614 /* SqliteStorageConstraintStringProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDA4D2224518CB6009AC614 /* SqliteStorageConstraintStringProviderTests.swift */; };
 		FFDA4D2424518CE0009AC614 /* StorageConstraintStringProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDA4D2024518C4B009AC614 /* StorageConstraintStringProvider.swift */; };
+		FFDA4D262451938F009AC614 /* StorageStorableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDA4D252451938F009AC614 /* StorageStorableType.swift */; };
+		FFDA4D2724519412009AC614 /* StorageStorableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDA4D252451938F009AC614 /* StorageStorableType.swift */; };
 		FFDF248D242245AC00261087 /* StorageSortByStringProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF248C242245AC00261087 /* StorageSortByStringProvider.swift */; };
 		FFDF248E242246E500261087 /* StorageSortByStringProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF248C242245AC00261087 /* StorageSortByStringProvider.swift */; };
 		FFE1DDA923A105CE00C5BB12 /* SqliteStorageIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDA623A105CE00C5BB12 /* SqliteStorageIntegrationTests.swift */; };
@@ -58,6 +60,7 @@
 		FFC2162C23EBF9C900D15FC1 /* SyncRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncRunner.swift; sourceTree = "<group>"; };
 		FFDA4D2024518C4B009AC614 /* StorageConstraintStringProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageConstraintStringProvider.swift; sourceTree = "<group>"; };
 		FFDA4D2224518CB6009AC614 /* SqliteStorageConstraintStringProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqliteStorageConstraintStringProviderTests.swift; sourceTree = "<group>"; };
+		FFDA4D252451938F009AC614 /* StorageStorableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageStorableType.swift; sourceTree = "<group>"; };
 		FFDF248C242245AC00261087 /* StorageSortByStringProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageSortByStringProvider.swift; sourceTree = "<group>"; };
 		FFE1DD9023A1050200C5BB12 /* SimpleStorageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleStorageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFE1DD9523A1050200C5BB12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -110,6 +113,7 @@
 				FFE1DDB123A105E100C5BB12 /* StorageError.swift */,
 				FFE1DDB223A105E100C5BB12 /* StorageType.swift */,
 				FFE1DDB323A105E100C5BB12 /* StorageItem.swift */,
+				FFDA4D252451938F009AC614 /* StorageStorableType.swift */,
 				FF265CA323AA991400D70725 /* StorageConstraint.swift */,
 				FFC2162C23EBF9C900D15FC1 /* SyncRunner.swift */,
 				FFB590A323C4C01B00C738AB /* SimpleStorage.h */,
@@ -285,6 +289,7 @@
 				FFB590AF23C4C02F00C738AB /* Storage.swift in Sources */,
 				FFB590A923C4C02F00C738AB /* StorageItem.swift in Sources */,
 				FFDA4D2124518C4B009AC614 /* StorageConstraintStringProvider.swift in Sources */,
+				FFDA4D262451938F009AC614 /* StorageStorableType.swift in Sources */,
 				FFB590B123C4C03E00C738AB /* IdProvider.swift in Sources */,
 				FFB590B023C4C02F00C738AB /* StorageType.swift in Sources */,
 				FFB590AA23C4C02F00C738AB /* SqliteStorage.swift in Sources */,
@@ -307,6 +312,7 @@
 				FFB590B723C4C04600C738AB /* StorageError.swift in Sources */,
 				FFE1DDAA23A105CE00C5BB12 /* SqliteStorageAttributeDescriptionProviderTests.swift in Sources */,
 				FFE1DDBD23A11B6A00C5BB12 /* IdProvider.swift in Sources */,
+				FFDA4D2724519412009AC614 /* StorageStorableType.swift in Sources */,
 				FFE1DDA923A105CE00C5BB12 /* SqliteStorageIntegrationTests.swift in Sources */,
 				FF342A1824225210009EAC9C /* StorageExpression.swift in Sources */,
 				FFE1DDC623A11E2500C5BB12 /* ErrorStub.swift in Sources */,

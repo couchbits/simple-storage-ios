@@ -10,7 +10,7 @@ import Foundation
 
 public struct StorageItem: Equatable {
     public let meta: Meta?
-    var values: [StorableType?]
+    var values: [StorageStorableType?]
 
     public struct Meta: Equatable {
         public let id: UUID
@@ -24,25 +24,25 @@ public struct StorageItem: Equatable {
         }
     }
 
-    public init(meta: Meta? = nil, values: [StorableType?]) {
+    public init(meta: Meta? = nil, values: [StorageStorableType?]) {
         self.values = values
         self.meta = meta
     }
 
-    public func value<T: StorableType>(index: Int) throws -> T {
+    public func value<T: StorageStorableType>(index: Int) throws -> T {
         guard index >= 0 else { throw StorageError.invalidData("Negative index isn't allowed") }
         guard index < values.count else { throw StorageError.invalidData("Index out of bounds: \(index)") }
         guard let value = values[index] as? T else { throw StorageError.invalidData("Value \(values[index] ?? "nil") is not of type \(T.self)") }
         return value
     }
 
-    public func value<T: StorableType>(index: Int) throws -> T? {
+    public func value<T: StorageStorableType>(index: Int) throws -> T? {
         guard index >= 0 else { throw StorageError.invalidData("Negative index isn't allowed") }
         guard index < values.count else { throw StorageError.invalidData("Index out of bounds: \(index)") }
         return values[index] as? T
     }
 
-    public mutating func setValue<T: StorableType>(index: Int, value: T?) throws {
+    public mutating func setValue<T: StorageStorableType>(index: Int, value: T?) throws {
         guard index >= 0 else { throw StorageError.invalidData("Negative index isn't allowed") }
         guard index < values.count else { throw StorageError.invalidData("Index out of bounds: \(index)") }
         values[index] = value
