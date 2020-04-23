@@ -702,7 +702,7 @@ class SqliteStroageTests: XCTestCase {
         //prepare
         try sut.createStorageType(storageType: storageType)
         let newAttribute = StorageType.Attribute(name: "new_attribute", type: .integer, nullable: false)
-        try sut.addAttribute(storageType: storageType, attribute: newAttribute, defaultValue: 1, onSchemaVersion: 0)
+        _ = try sut.addAttribute(storageType: storageType, attribute: newAttribute, defaultValue: 1, onSchemaVersion: 0)
         try sut.incrementStorageTypeVersion(storageType: storageType)
 
         //execute
