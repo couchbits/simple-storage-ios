@@ -7,7 +7,6 @@
 
 import Foundation
 import XCTest
-@testable import SimpleStorage
 
 class SqliteStorageSortByStringProviderTests: XCTestCase {
     var sut = SqliteStorageSortByStringProvider()

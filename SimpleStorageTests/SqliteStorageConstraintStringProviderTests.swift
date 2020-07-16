@@ -8,7 +8,6 @@
 
 import Foundation
 import XCTest
-@testable import SimpleStorage
 
 class SqliteStorageConstraintStringProviderTests: XCTestCase {
     var sut = SqliteStorageConstraintStringProvider()

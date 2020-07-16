@@ -376,6 +376,20 @@ extension SqliteStorage: StorageTypeCreateable {
         }
     }
 
+    public func removeStorageType(storageType: StorageType) throws {
+        let statement = "DROP TABLE \(storageType.name)"
+
+        let createTableStatement = try prepareStatement(sql: statement)
+
+        defer {
+            sqlite3_finalize(createTableStatement)
+        }
+
+        guard sqlite3_step(createTableStatement) == SQLITE_DONE else {
+            throw StorageError.perform(errorMessage)
+        }
+    }
+
     public func addAttribute(storageType: StorageType, attribute: StorageType.Attribute, defaultValue: StorageStorableType?, onSchemaVersion: Int) throws -> StorageType {
         let newStorageType = StorageType(name: storageType.name, attributes: storageType.attributes + [attribute])
         let schemaVersion = try storageTypeVersion(storageType: storageType)

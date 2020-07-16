@@ -707,7 +707,21 @@ class SqliteStroageTests: XCTestCase {
 
         //execute
         let actualStorageType = try sut.addAttribute(storageType: storageType, attribute: newAttribute, defaultValue: 0, onSchemaVersion: 0)
+
+        //verify
         XCTAssertNotNil(actualStorageType.attributes.first(where: { $0.name == "new_attribute" }))
+    }
+
+    func test_dropTable_shouldDropTheTable() throws {
+        //prepare
+        let helper = try SqliteTestHelper(path: url)
+        try sut.createStorageType(storageType: storageType)
+
+        //execute
+        try sut.removeStorageType(storageType: storageType)
+
+        //verfiy
+        XCTAssertEqual(try helper.existsTable(storageType.name), 0)
     }
 }
 

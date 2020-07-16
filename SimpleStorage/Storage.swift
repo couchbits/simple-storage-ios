@@ -10,6 +10,7 @@ import Foundation
 
 public protocol StorageTypeCreateable {
     func createStorageType(storageType: StorageType) throws
+    func removeStorageType(storageType: StorageType) throws
     func storageTypeVersion(storageType: StorageType) throws -> Int
     func incrementStorageTypeVersion(storageType: StorageType) throws
     func addAttribute(storageType: StorageType, attribute: StorageType.Attribute, defaultValue: StorageStorableType?, onSchemaVersion: Int) throws -> StorageType
