@@ -13,22 +13,13 @@ public struct SimpleStorageConfiguration {
     public var type: SimpleStorageType = .inMemory
     public var transactional: Bool = true
 
-    static var `default`: SimpleStorageConfiguration {
-        return SimpleStorageConfiguration()
-    }
-
     public enum SimpleStorageType {
         case inMemory
         case file(url: URL)
+    }
 
-        var sqlitePath: String {
-            switch self {
-            case .inMemory:
-                return ":memory:"
-            case .file(let url):
-                return url.path
-            }
-        }
+    public static var `defaultInMemory`: SimpleStorageConfiguration {
+        return SimpleStorageConfiguration()
     }
 
     public static func `default`(url: URL) -> SimpleStorageConfiguration {
@@ -108,8 +99,16 @@ public class SimpleStorage {
                                                 attributes: [schameVersionStorageTypeNameAttribute,
                                                              StorageType.Attribute(name: "version", type: .integer, nullable: false)])
 
+        let sqlitePath: String
+        switch configuration.type {
+        case .inMemory:
+            sqlitePath = ":memory:"
+        case .file(let url):
+            sqlitePath = url.path
+        }
+
         let flags = SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX | SQLITE_OPEN_FILEPROTECTION_NONE
-        guard sqlite3_open_v2(configuration.type.sqlitePath, &handle, flags, nil) == SQLITE_OK else {
+        guard sqlite3_open_v2(sqlitePath, &handle, flags, nil) == SQLITE_OK else {
             throw StorageError.open(errorMessage)
         }
 

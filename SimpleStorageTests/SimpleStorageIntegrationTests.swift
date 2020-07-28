@@ -28,7 +28,7 @@ class SimpleStorageTests: XCTestCase {
         super.setUp()
         idProvider = IdProviderStub()
         dateProvider = DateProviderStub()
-        sut = try? SimpleStorage(configuration: .default,
+        sut = try? SimpleStorage(configuration: .default(url: url),
                                  idProvider: idProvider,
                                  dateProvider: dateProvider,
                                  attributeDescriptionProvider: SqliteStorageAttributeDescriptionProvider(),
