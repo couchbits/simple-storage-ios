@@ -10,8 +10,8 @@ import Foundation
 import XCTest
 import SQLite3
 
-class SqliteStroageTests: XCTestCase {
-    var sut: Storage!
+class SimpleStorageTests: XCTestCase {
+    var sut: SimpleStorage!
     var idProvider: IdProviderStub!
     var dateProvider: DateProviderStub!
     var storageType = StorageType(name: "my_type", attributes: [StorageType.Attribute(name: "anyid", type: .uuid, nullable: false),
@@ -28,7 +28,8 @@ class SqliteStroageTests: XCTestCase {
         super.setUp()
         idProvider = IdProviderStub()
         dateProvider = DateProviderStub()
-        sut = try? SqliteStorage(url: url, idProvider: idProvider,
+        sut = try? SimpleStorage(configuration: .default,
+                                 idProvider: idProvider,
                                  dateProvider: dateProvider,
                                  attributeDescriptionProvider: SqliteStorageAttributeDescriptionProvider(),
                                  defaultValueDescriptionProvider: SqliteStorageAttributeDefaultValueDescriptionProvider(),
@@ -54,7 +55,7 @@ class SqliteStroageTests: XCTestCase {
 
     func test_create_shouldCreateTheTable() throws {
         //prepare
-        let helper = try SqliteTestHelper(path: url)
+        let helper = try SqliteTestHelper(handle: sut.handle)
 
         //execute
         try sut.createStorageType(storageType: storageType)
@@ -113,7 +114,7 @@ class SqliteStroageTests: XCTestCase {
 
     func test_create_shouldNotCreateTheTableIfAlreadyExists() throws {
         //prepare
-        let helper = try SqliteTestHelper(path: url)
+        let helper = try SqliteTestHelper(handle: sut.handle)
         try sut.createStorageType(storageType: storageType)
 
         //execute
@@ -125,7 +126,7 @@ class SqliteStroageTests: XCTestCase {
 
     func test_save_shouldStoreTheNewItem() throws {
         //prepare
-        let helper = try SqliteTestHelper(path: url)
+        let helper = try SqliteTestHelper(handle: sut.handle)
         try sut.createStorageType(storageType: storageType)
 
         //execute
@@ -137,7 +138,7 @@ class SqliteStroageTests: XCTestCase {
 
     func test_save_batch_shouldStoreTheNewItems() throws {
         //prepare
-        let helper = try SqliteTestHelper(path: url)
+        let helper = try SqliteTestHelper(handle: sut.handle)
         try sut.createStorageType(storageType: storageType)
 
         //execute
@@ -152,7 +153,7 @@ class SqliteStroageTests: XCTestCase {
 
     func test_save_batch_shouldStoreTheNewItems2() throws {
         //prepare
-        let helper = try SqliteTestHelper(path: url)
+        let helper = try SqliteTestHelper(handle: sut.handle)
         try sut.createStorageType(storageType: storageType)
 
         //execute
@@ -170,7 +171,7 @@ class SqliteStroageTests: XCTestCase {
 
     func test_save_shouldUpdateAnExistingItem() throws {
         //prepare
-        let helper = try SqliteTestHelper(path: url)
+        let helper = try SqliteTestHelper(handle: sut.handle)
         try sut.createStorageType(storageType: storageType)
         let createdAt = Date()
         dateProvider.stubbedDate = createdAt
@@ -316,7 +317,7 @@ class SqliteStroageTests: XCTestCase {
 
     func test_initialize_shouldTheRelatedTable() throws {
         //prepare
-        let helper = try SqliteTestHelper(path: url)
+        let helper = try SqliteTestHelper(handle: sut.handle)
         try sut.createStorageType(storageType: storageType)
 
         //execute
@@ -617,7 +618,7 @@ class SqliteStroageTests: XCTestCase {
 
     func test_removeAttribute_shouldRemoveTheAttribute() throws {
         //prepare
-        let helper = try SqliteTestHelper(path: url)
+        let helper = try SqliteTestHelper(handle: sut.handle)
         try sut.createStorageType(storageType: storageType)
         let anyId = UUID()
         try sut.save(storageType: storageType, item: StorageItem(values: [anyId, "any-name", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text"]))
@@ -643,7 +644,7 @@ class SqliteStroageTests: XCTestCase {
 
     func test_removeAttribute_shouldAllowToAddNewRecord() throws {
         //prepare
-        let helper = try SqliteTestHelper(path: url)
+        let helper = try SqliteTestHelper(handle: sut.handle)
         try sut.createStorageType(storageType: storageType)
         try sut.save(storageType: storageType, item: StorageItem(values: [UUID(), "any-name", true, 42, 500.5, Date(timeIntervalSince1970: 5000), "any-text"]))
 
@@ -714,7 +715,7 @@ class SqliteStroageTests: XCTestCase {
 
     func test_dropTable_shouldDropTheTable() throws {
         //prepare
-        let helper = try SqliteTestHelper(path: url)
+        let helper = try SqliteTestHelper(handle: sut.handle)
         try sut.createStorageType(storageType: storageType)
 
         //execute
@@ -728,15 +729,8 @@ class SqliteStroageTests: XCTestCase {
 class SqliteTestHelper {
     var handle: OpaquePointer?
 
-    init(path: URL) throws {
-        try open(path: path)
-    }
-
-    func open(path: URL) throws {
-        let flags = SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX
-        guard sqlite3_open_v2(path.absoluteString, &handle, flags, nil) == SQLITE_OK else {
-            throw ErrorStub()
-        }
+    init(handle: OpaquePointer?) throws {
+        self.handle = handle
     }
 
     func perform(_ statement: String) throws {

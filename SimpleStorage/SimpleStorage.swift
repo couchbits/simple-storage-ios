@@ -9,7 +9,36 @@
 import Foundation
 import SQLite3
 
-public class SqliteStorage {
+public struct SimpleStorageConfiguration {
+    public var type: SimpleStorageType = .inMemory
+    public var transactional: Bool = true
+
+    static var `default`: SimpleStorageConfiguration {
+        return SimpleStorageConfiguration()
+    }
+
+    public enum SimpleStorageType {
+        case inMemory
+        case file(url: URL)
+
+        var sqlitePath: String {
+            switch self {
+            case .inMemory:
+                return ":memory:"
+            case .file(let url):
+                return url.path
+            }
+        }
+    }
+
+    public static func `default`(url: URL) -> SimpleStorageConfiguration {
+        var configuration = SimpleStorageConfiguration()
+        configuration.type = .file(url: url)
+        return configuration
+    }
+}
+
+public class SimpleStorage {
     let idProvider: IdProvider
     let dateProvider: DateProvider
     let attributeDescriptionProvider: StorageAttributeDescriptionProvider
@@ -23,14 +52,16 @@ public class SqliteStorage {
 
     var handle: OpaquePointer?
 
+    @available(*, deprecated, message: "Use configuration")
     public convenience init(url: URL) throws {
-        try self.init(url: url,
+        try self.init(configuration: SimpleStorageConfiguration.default(url: url),
                       idProvider: DefaultIdProvider(),
                       dateProvider: DefaultDateProvider())
     }
 
+    @available(*, deprecated, message: "Use configuration")
     public convenience init(url: URL, idProvider: IdProvider, dateProvider: DateProvider) throws {
-        try self.init(url: url,
+        try self.init(configuration: SimpleStorageConfiguration.default(url: url),
                       idProvider: idProvider,
                       dateProvider: dateProvider,
                       attributeDescriptionProvider: SqliteStorageAttributeDescriptionProvider(),
@@ -40,7 +71,24 @@ public class SqliteStorage {
                       syncRunner: DefaultSyncRunner())
     }
 
-    init(url: URL,
+    public convenience init(configuration: SimpleStorageConfiguration) throws {
+        try self.init(configuration: configuration,
+                      idProvider: DefaultIdProvider(),
+                      dateProvider: DefaultDateProvider())
+    }
+
+    public convenience init(configuration: SimpleStorageConfiguration, idProvider: IdProvider, dateProvider: DateProvider) throws {
+        try self.init(configuration: configuration,
+                      idProvider: idProvider,
+                      dateProvider: dateProvider,
+                      attributeDescriptionProvider: SqliteStorageAttributeDescriptionProvider(),
+                      defaultValueDescriptionProvider: SqliteStorageAttributeDefaultValueDescriptionProvider(),
+                      sortByStringProvider: SqliteStorageSortByStringProvider(),
+                      constraintStringProvider: SqliteStorageConstraintStringProvider(),
+                      syncRunner: DefaultSyncRunner())
+    }
+
+    init(configuration: SimpleStorageConfiguration,
          idProvider: IdProvider,
          dateProvider: DateProvider,
          attributeDescriptionProvider: StorageAttributeDescriptionProvider,
@@ -61,9 +109,10 @@ public class SqliteStorage {
                                                              StorageType.Attribute(name: "version", type: .integer, nullable: false)])
 
         let flags = SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX | SQLITE_OPEN_FILEPROTECTION_NONE
-        guard sqlite3_open_v2(url.path, &handle, flags, nil) == SQLITE_OK else {
+        guard sqlite3_open_v2(configuration.type.sqlitePath, &handle, flags, nil) == SQLITE_OK else {
             throw StorageError.open(errorMessage)
         }
+
         try performStatement(sql: "PRAGMA foreign_keys = ON")
 
         try createStorageType(storageType: schemaVersionsStorageType)
@@ -354,7 +403,7 @@ public class SqliteStorage {
     }
 }
 
-extension SqliteStorage: StorageTypeCreateable {
+extension SimpleStorage: StorageTypeCreateable {
     public func createStorageType(storageType: StorageType) throws {
         try assertAttributeNames(storageType.attributes)
 
@@ -467,7 +516,7 @@ extension SqliteStorage: StorageTypeCreateable {
     }
 }
 
-extension SqliteStorage: StorageStoreable {
+extension SimpleStorage: StorageStoreable {
     @discardableResult
     public func save(storageType: StorageType, item: StorageItem) throws -> StorageItem {
         guard let item = try save(storageType: storageType, items: [item]).first else {
@@ -550,7 +599,7 @@ extension SqliteStorage: StorageStoreable {
     }
 }
 
-extension SqliteStorage: StorageReadeable {
+extension SimpleStorage: StorageReadeable {
     public func object(storageType: StorageType, id: UUID) throws -> StorageItem {
         var expression = StorageExpression()
         expression.constraints = [StorageConstraint(attribute: StorageType.metaAttributes.id, value: id)]
@@ -608,7 +657,7 @@ extension SqliteStorage: StorageReadeable {
     }
 }
 
-extension SqliteStorage: StorageDeleteable {
+extension SimpleStorage: StorageDeleteable {
     public func delete(storageType: StorageType, id: UUID) throws {
         try syncRunner.run {
             let statement = try prepareStatement(sql: "DELETE FROM \(storageType.name) WHERE id = ?")
