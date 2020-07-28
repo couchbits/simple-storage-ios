@@ -29,7 +29,7 @@ public struct SimpleStorageConfiguration {
     }
 }
 
-public class SimpleStorage {
+public class SqliteStorage {
     let idProvider: IdProvider
     let dateProvider: DateProvider
     let attributeDescriptionProvider: StorageAttributeDescriptionProvider
@@ -402,7 +402,7 @@ public class SimpleStorage {
     }
 }
 
-extension SimpleStorage: StorageTypeCreateable {
+extension SqliteStorage: StorageTypeCreateable {
     public func createStorageType(storageType: StorageType) throws {
         try assertAttributeNames(storageType.attributes)
 
@@ -515,7 +515,7 @@ extension SimpleStorage: StorageTypeCreateable {
     }
 }
 
-extension SimpleStorage: StorageStoreable {
+extension SqliteStorage: StorageStoreable {
     @discardableResult
     public func save(storageType: StorageType, item: StorageItem) throws -> StorageItem {
         guard let item = try save(storageType: storageType, items: [item]).first else {
@@ -598,7 +598,7 @@ extension SimpleStorage: StorageStoreable {
     }
 }
 
-extension SimpleStorage: StorageReadeable {
+extension SqliteStorage: StorageReadeable {
     public func object(storageType: StorageType, id: UUID) throws -> StorageItem {
         var expression = StorageExpression()
         expression.constraints = [StorageConstraint(attribute: StorageType.metaAttributes.id, value: id)]
@@ -656,7 +656,7 @@ extension SimpleStorage: StorageReadeable {
     }
 }
 
-extension SimpleStorage: StorageDeleteable {
+extension SqliteStorage: StorageDeleteable {
     public func delete(storageType: StorageType, id: UUID) throws {
         try syncRunner.run {
             let statement = try prepareStatement(sql: "DELETE FROM \(storageType.name) WHERE id = ?")

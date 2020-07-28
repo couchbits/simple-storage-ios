@@ -11,7 +11,7 @@ import XCTest
 import SQLite3
 
 class SimpleStorageTests: XCTestCase {
-    var sut: SimpleStorage!
+    var sut: SqliteStorage!
     var idProvider: IdProviderStub!
     var dateProvider: DateProviderStub!
     var storageType = StorageType(name: "my_type", attributes: [StorageType.Attribute(name: "anyid", type: .uuid, nullable: false),
@@ -28,7 +28,7 @@ class SimpleStorageTests: XCTestCase {
         super.setUp()
         idProvider = IdProviderStub()
         dateProvider = DateProviderStub()
-        sut = try? SimpleStorage(configuration: .default(url: url),
+        sut = try? SqliteStorage(configuration: .default(url: url),
                                  idProvider: idProvider,
                                  dateProvider: dateProvider,
                                  attributeDescriptionProvider: SqliteStorageAttributeDescriptionProvider(),

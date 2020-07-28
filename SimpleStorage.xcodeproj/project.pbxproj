@@ -13,7 +13,7 @@
 		FF342A1824225210009EAC9C /* StorageExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF342A162422519F009EAC9C /* StorageExpression.swift */; };
 		FFB590A523C4C01B00C738AB /* SimpleStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = FFB590A323C4C01B00C738AB /* SimpleStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFB590A923C4C02F00C738AB /* StorageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDB323A105E100C5BB12 /* StorageItem.swift */; };
-		FFB590AA23C4C02F00C738AB /* SimpleStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDAE23A105E100C5BB12 /* SimpleStorage.swift */; };
+		FFB590AA23C4C02F00C738AB /* SqliteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDAE23A105E100C5BB12 /* SqliteStorage.swift */; };
 		FFB590AB23C4C02F00C738AB /* StorageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDB123A105E100C5BB12 /* StorageError.swift */; };
 		FFB590AC23C4C02F00C738AB /* StorageConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF265CA323AA991400D70725 /* StorageConstraint.swift */; };
 		FFB590AD23C4C02F00C738AB /* StorageAttributeDescriptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDB023A105E100C5BB12 /* StorageAttributeDescriptionProvider.swift */; };
@@ -23,7 +23,7 @@
 		FFB590B123C4C03E00C738AB /* IdProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDBC23A11B6A00C5BB12 /* IdProvider.swift */; };
 		FFB590B223C4C03E00C738AB /* DateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDBE23A11B9200C5BB12 /* DateProvider.swift */; };
 		FFB590B323C4C04600C738AB /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDAD23A105E100C5BB12 /* Storage.swift */; };
-		FFB590B423C4C04600C738AB /* SimpleStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDAE23A105E100C5BB12 /* SimpleStorage.swift */; };
+		FFB590B423C4C04600C738AB /* SqliteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDAE23A105E100C5BB12 /* SqliteStorage.swift */; };
 		FFB590B523C4C04600C738AB /* StorageAttributeDefaultValueDescriptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDAF23A105E100C5BB12 /* StorageAttributeDefaultValueDescriptionProvider.swift */; };
 		FFB590B623C4C04600C738AB /* StorageAttributeDescriptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDB023A105E100C5BB12 /* StorageAttributeDescriptionProvider.swift */; };
 		FFB590B723C4C04600C738AB /* StorageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDB123A105E100C5BB12 /* StorageError.swift */; };
@@ -68,7 +68,7 @@
 		FFE1DDA723A105CE00C5BB12 /* SqliteStorageAttributeDescriptionProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteStorageAttributeDescriptionProviderTests.swift; sourceTree = "<group>"; };
 		FFE1DDA823A105CE00C5BB12 /* StorageItemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageItemTests.swift; sourceTree = "<group>"; };
 		FFE1DDAD23A105E100C5BB12 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
-		FFE1DDAE23A105E100C5BB12 /* SimpleStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleStorage.swift; sourceTree = "<group>"; };
+		FFE1DDAE23A105E100C5BB12 /* SqliteStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteStorage.swift; sourceTree = "<group>"; };
 		FFE1DDAF23A105E100C5BB12 /* StorageAttributeDefaultValueDescriptionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageAttributeDefaultValueDescriptionProvider.swift; sourceTree = "<group>"; };
 		FFE1DDB023A105E100C5BB12 /* StorageAttributeDescriptionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageAttributeDescriptionProvider.swift; sourceTree = "<group>"; };
 		FFE1DDB123A105E100C5BB12 /* StorageError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageError.swift; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 			children = (
 				FFE1DDBB23A11B6000C5BB12 /* Common */,
 				FFE1DDAD23A105E100C5BB12 /* Storage.swift */,
-				FFE1DDAE23A105E100C5BB12 /* SimpleStorage.swift */,
+				FFE1DDAE23A105E100C5BB12 /* SqliteStorage.swift */,
 				FFE1DDAF23A105E100C5BB12 /* StorageAttributeDefaultValueDescriptionProvider.swift */,
 				FFE1DDB023A105E100C5BB12 /* StorageAttributeDescriptionProvider.swift */,
 				FFDF248C242245AC00261087 /* StorageSortByStringProvider.swift */,
@@ -292,7 +292,7 @@
 				FFDA4D262451938F009AC614 /* StorageStorableType.swift in Sources */,
 				FFB590B123C4C03E00C738AB /* IdProvider.swift in Sources */,
 				FFB590B023C4C02F00C738AB /* StorageType.swift in Sources */,
-				FFB590AA23C4C02F00C738AB /* SimpleStorage.swift in Sources */,
+				FFB590AA23C4C02F00C738AB /* SqliteStorage.swift in Sources */,
 				FFB590B223C4C03E00C738AB /* DateProvider.swift in Sources */,
 				FFB590AD23C4C02F00C738AB /* StorageAttributeDescriptionProvider.swift in Sources */,
 				FFC2162D23EBF9C900D15FC1 /* SyncRunner.swift in Sources */,
@@ -328,7 +328,7 @@
 				FFE1DDBF23A11B9200C5BB12 /* DateProvider.swift in Sources */,
 				FFDA4D2324518CB6009AC614 /* SqliteStorageConstraintStringProviderTests.swift in Sources */,
 				FFE1DDC423A11D9400C5BB12 /* DateProviderStub.swift in Sources */,
-				FFB590B423C4C04600C738AB /* SimpleStorage.swift in Sources */,
+				FFB590B423C4C04600C738AB /* SqliteStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
