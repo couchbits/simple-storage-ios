@@ -113,6 +113,7 @@ public class SqliteStorage {
         }
 
         try performStatement(sql: "PRAGMA foreign_keys = ON")
+        try performStatement(sql: "VACUUM")
 
         try createStorageType(storageType: schemaVersionsStorageType)
     }
