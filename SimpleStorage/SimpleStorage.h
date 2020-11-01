@@ -2,7 +2,7 @@
 //  SimpleStorage.h
 //  SimpleStorage
 //
-//  Created by Dominik Gauggel on 07.01.20.
+//  Created by Dominik Gauggel on 30.10.20.
 //
 
 #import <Foundation/Foundation.h>

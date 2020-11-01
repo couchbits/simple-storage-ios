@@ -7,195 +7,203 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FF2E112123F69C4E002E3909 /* SimpleStorage.podspec in Resources */ = {isa = PBXBuildFile; fileRef = FF2E112023F69C4E002E3909 /* SimpleStorage.podspec */; };
-		FF342A1524224AE6009EAC9C /* SqliteStorageSortByStringProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF342A1424224AE6009EAC9C /* SqliteStorageSortByStringProviderTests.swift */; };
-		FF342A172422519F009EAC9C /* StorageExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF342A162422519F009EAC9C /* StorageExpression.swift */; };
-		FF342A1824225210009EAC9C /* StorageExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF342A162422519F009EAC9C /* StorageExpression.swift */; };
-		FFB590A523C4C01B00C738AB /* SimpleStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = FFB590A323C4C01B00C738AB /* SimpleStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FFB590A923C4C02F00C738AB /* StorageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDB323A105E100C5BB12 /* StorageItem.swift */; };
-		FFB590AA23C4C02F00C738AB /* SqliteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDAE23A105E100C5BB12 /* SqliteStorage.swift */; };
-		FFB590AB23C4C02F00C738AB /* StorageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDB123A105E100C5BB12 /* StorageError.swift */; };
-		FFB590AC23C4C02F00C738AB /* StorageConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF265CA323AA991400D70725 /* StorageConstraint.swift */; };
-		FFB590AD23C4C02F00C738AB /* StorageAttributeDescriptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDB023A105E100C5BB12 /* StorageAttributeDescriptionProvider.swift */; };
-		FFB590AE23C4C02F00C738AB /* StorageAttributeDefaultValueDescriptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDAF23A105E100C5BB12 /* StorageAttributeDefaultValueDescriptionProvider.swift */; };
-		FFB590AF23C4C02F00C738AB /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDAD23A105E100C5BB12 /* Storage.swift */; };
-		FFB590B023C4C02F00C738AB /* StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDB223A105E100C5BB12 /* StorageType.swift */; };
-		FFB590B123C4C03E00C738AB /* IdProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDBC23A11B6A00C5BB12 /* IdProvider.swift */; };
-		FFB590B223C4C03E00C738AB /* DateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDBE23A11B9200C5BB12 /* DateProvider.swift */; };
-		FFB590B323C4C04600C738AB /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDAD23A105E100C5BB12 /* Storage.swift */; };
-		FFB590B423C4C04600C738AB /* SqliteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDAE23A105E100C5BB12 /* SqliteStorage.swift */; };
-		FFB590B523C4C04600C738AB /* StorageAttributeDefaultValueDescriptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDAF23A105E100C5BB12 /* StorageAttributeDefaultValueDescriptionProvider.swift */; };
-		FFB590B623C4C04600C738AB /* StorageAttributeDescriptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDB023A105E100C5BB12 /* StorageAttributeDescriptionProvider.swift */; };
-		FFB590B723C4C04600C738AB /* StorageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDB123A105E100C5BB12 /* StorageError.swift */; };
-		FFB590B823C4C04600C738AB /* StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDB223A105E100C5BB12 /* StorageType.swift */; };
-		FFB590B923C4C04600C738AB /* StorageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDB323A105E100C5BB12 /* StorageItem.swift */; };
-		FFB590BA23C4C04600C738AB /* StorageConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF265CA323AA991400D70725 /* StorageConstraint.swift */; };
-		FFC2162D23EBF9C900D15FC1 /* SyncRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC2162C23EBF9C900D15FC1 /* SyncRunner.swift */; };
-		FFC2162E23EBFC0F00D15FC1 /* SyncRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC2162C23EBF9C900D15FC1 /* SyncRunner.swift */; };
-		FFDA4D2124518C4B009AC614 /* StorageConstraintStringProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDA4D2024518C4B009AC614 /* StorageConstraintStringProvider.swift */; };
-		FFDA4D2324518CB6009AC614 /* SqliteStorageConstraintStringProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDA4D2224518CB6009AC614 /* SqliteStorageConstraintStringProviderTests.swift */; };
-		FFDA4D2424518CE0009AC614 /* StorageConstraintStringProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDA4D2024518C4B009AC614 /* StorageConstraintStringProvider.swift */; };
-		FFDA4D262451938F009AC614 /* StorageStorableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDA4D252451938F009AC614 /* StorageStorableType.swift */; };
-		FFDA4D2724519412009AC614 /* StorageStorableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDA4D252451938F009AC614 /* StorageStorableType.swift */; };
-		FFDF248D242245AC00261087 /* StorageSortByStringProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF248C242245AC00261087 /* StorageSortByStringProvider.swift */; };
-		FFDF248E242246E500261087 /* StorageSortByStringProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF248C242245AC00261087 /* StorageSortByStringProvider.swift */; };
-		FFE1DDA923A105CE00C5BB12 /* SimpleStorageIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDA623A105CE00C5BB12 /* SimpleStorageIntegrationTests.swift */; };
-		FFE1DDAA23A105CE00C5BB12 /* SqliteStorageAttributeDescriptionProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDA723A105CE00C5BB12 /* SqliteStorageAttributeDescriptionProviderTests.swift */; };
-		FFE1DDAB23A105CE00C5BB12 /* StorageItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDA823A105CE00C5BB12 /* StorageItemTests.swift */; };
-		FFE1DDBD23A11B6A00C5BB12 /* IdProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDBC23A11B6A00C5BB12 /* IdProvider.swift */; };
-		FFE1DDBF23A11B9200C5BB12 /* DateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDBE23A11B9200C5BB12 /* DateProvider.swift */; };
-		FFE1DDC223A11D8900C5BB12 /* IdProviderStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDC123A11D8900C5BB12 /* IdProviderStub.swift */; };
-		FFE1DDC423A11D9400C5BB12 /* DateProviderStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDC323A11D9400C5BB12 /* DateProviderStub.swift */; };
-		FFE1DDC623A11E2500C5BB12 /* ErrorStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DDC523A11E2500C5BB12 /* ErrorStub.swift */; };
+		FF58F1A3254C7462002B61B8 /* SimpleStorateSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF58F1A2254C7462002B61B8 /* SimpleStorateSchema.swift */; };
+		FF6426A5254D64AA002D752B /* SimpleStorageCreateOrUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426A4254D64AA002D752B /* SimpleStorageCreateOrUpdate.swift */; };
+		FF6426A9254D947F002D752B /* StorableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426A8254D947F002D752B /* StorableType.swift */; };
+		FF6426AF254D9962002D752B /* SyncRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426AE254D9962002D752B /* SyncRunner.swift */; };
+		FF6426B3254D9AA9002D752B /* SimpleStorageTableDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426B2254D9AA9002D752B /* SimpleStorageTableDescription.swift */; };
+		FF6426B7254DB171002D752B /* SimpleStorageCreateOrUpdateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426B6254DB171002D752B /* SimpleStorageCreateOrUpdateTests.swift */; };
+		FF6426BF254DB776002D752B /* SimpleStorageFind.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426BE254DB776002D752B /* SimpleStorageFind.swift */; };
+		FF6426C3254EDB95002D752B /* SimpleStorageFindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426C2254EDB95002D752B /* SimpleStorageFindTests.swift */; };
+		FF6426CB254EDC10002D752B /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426CA254EDC10002D752B /* TestUtils.swift */; };
+		FF6426D2254EED63002D752B /* Attribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426D1254EED63002D752B /* Attribute.swift */; };
+		FF6426DC254EEDA3002D752B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426DB254EEDA3002D752B /* Item.swift */; };
+		FF6426E1254EEDC0002D752B /* TableDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426E0254EEDC0002D752B /* TableDescription.swift */; };
+		FF6426E7254EEDE0002D752B /* Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426E6254EEDE0002D752B /* Constraint.swift */; };
+		FF6426ED254EEDF0002D752B /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426EC254EEDF0002D752B /* Expression.swift */; };
+		FF6426F2254EF5DE002D752B /* SimpleStorageDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426F1254EF5DE002D752B /* SimpleStorageDelete.swift */; };
+		FF6426F8254EF6C1002D752B /* SimpleStorageCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426F7254EF6C1002D752B /* SimpleStorageCount.swift */; };
+		FF642700254EF72A002D752B /* SimpleStorageCountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426FF254EF72A002D752B /* SimpleStorageCountTests.swift */; };
+		FF642704254EF760002D752B /* SimpleStorageDeleteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF642703254EF760002D752B /* SimpleStorageDeleteTests.swift */; };
+		FF642711254F1804002D752B /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF64270B254F179A002D752B /* Package.swift */; };
+		FFAAC5C0254C5C4F00B27449 /* SimpleStorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFAAC5B6254C5C4F00B27449 /* SimpleStorage.framework */; };
+		FFAAC5C5254C5C4F00B27449 /* SimpleStorageSchemaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAAC5C4254C5C4F00B27449 /* SimpleStorageSchemaTests.swift */; };
+		FFAAC5C7254C5C4F00B27449 /* SimpleStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = FFAAC5B9254C5C4F00B27449 /* SimpleStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FFAAC5D3254C5C7400B27449 /* SimpleStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAAC5D2254C5C7400B27449 /* SimpleStorage.swift */; };
+		FFAAC5D7254C5C9D00B27449 /* DateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAAC5D6254C5C9D00B27449 /* DateProvider.swift */; };
+		FFAAC5DB254C5CCD00B27449 /* SimpleStorageConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAAC5DA254C5CCD00B27449 /* SimpleStorageConfiguration.swift */; };
+		FFAAC5DF254C5DF700B27449 /* Sqlite.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAAC5DE254C5DF700B27449 /* Sqlite.swift */; };
+		FFAAC5E5254C5EB800B27449 /* SimpleStorageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAAC5E4254C5EB800B27449 /* SimpleStorageError.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		FFAAC5C1254C5C4F00B27449 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FFAAC5AD254C5C4E00B27449 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FFAAC5B5254C5C4F00B27449;
+			remoteInfo = SimpleStorage;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		FF265CA323AA991400D70725 /* StorageConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageConstraint.swift; sourceTree = "<group>"; };
-		FF2E112023F69C4E002E3909 /* SimpleStorage.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SimpleStorage.podspec; sourceTree = "<group>"; };
-		FF342A1424224AE6009EAC9C /* SqliteStorageSortByStringProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqliteStorageSortByStringProviderTests.swift; sourceTree = "<group>"; };
-		FF342A162422519F009EAC9C /* StorageExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageExpression.swift; sourceTree = "<group>"; };
-		FFB590A123C4C01A00C738AB /* SimpleStorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SimpleStorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FFB590A323C4C01B00C738AB /* SimpleStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleStorage.h; sourceTree = "<group>"; };
-		FFB590A423C4C01B00C738AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FFC2162C23EBF9C900D15FC1 /* SyncRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncRunner.swift; sourceTree = "<group>"; };
-		FFDA4D2024518C4B009AC614 /* StorageConstraintStringProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageConstraintStringProvider.swift; sourceTree = "<group>"; };
-		FFDA4D2224518CB6009AC614 /* SqliteStorageConstraintStringProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqliteStorageConstraintStringProviderTests.swift; sourceTree = "<group>"; };
-		FFDA4D252451938F009AC614 /* StorageStorableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageStorableType.swift; sourceTree = "<group>"; };
-		FFDF248C242245AC00261087 /* StorageSortByStringProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageSortByStringProvider.swift; sourceTree = "<group>"; };
-		FFE1DD9023A1050200C5BB12 /* SimpleStorageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleStorageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FFE1DD9523A1050200C5BB12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FFE1DDA623A105CE00C5BB12 /* SimpleStorageIntegrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleStorageIntegrationTests.swift; sourceTree = "<group>"; };
-		FFE1DDA723A105CE00C5BB12 /* SqliteStorageAttributeDescriptionProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteStorageAttributeDescriptionProviderTests.swift; sourceTree = "<group>"; };
-		FFE1DDA823A105CE00C5BB12 /* StorageItemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageItemTests.swift; sourceTree = "<group>"; };
-		FFE1DDAD23A105E100C5BB12 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
-		FFE1DDAE23A105E100C5BB12 /* SqliteStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteStorage.swift; sourceTree = "<group>"; };
-		FFE1DDAF23A105E100C5BB12 /* StorageAttributeDefaultValueDescriptionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageAttributeDefaultValueDescriptionProvider.swift; sourceTree = "<group>"; };
-		FFE1DDB023A105E100C5BB12 /* StorageAttributeDescriptionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageAttributeDescriptionProvider.swift; sourceTree = "<group>"; };
-		FFE1DDB123A105E100C5BB12 /* StorageError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageError.swift; sourceTree = "<group>"; };
-		FFE1DDB223A105E100C5BB12 /* StorageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageType.swift; sourceTree = "<group>"; };
-		FFE1DDB323A105E100C5BB12 /* StorageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageItem.swift; sourceTree = "<group>"; };
-		FFE1DDBC23A11B6A00C5BB12 /* IdProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdProvider.swift; sourceTree = "<group>"; };
-		FFE1DDBE23A11B9200C5BB12 /* DateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateProvider.swift; sourceTree = "<group>"; };
-		FFE1DDC123A11D8900C5BB12 /* IdProviderStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdProviderStub.swift; sourceTree = "<group>"; };
-		FFE1DDC323A11D9400C5BB12 /* DateProviderStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateProviderStub.swift; sourceTree = "<group>"; };
-		FFE1DDC523A11E2500C5BB12 /* ErrorStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorStub.swift; sourceTree = "<group>"; };
+		FF58F1A2254C7462002B61B8 /* SimpleStorateSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorateSchema.swift; sourceTree = "<group>"; };
+		FF6426A4254D64AA002D752B /* SimpleStorageCreateOrUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageCreateOrUpdate.swift; sourceTree = "<group>"; };
+		FF6426A8254D947F002D752B /* StorableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorableType.swift; sourceTree = "<group>"; };
+		FF6426AE254D9962002D752B /* SyncRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncRunner.swift; sourceTree = "<group>"; };
+		FF6426B2254D9AA9002D752B /* SimpleStorageTableDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageTableDescription.swift; sourceTree = "<group>"; };
+		FF6426B6254DB171002D752B /* SimpleStorageCreateOrUpdateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageCreateOrUpdateTests.swift; sourceTree = "<group>"; };
+		FF6426BE254DB776002D752B /* SimpleStorageFind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageFind.swift; sourceTree = "<group>"; };
+		FF6426C2254EDB95002D752B /* SimpleStorageFindTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageFindTests.swift; sourceTree = "<group>"; };
+		FF6426CA254EDC10002D752B /* TestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
+		FF6426D1254EED63002D752B /* Attribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attribute.swift; sourceTree = "<group>"; };
+		FF6426DB254EEDA3002D752B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		FF6426E0254EEDC0002D752B /* TableDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDescription.swift; sourceTree = "<group>"; };
+		FF6426E6254EEDE0002D752B /* Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constraint.swift; sourceTree = "<group>"; };
+		FF6426EC254EEDF0002D752B /* Expression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expression.swift; sourceTree = "<group>"; };
+		FF6426F1254EF5DE002D752B /* SimpleStorageDelete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageDelete.swift; sourceTree = "<group>"; };
+		FF6426F7254EF6C1002D752B /* SimpleStorageCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageCount.swift; sourceTree = "<group>"; };
+		FF6426FF254EF72A002D752B /* SimpleStorageCountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageCountTests.swift; sourceTree = "<group>"; };
+		FF642703254EF760002D752B /* SimpleStorageDeleteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageDeleteTests.swift; sourceTree = "<group>"; };
+		FF64270B254F179A002D752B /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		FFAAC5B6254C5C4F00B27449 /* SimpleStorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SimpleStorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFAAC5B9254C5C4F00B27449 /* SimpleStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleStorage.h; sourceTree = "<group>"; };
+		FFAAC5BA254C5C4F00B27449 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FFAAC5BF254C5C4F00B27449 /* SimpleStorageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleStorageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFAAC5C4254C5C4F00B27449 /* SimpleStorageSchemaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageSchemaTests.swift; sourceTree = "<group>"; };
+		FFAAC5C6254C5C4F00B27449 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FFAAC5D2254C5C7400B27449 /* SimpleStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorage.swift; sourceTree = "<group>"; };
+		FFAAC5D6254C5C9D00B27449 /* DateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateProvider.swift; sourceTree = "<group>"; };
+		FFAAC5DA254C5CCD00B27449 /* SimpleStorageConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageConfiguration.swift; sourceTree = "<group>"; };
+		FFAAC5DE254C5DF700B27449 /* Sqlite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite.swift; sourceTree = "<group>"; };
+		FFAAC5E4254C5EB800B27449 /* SimpleStorageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		FFB5909E23C4C01A00C738AB /* Frameworks */ = {
+		FFAAC5B3254C5C4F00B27449 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FFE1DD8D23A1050200C5BB12 /* Frameworks */ = {
+		FFAAC5BC254C5C4F00B27449 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFAAC5C0254C5C4F00B27449 /* SimpleStorage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FFB590A223C4C01B00C738AB /* SimpleStorage */ = {
+		FF58F1AA254C7469002B61B8 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				FFE1DDBB23A11B6000C5BB12 /* Common */,
-				FFE1DDAD23A105E100C5BB12 /* Storage.swift */,
-				FFE1DDAE23A105E100C5BB12 /* SqliteStorage.swift */,
-				FFE1DDAF23A105E100C5BB12 /* StorageAttributeDefaultValueDescriptionProvider.swift */,
-				FFE1DDB023A105E100C5BB12 /* StorageAttributeDescriptionProvider.swift */,
-				FFDF248C242245AC00261087 /* StorageSortByStringProvider.swift */,
-				FFDA4D2024518C4B009AC614 /* StorageConstraintStringProvider.swift */,
-				FF342A162422519F009EAC9C /* StorageExpression.swift */,
-				FFE1DDB123A105E100C5BB12 /* StorageError.swift */,
-				FFE1DDB223A105E100C5BB12 /* StorageType.swift */,
-				FFE1DDB323A105E100C5BB12 /* StorageItem.swift */,
-				FFDA4D252451938F009AC614 /* StorageStorableType.swift */,
-				FF265CA323AA991400D70725 /* StorageConstraint.swift */,
-				FFC2162C23EBF9C900D15FC1 /* SyncRunner.swift */,
-				FFB590A323C4C01B00C738AB /* SimpleStorage.h */,
-				FFB590A423C4C01B00C738AB /* Info.plist */,
+				FFAAC5DE254C5DF700B27449 /* Sqlite.swift */,
+				FFAAC5D6254C5C9D00B27449 /* DateProvider.swift */,
+				FF6426AE254D9962002D752B /* SyncRunner.swift */,
 			);
-			path = SimpleStorage;
+			path = Utils;
 			sourceTree = "<group>";
 		};
-		FFE1DD7D23A1048B00C5BB12 = {
+		FF6426D0254EED55002D752B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FF2E112023F69C4E002E3909 /* SimpleStorage.podspec */,
-				FFB590A223C4C01B00C738AB /* SimpleStorage */,
-				FFE1DD9223A1050200C5BB12 /* SimpleStorageTests */,
-				FFE1DD9123A1050200C5BB12 /* Products */,
+				FF6426DF254EEDB4002D752B /* Internal */,
+				FFAAC5DA254C5CCD00B27449 /* SimpleStorageConfiguration.swift */,
+				FFAAC5E4254C5EB800B27449 /* SimpleStorageError.swift */,
+				FF6426D1254EED63002D752B /* Attribute.swift */,
+				FF6426DB254EEDA3002D752B /* Item.swift */,
+				FF6426A8254D947F002D752B /* StorableType.swift */,
+				FF6426E6254EEDE0002D752B /* Constraint.swift */,
+				FF6426EC254EEDF0002D752B /* Expression.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		FF6426DF254EEDB4002D752B /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				FF6426E0254EEDC0002D752B /* TableDescription.swift */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
+		FFAAC5AC254C5C4E00B27449 = {
+			isa = PBXGroup;
+			children = (
+				FF64270B254F179A002D752B /* Package.swift */,
+				FFAAC5B8254C5C4F00B27449 /* SimpleStorage */,
+				FFAAC5C3254C5C4F00B27449 /* SimpleStorageTests */,
+				FFAAC5B7254C5C4F00B27449 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		FFE1DD9123A1050200C5BB12 /* Products */ = {
+		FFAAC5B7254C5C4F00B27449 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FFE1DD9023A1050200C5BB12 /* SimpleStorageTests.xctest */,
-				FFB590A123C4C01A00C738AB /* SimpleStorage.framework */,
+				FFAAC5B6254C5C4F00B27449 /* SimpleStorage.framework */,
+				FFAAC5BF254C5C4F00B27449 /* SimpleStorageTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FFE1DD9223A1050200C5BB12 /* SimpleStorageTests */ = {
+		FFAAC5B8254C5C4F00B27449 /* SimpleStorage */ = {
 			isa = PBXGroup;
 			children = (
-				FFE1DDC023A11D8000C5BB12 /* Stubs */,
-				FFE1DDA723A105CE00C5BB12 /* SqliteStorageAttributeDescriptionProviderTests.swift */,
-				FF342A1424224AE6009EAC9C /* SqliteStorageSortByStringProviderTests.swift */,
-				FFDA4D2224518CB6009AC614 /* SqliteStorageConstraintStringProviderTests.swift */,
-				FFE1DDA623A105CE00C5BB12 /* SimpleStorageIntegrationTests.swift */,
-				FFE1DDA823A105CE00C5BB12 /* StorageItemTests.swift */,
-				FFE1DD9523A1050200C5BB12 /* Info.plist */,
+				FF6426D0254EED55002D752B /* Model */,
+				FF58F1AA254C7469002B61B8 /* Utils */,
+				FFAAC5B9254C5C4F00B27449 /* SimpleStorage.h */,
+				FFAAC5BA254C5C4F00B27449 /* Info.plist */,
+				FFAAC5D2254C5C7400B27449 /* SimpleStorage.swift */,
+				FF58F1A2254C7462002B61B8 /* SimpleStorateSchema.swift */,
+				FF6426B2254D9AA9002D752B /* SimpleStorageTableDescription.swift */,
+				FF6426A4254D64AA002D752B /* SimpleStorageCreateOrUpdate.swift */,
+				FF6426BE254DB776002D752B /* SimpleStorageFind.swift */,
+				FF6426F7254EF6C1002D752B /* SimpleStorageCount.swift */,
+				FF6426F1254EF5DE002D752B /* SimpleStorageDelete.swift */,
+			);
+			path = SimpleStorage;
+			sourceTree = "<group>";
+		};
+		FFAAC5C3254C5C4F00B27449 /* SimpleStorageTests */ = {
+			isa = PBXGroup;
+			children = (
+				FF6426CA254EDC10002D752B /* TestUtils.swift */,
+				FFAAC5C4254C5C4F00B27449 /* SimpleStorageSchemaTests.swift */,
+				FF6426B6254DB171002D752B /* SimpleStorageCreateOrUpdateTests.swift */,
+				FF6426C2254EDB95002D752B /* SimpleStorageFindTests.swift */,
+				FF6426FF254EF72A002D752B /* SimpleStorageCountTests.swift */,
+				FF642703254EF760002D752B /* SimpleStorageDeleteTests.swift */,
+				FFAAC5C6254C5C4F00B27449 /* Info.plist */,
 			);
 			path = SimpleStorageTests;
-			sourceTree = "<group>";
-		};
-		FFE1DDBB23A11B6000C5BB12 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				FFE1DDBC23A11B6A00C5BB12 /* IdProvider.swift */,
-				FFE1DDBE23A11B9200C5BB12 /* DateProvider.swift */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		FFE1DDC023A11D8000C5BB12 /* Stubs */ = {
-			isa = PBXGroup;
-			children = (
-				FFE1DDC123A11D8900C5BB12 /* IdProviderStub.swift */,
-				FFE1DDC323A11D9400C5BB12 /* DateProviderStub.swift */,
-				FFE1DDC523A11E2500C5BB12 /* ErrorStub.swift */,
-			);
-			path = Stubs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		FFB5909C23C4C01A00C738AB /* Headers */ = {
+		FFAAC5B1254C5C4F00B27449 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFB590A523C4C01B00C738AB /* SimpleStorage.h in Headers */,
+				FFAAC5C7254C5C4F00B27449 /* SimpleStorage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		FFB590A023C4C01A00C738AB /* SimpleStorage */ = {
+		FFAAC5B5254C5C4F00B27449 /* SimpleStorage */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FFB590A823C4C01B00C738AB /* Build configuration list for PBXNativeTarget "SimpleStorage" */;
+			buildConfigurationList = FFAAC5CA254C5C4F00B27449 /* Build configuration list for PBXNativeTarget "SimpleStorage" */;
 			buildPhases = (
-				FFB5909C23C4C01A00C738AB /* Headers */,
-				FFB5909D23C4C01A00C738AB /* Sources */,
-				FFB5909E23C4C01A00C738AB /* Frameworks */,
-				FFB5909F23C4C01A00C738AB /* Resources */,
+				FFAAC5B1254C5C4F00B27449 /* Headers */,
+				FFAAC5B2254C5C4F00B27449 /* Sources */,
+				FFAAC5B3254C5C4F00B27449 /* Frameworks */,
+				FFAAC5B4254C5C4F00B27449 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -203,46 +211,46 @@
 			);
 			name = SimpleStorage;
 			productName = SimpleStorage;
-			productReference = FFB590A123C4C01A00C738AB /* SimpleStorage.framework */;
+			productReference = FFAAC5B6254C5C4F00B27449 /* SimpleStorage.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		FFE1DD8F23A1050200C5BB12 /* SimpleStorageTests */ = {
+		FFAAC5BE254C5C4F00B27449 /* SimpleStorageTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FFE1DD9623A1050200C5BB12 /* Build configuration list for PBXNativeTarget "SimpleStorageTests" */;
+			buildConfigurationList = FFAAC5CD254C5C4F00B27449 /* Build configuration list for PBXNativeTarget "SimpleStorageTests" */;
 			buildPhases = (
-				FFE1DD8C23A1050200C5BB12 /* Sources */,
-				FFE1DD8D23A1050200C5BB12 /* Frameworks */,
-				FFE1DD8E23A1050200C5BB12 /* Resources */,
+				FFAAC5BB254C5C4F00B27449 /* Sources */,
+				FFAAC5BC254C5C4F00B27449 /* Frameworks */,
+				FFAAC5BD254C5C4F00B27449 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FFAAC5C2254C5C4F00B27449 /* PBXTargetDependency */,
 			);
 			name = SimpleStorageTests;
-			productName = StorageTests;
-			productReference = FFE1DD9023A1050200C5BB12 /* SimpleStorageTests.xctest */;
+			productName = SimpleStorageTests;
+			productReference = FFAAC5BF254C5C4F00B27449 /* SimpleStorageTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		FFE1DD7E23A1048B00C5BB12 /* Project object */ = {
+		FFAAC5AD254C5C4E00B27449 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1120;
-				LastUpgradeCheck = 1140;
-				ORGANIZATIONNAME = "couchbits GmbH";
+				LastSwiftUpdateCheck = 1200;
+				LastUpgradeCheck = 1200;
 				TargetAttributes = {
-					FFB590A023C4C01A00C738AB = {
-						CreatedOnToolsVersion = 11.2.1;
+					FFAAC5B5254C5C4F00B27449 = {
+						CreatedOnToolsVersion = 12.0;
+						LastSwiftMigration = 1200;
 					};
-					FFE1DD8F23A1050200C5BB12 = {
-						CreatedOnToolsVersion = 11.2.1;
-						LastSwiftMigration = 1120;
+					FFAAC5BE254C5C4F00B27449 = {
+						CreatedOnToolsVersion = 12.0;
 					};
 				};
 			};
-			buildConfigurationList = FFE1DD8123A1048B00C5BB12 /* Build configuration list for PBXProject "SimpleStorage" */;
+			buildConfigurationList = FFAAC5B0254C5C4E00B27449 /* Build configuration list for PBXProject "SimpleStorage" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -250,27 +258,26 @@
 				en,
 				Base,
 			);
-			mainGroup = FFE1DD7D23A1048B00C5BB12;
-			productRefGroup = FFE1DD9123A1050200C5BB12 /* Products */;
+			mainGroup = FFAAC5AC254C5C4E00B27449;
+			productRefGroup = FFAAC5B7254C5C4F00B27449 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FFB590A023C4C01A00C738AB /* SimpleStorage */,
-				FFE1DD8F23A1050200C5BB12 /* SimpleStorageTests */,
+				FFAAC5B5254C5C4F00B27449 /* SimpleStorage */,
+				FFAAC5BE254C5C4F00B27449 /* SimpleStorageTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		FFB5909F23C4C01A00C738AB /* Resources */ = {
+		FFAAC5B4254C5C4F00B27449 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF2E112123F69C4E002E3909 /* SimpleStorage.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FFE1DD8E23A1050200C5BB12 /* Resources */ = {
+		FFAAC5BD254C5C4F00B27449 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -280,62 +287,57 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		FFB5909D23C4C01A00C738AB /* Sources */ = {
+		FFAAC5B2254C5C4F00B27449 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFB590AC23C4C02F00C738AB /* StorageConstraint.swift in Sources */,
-				FF342A172422519F009EAC9C /* StorageExpression.swift in Sources */,
-				FFB590AF23C4C02F00C738AB /* Storage.swift in Sources */,
-				FFB590A923C4C02F00C738AB /* StorageItem.swift in Sources */,
-				FFDA4D2124518C4B009AC614 /* StorageConstraintStringProvider.swift in Sources */,
-				FFDA4D262451938F009AC614 /* StorageStorableType.swift in Sources */,
-				FFB590B123C4C03E00C738AB /* IdProvider.swift in Sources */,
-				FFB590B023C4C02F00C738AB /* StorageType.swift in Sources */,
-				FFB590AA23C4C02F00C738AB /* SqliteStorage.swift in Sources */,
-				FFB590B223C4C03E00C738AB /* DateProvider.swift in Sources */,
-				FFB590AD23C4C02F00C738AB /* StorageAttributeDescriptionProvider.swift in Sources */,
-				FFC2162D23EBF9C900D15FC1 /* SyncRunner.swift in Sources */,
-				FFDF248D242245AC00261087 /* StorageSortByStringProvider.swift in Sources */,
-				FFB590AE23C4C02F00C738AB /* StorageAttributeDefaultValueDescriptionProvider.swift in Sources */,
-				FFB590AB23C4C02F00C738AB /* StorageError.swift in Sources */,
+				FFAAC5D7254C5C9D00B27449 /* DateProvider.swift in Sources */,
+				FF6426BF254DB776002D752B /* SimpleStorageFind.swift in Sources */,
+				FF6426AF254D9962002D752B /* SyncRunner.swift in Sources */,
+				FF6426E7254EEDE0002D752B /* Constraint.swift in Sources */,
+				FF642711254F1804002D752B /* Package.swift in Sources */,
+				FFAAC5E5254C5EB800B27449 /* SimpleStorageError.swift in Sources */,
+				FF6426B3254D9AA9002D752B /* SimpleStorageTableDescription.swift in Sources */,
+				FF6426F2254EF5DE002D752B /* SimpleStorageDelete.swift in Sources */,
+				FF6426E1254EEDC0002D752B /* TableDescription.swift in Sources */,
+				FF6426A5254D64AA002D752B /* SimpleStorageCreateOrUpdate.swift in Sources */,
+				FF6426D2254EED63002D752B /* Attribute.swift in Sources */,
+				FF6426DC254EEDA3002D752B /* Item.swift in Sources */,
+				FF6426A9254D947F002D752B /* StorableType.swift in Sources */,
+				FF6426ED254EEDF0002D752B /* Expression.swift in Sources */,
+				FF58F1A3254C7462002B61B8 /* SimpleStorateSchema.swift in Sources */,
+				FFAAC5DF254C5DF700B27449 /* Sqlite.swift in Sources */,
+				FFAAC5D3254C5C7400B27449 /* SimpleStorage.swift in Sources */,
+				FFAAC5DB254C5CCD00B27449 /* SimpleStorageConfiguration.swift in Sources */,
+				FF6426F8254EF6C1002D752B /* SimpleStorageCount.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FFE1DD8C23A1050200C5BB12 /* Sources */ = {
+		FFAAC5BB254C5C4F00B27449 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFB590B523C4C04600C738AB /* StorageAttributeDefaultValueDescriptionProvider.swift in Sources */,
-				FFB590B823C4C04600C738AB /* StorageType.swift in Sources */,
-				FFE1DDC223A11D8900C5BB12 /* IdProviderStub.swift in Sources */,
-				FFB590B723C4C04600C738AB /* StorageError.swift in Sources */,
-				FFE1DDAA23A105CE00C5BB12 /* SqliteStorageAttributeDescriptionProviderTests.swift in Sources */,
-				FFE1DDBD23A11B6A00C5BB12 /* IdProvider.swift in Sources */,
-				FFDA4D2724519412009AC614 /* StorageStorableType.swift in Sources */,
-				FFE1DDA923A105CE00C5BB12 /* SimpleStorageIntegrationTests.swift in Sources */,
-				FF342A1824225210009EAC9C /* StorageExpression.swift in Sources */,
-				FFE1DDC623A11E2500C5BB12 /* ErrorStub.swift in Sources */,
-				FFB590B923C4C04600C738AB /* StorageItem.swift in Sources */,
-				FF342A1524224AE6009EAC9C /* SqliteStorageSortByStringProviderTests.swift in Sources */,
-				FFDF248E242246E500261087 /* StorageSortByStringProvider.swift in Sources */,
-				FFB590B323C4C04600C738AB /* Storage.swift in Sources */,
-				FFE1DDAB23A105CE00C5BB12 /* StorageItemTests.swift in Sources */,
-				FFC2162E23EBFC0F00D15FC1 /* SyncRunner.swift in Sources */,
-				FFB590B623C4C04600C738AB /* StorageAttributeDescriptionProvider.swift in Sources */,
-				FFDA4D2424518CE0009AC614 /* StorageConstraintStringProvider.swift in Sources */,
-				FFB590BA23C4C04600C738AB /* StorageConstraint.swift in Sources */,
-				FFE1DDBF23A11B9200C5BB12 /* DateProvider.swift in Sources */,
-				FFDA4D2324518CB6009AC614 /* SqliteStorageConstraintStringProviderTests.swift in Sources */,
-				FFE1DDC423A11D9400C5BB12 /* DateProviderStub.swift in Sources */,
-				FFB590B423C4C04600C738AB /* SqliteStorage.swift in Sources */,
+				FFAAC5C5254C5C4F00B27449 /* SimpleStorageSchemaTests.swift in Sources */,
+				FF6426B7254DB171002D752B /* SimpleStorageCreateOrUpdateTests.swift in Sources */,
+				FF642704254EF760002D752B /* SimpleStorageDeleteTests.swift in Sources */,
+				FF6426C3254EDB95002D752B /* SimpleStorageFindTests.swift in Sources */,
+				FF642700254EF72A002D752B /* SimpleStorageCountTests.swift in Sources */,
+				FF6426CB254EDC10002D752B /* TestUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		FFAAC5C2254C5C4F00B27449 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FFAAC5B5254C5C4F00B27449 /* SimpleStorage */;
+			targetProxy = FFAAC5C1254C5C4F00B27449 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
-		FFB590A623C4C01B00C738AB /* Debug */ = {
+		FFAAC5C8254C5C4F00B27449 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -361,21 +363,16 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = S49KW7B7X6;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -392,31 +389,19 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = SimpleStorage/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.2.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.couchbits.simplestorage.SimpleStorage;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		FFB590A723C4C01B00C738AB /* Release */ = {
+		FFAAC5C9254C5C4F00B27449 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -442,31 +427,48 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		FFAAC5CB254C5C4F00B27449 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = S49KW7B7X6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = SimpleStorage/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -474,258 +476,109 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.2;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.couchbits.simplestorage.SimpleStorage;
+				PRODUCT_BUNDLE_IDENTIFIER = com.couchbits.SimpleStorage;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		FFE1DD8223A1048B00C5BB12 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				ONLY_ACTIVE_ARCH = YES;
-			};
-			name = Debug;
-		};
-		FFE1DD8323A1048B00C5BB12 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-			};
-			name = Release;
-		};
-		FFE1DD9723A1050200C5BB12 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = S49KW7B7X6;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = SimpleStorageTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.couchbits.storage.StorageTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		FFE1DD9823A1050200C5BB12 /* Release */ = {
+		FFAAC5CC254C5C4F00B27449 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = S49KW7B7X6;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = SimpleStorageTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = SimpleStorage/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.couchbits.storage.StorageTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				PRODUCT_BUNDLE_IDENTIFIER = com.couchbits.SimpleStorage;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FFAAC5CE254C5C4F00B27449 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = S49KW7B7X6;
+				INFOPLIST_FILE = SimpleStorageTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.couchbits.SimpleStorageTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FFAAC5CF254C5C4F00B27449 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = S49KW7B7X6;
+				INFOPLIST_FILE = SimpleStorageTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.couchbits.SimpleStorageTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FFB590A823C4C01B00C738AB /* Build configuration list for PBXNativeTarget "SimpleStorage" */ = {
+		FFAAC5B0254C5C4E00B27449 /* Build configuration list for PBXProject "SimpleStorage" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FFB590A623C4C01B00C738AB /* Debug */,
-				FFB590A723C4C01B00C738AB /* Release */,
+				FFAAC5C8254C5C4F00B27449 /* Debug */,
+				FFAAC5C9254C5C4F00B27449 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FFE1DD8123A1048B00C5BB12 /* Build configuration list for PBXProject "SimpleStorage" */ = {
+		FFAAC5CA254C5C4F00B27449 /* Build configuration list for PBXNativeTarget "SimpleStorage" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FFE1DD8223A1048B00C5BB12 /* Debug */,
-				FFE1DD8323A1048B00C5BB12 /* Release */,
+				FFAAC5CB254C5C4F00B27449 /* Debug */,
+				FFAAC5CC254C5C4F00B27449 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FFE1DD9623A1050200C5BB12 /* Build configuration list for PBXNativeTarget "SimpleStorageTests" */ = {
+		FFAAC5CD254C5C4F00B27449 /* Build configuration list for PBXNativeTarget "SimpleStorageTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FFE1DD9723A1050200C5BB12 /* Debug */,
-				FFE1DD9823A1050200C5BB12 /* Release */,
+				FFAAC5CE254C5C4F00B27449 /* Debug */,
+				FFAAC5CF254C5C4F00B27449 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = FFE1DD7E23A1048B00C5BB12 /* Project object */;
+	rootObject = FFAAC5AD254C5C4E00B27449 /* Project object */;
 }

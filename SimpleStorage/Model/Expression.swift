@@ -1,28 +1,27 @@
 //
-//  StorageExpression.swift
+//  Expression.swift
 //  SimpleStorage
 //
-//  Created by Dominik Gauggel on 18.03.20.
-//  Copyright © 2020 couchbits GmbH. All rights reserved.
+//  Created by Dominik Gauggel on 01.11.20.
 //
 
 import Foundation
 
-public struct StorageExpression: Equatable {
-    public var constraints: [StorageConstraint]
+public struct Expression: Equatable {
+    public var constraints: [Constraint]
     public var sortedBy: [SortBy]
     public var limit: Limit?
 
-    public init(constraints: [StorageConstraint] = [], sortedBy: [SortBy] = [], limit: Limit? = nil) {
+    public init(constraints: [Constraint] = [], sortedBy: [SortBy] = [], limit: Limit? = nil) {
         self.constraints = constraints
         self.sortedBy = sortedBy
         self.limit = limit
     }
 
-    public static var empty: StorageExpression { return StorageExpression() }
+    public static var empty: Expression { return Expression() }
 
     public struct SortBy: Equatable {
-        public let attribute: StorageType.Attribute
+        public let attribute: String
         public let sortOrder: SortOrder
 
         public enum SortOrder {
@@ -30,7 +29,7 @@ public struct StorageExpression: Equatable {
             case descending
         }
 
-        public init(attribute: StorageType.Attribute, sortOrder: SortOrder) {
+        public init(attribute: String, sortOrder: SortOrder) {
             self.attribute = attribute
             self.sortOrder = sortOrder
         }

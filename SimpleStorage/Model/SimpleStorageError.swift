@@ -1,14 +1,13 @@
 //
-//  StorageError.swift
-//  Storage
+//  SimpleStorageError.swift
+//  SimpleStorage
 //
-//  Created by Dominik Gauggel on 11/12/19.
-//  Copyright © 2019 couchbits GmbH. All rights reserved.
+//  Created by Dominik Gauggel on 30.10.20.
 //
 
 import Foundation
 
-public enum StorageError: Error {
+public enum SimpleStorageError: Error {
     case open(String)
     case invalidDefinition(String)
     case perform(String)
