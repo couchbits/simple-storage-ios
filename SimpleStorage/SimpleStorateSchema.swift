@@ -122,12 +122,12 @@ extension SimpleStorage {
         return item
     }
 
-    func storageTypeVersion(storageType: String) throws -> Int {
+    public func storageTypeVersion(storageType: String) throws -> Int {
         let item = try findStorageTypeVersion(storageType: storageType)
         return try item.value(name: "version")
     }
 
-    func setStorageTypeVersion(storageType: String, version: Int) throws {
+    public func setStorageTypeVersion(storageType: String, version: Int) throws {
         var item = try findStorageTypeVersion(storageType: storageType)
         item.values["version"] = version
 
