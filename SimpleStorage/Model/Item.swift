@@ -11,9 +11,9 @@ public struct Item {
     public var id: UUID
     public var values: [String: StorableType]
 
-    public init(id: UUID? = nil, values: [String: StorableType]) {
+    public init(id: UUID? = nil, values: [String: StorableType?]) {
         self.id = id ?? UUID()
-        self.values = values
+        self.values = values.compactMapValues { $0 }
     }
 
     public func value<T: StorableType>(name: String) throws -> T {
