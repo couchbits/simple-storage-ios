@@ -12,6 +12,12 @@ public struct Attribute: Equatable {
     public let type: AttributeType
     public let nullable: Bool
 
+    public init(name: String, type: AttributeType, nullable: Bool = false) {
+        self.name = name
+        self.type = type
+        self.nullable = nullable
+    }
+
     public enum AttributeType: Equatable {
         case string
         case double
