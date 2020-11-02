@@ -20,7 +20,7 @@ class SimpleStorageTests: XCTestCase {
 
     func test_createStorageType_shouldCreateTheStorageType() throws {
         //execute
-        try sut.createStorageType(storageType: "mytype")
+        _ = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //verify
         let tableDescription = try table("mytype")
@@ -31,10 +31,10 @@ class SimpleStorageTests: XCTestCase {
 
     func test_createAttribute_shouldAddStringAttribute() throws {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try sut.addStorageTypeAttribute(storageType: "mytype", attribute: Attribute(name: "myvalue", type: .string, nullable: false))
+        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .string, nullable: false))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "TEXT", notNull: true))
@@ -42,10 +42,10 @@ class SimpleStorageTests: XCTestCase {
 
     func test_createAttribute_shouldAddStringAttribute_Nullable() throws {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try sut.addStorageTypeAttribute(storageType: "mytype", attribute: Attribute(name: "myvalue", type: .string, nullable: true))
+        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .string, nullable: true))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "TEXT", notNull: false))
@@ -53,10 +53,10 @@ class SimpleStorageTests: XCTestCase {
 
     func test_createAttribute_shouldAddUUIDAttribute() throws {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try sut.addStorageTypeAttribute(storageType: "mytype", attribute: Attribute(name: "myvalue", type: .uuid, nullable: false))
+        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .uuid, nullable: false))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "TEXT", notNull: true))
@@ -64,10 +64,10 @@ class SimpleStorageTests: XCTestCase {
 
     func test_createAttribute_shouldAddUUIDAttribute_Nullable() throws {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try sut.addStorageTypeAttribute(storageType: "mytype", attribute: Attribute(name: "myvalue", type: .uuid, nullable: true))
+        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .uuid, nullable: true))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "TEXT", notNull: false))
@@ -75,10 +75,10 @@ class SimpleStorageTests: XCTestCase {
 
     func test_createAttribute_shouldAddIntegerAttribute() throws {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try sut.addStorageTypeAttribute(storageType: "mytype", attribute: Attribute(name: "myvalue", type: .integer, nullable: false))
+        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .integer, nullable: false))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "INTEGER", notNull: true))
@@ -86,10 +86,10 @@ class SimpleStorageTests: XCTestCase {
 
     func test_createAttribute_shouldAddIntegerAttribute_Nullable() throws {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try sut.addStorageTypeAttribute(storageType: "mytype", attribute: Attribute(name: "myvalue", type: .integer, nullable: true))
+        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .integer, nullable: true))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "INTEGER", notNull: false))
@@ -97,10 +97,10 @@ class SimpleStorageTests: XCTestCase {
 
     func test_createAttribute_shouldAddBoolAttribute() throws {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try sut.addStorageTypeAttribute(storageType: "mytype", attribute: Attribute(name: "myvalue", type: .bool, nullable: false))
+        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .bool, nullable: false))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "INTEGER", notNull: true))
@@ -108,10 +108,10 @@ class SimpleStorageTests: XCTestCase {
 
     func test_createAttribute_shouldAddBoolAttribute_Nullable() throws {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try sut.addStorageTypeAttribute(storageType: "mytype", attribute: Attribute(name: "myvalue", type: .bool, nullable: true))
+        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .bool, nullable: true))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "INTEGER", notNull: false))
@@ -119,10 +119,10 @@ class SimpleStorageTests: XCTestCase {
 
     func test_createAttribute_shouldAddDoubleAttribute() throws {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try sut.addStorageTypeAttribute(storageType: "mytype", attribute: Attribute(name: "myvalue", type: .double, nullable: false))
+        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .double, nullable: false))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "REAL", notNull: true))
@@ -130,10 +130,10 @@ class SimpleStorageTests: XCTestCase {
 
     func test_createAttribute_shouldAddDoubleAttribute_Nullable() throws {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try sut.addStorageTypeAttribute(storageType: "mytype", attribute: Attribute(name: "myvalue", type: .double, nullable: true))
+        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .double, nullable: true))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "REAL", notNull: false))
@@ -141,10 +141,10 @@ class SimpleStorageTests: XCTestCase {
 
     func test_createAttribute_shouldAddDateAttribute() throws {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try sut.addStorageTypeAttribute(storageType: "mytype", attribute: Attribute(name: "myvalue", type: .date, nullable: false))
+        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .date, nullable: false))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "REAL", notNull: true))
@@ -152,10 +152,10 @@ class SimpleStorageTests: XCTestCase {
 
     func test_createAttribute_shouldAddDateAttribute_Nullable() throws {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try sut.addStorageTypeAttribute(storageType: "mytype", attribute: Attribute(name: "myvalue", type: .date, nullable: true))
+        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .date, nullable: true))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "REAL", notNull: false))
@@ -163,11 +163,11 @@ class SimpleStorageTests: XCTestCase {
 
     func test_createAttribute_shouldAddRelationshipAttribute() throws {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
-        try sut.createStorageType(storageType: "myrelationshiptype")
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
+        _ = try SimpleStorageType(simpleStorage: sut, storageType: "myrelationshiptype")
 
         //execute
-        try sut.addStorageTypeAttribute(storageType: "mytype", attribute: Attribute(name: "myrelationship", type: .relationship("myrelationshiptype"), nullable: false))
+        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myrelationship", type: .relationship("myrelationshiptype"), nullable: false))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myrelationship", type: "TEXT", notNull: true))
@@ -175,11 +175,11 @@ class SimpleStorageTests: XCTestCase {
 
     func test_createAttribute_shouldAddRelationshipAttribute_Nullable() throws {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
-        try sut.createStorageType(storageType: "myrelationshiptype")
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
+        _ = try SimpleStorageType(simpleStorage: sut, storageType: "myrelationshiptype")
 
         //execute
-        try sut.addStorageTypeAttribute(storageType: "mytype", attribute: Attribute(name: "myrelationship", type: .relationship("myrelationshiptype"), nullable: true))
+        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myrelationship", type: .relationship("myrelationshiptype"), nullable: true))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myrelationship", type: "TEXT", notNull: false))
@@ -187,10 +187,10 @@ class SimpleStorageTests: XCTestCase {
 
     func test_storageTypeVersion_shouldReturnIntially0() throws {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        let version = try sut.storageTypeVersion(storageType: "mytype")
+        let version = try storageType.storageTypeVersion()
 
         //verify
         XCTAssertEqual(version, 0)
@@ -198,10 +198,10 @@ class SimpleStorageTests: XCTestCase {
 
     func test_storageTypeVersion_shouldUpdateTheStorageTypeVersion() throws {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try sut.setStorageTypeVersion(storageType: "mytype", version: 3)
+        try storageType.setStorageTypeVersion(version: 3)
 
         //verify
         XCTAssertEqual(try sut.storageTypeVersion(storageType: "mytype"), 3)
@@ -209,10 +209,10 @@ class SimpleStorageTests: XCTestCase {
 
     func test_removeStorageType() throws {
         //prepare
-        try TestUtils.createStorageType(sut: sut)
+        let storageType = try TestUtils.createStorageType(sut: sut)
 
         //execute
-        try sut.removeStorageType(storageType: "mytype")
+        try storageType.removeStorageType()
 
         //verify
         XCTAssertEqual(try table("mytype").count, 0)
@@ -220,10 +220,10 @@ class SimpleStorageTests: XCTestCase {
 
     func test_removeAttribute() throws {
         //prepare
-        try TestUtils.createStorageType(sut: sut)
+        let storageType = try TestUtils.createStorageType(sut: sut)
 
         //execute
-        try sut.removeAttribute(storageType: "mytype", attribute: "myinteger")
+        try storageType.removeAttribute(attribute: "myinteger")
 
         //vefify
         XCTAssertNil(try table("mytype").first { $0.name == "myinteger" })

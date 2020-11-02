@@ -8,7 +8,7 @@
 import Foundation
 
 extension SimpleStorage {
-    public func createStorageType(storageType: String) throws {
+    func createStorageType(storageType: String) throws {
         let sql = "CREATE TABLE IF NOT EXISTS \(storageType) (id TEXT NOT NULL PRIMARY KEY)"
 
         try sqlite.performStatement(sql: sql)
@@ -16,11 +16,11 @@ extension SimpleStorage {
         try addStorageTypeAttribute(storageType: storageType, attribute: Attribute(name: "updated_at", type: .date, nullable: false))
     }
 
-    public func removeStorageType(storageType: String) throws {
+    func removeStorageType(storageType: String) throws {
         try sqlite.performStatement(sql: "DROP TABLE \(storageType)")
     }
 
-    public func addStorageTypeAttribute(storageType: String, attribute: Attribute) throws {
+    func addStorageTypeAttribute(storageType: String, attribute: Attribute) throws {
         let null = attribute.nullable ? "NULL" : "NOT NULL"
         let attributeDescription: String
         switch attribute.type {
@@ -54,7 +54,7 @@ extension SimpleStorage {
         try sqlite.performStatement(sql: sql)
     }
 
-    public func removeAttribute(storageType: String, attribute: String) throws {
+    func removeAttribute(storageType: String, attribute: String) throws {
         let columns = try self.tableDescription(storageType).columns.filter { $0.name != attribute }
 
         try sqlite.performStatement(sql: "PRAGMA foreign_keys = OFF")
@@ -122,15 +122,15 @@ extension SimpleStorage {
         return item
     }
 
-    public func storageTypeVersion(storageType: String) throws -> Int {
+    func storageTypeVersion(storageType: String) throws -> Int {
         let item = try findStorageTypeVersion(storageType: storageType)
         return try item.value(name: "version")
     }
 
-    public func setStorageTypeVersion(storageType: String, version: Int) throws {
+    func setStorageTypeVersion(storageType: String, version: Int) throws {
         var item = try findStorageTypeVersion(storageType: storageType)
         item.values["version"] = version
 
-        try createOrUpdate(storageType: "storage_type_versions", item: item)
+        try createOrUpdate(storageType: "storage_type_versions", items: [item])
     }
 }

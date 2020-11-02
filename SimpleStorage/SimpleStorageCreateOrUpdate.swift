@@ -9,11 +9,11 @@ import Foundation
 import SQLite3
 
 extension SimpleStorage {
-    public func createOrUpdate(storageType: String, item: Item) throws {
+    func createOrUpdate(storageType: String, item: Item) throws {
         try createOrUpdate(storageType: storageType, items: [item])
     }
 
-    public func createOrUpdate(storageType: String, items: [Item]) throws {
+    func createOrUpdate(storageType: String, items: [Item]) throws {
         try syncRunner.run {
             let tableDescription = try self.tableDescription(storageType)
 

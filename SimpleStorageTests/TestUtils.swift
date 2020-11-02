@@ -10,33 +10,29 @@ import Foundation
 import SQLite3
 
 class TestUtils {
-    static func createStorageType(sut: SimpleStorage, nullable: Bool = false) throws {
+    static func createStorageType(sut: SimpleStorage, nullable: Bool = false) throws -> SimpleStorageType {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
-        try sut.addStorageTypeAttribute(
-            storageType: "mytype",
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
+        try storageType.addStorageTypeAttribute(
             attribute: Attribute(name: "myinteger", type: .integer, nullable: nullable)
         )
-        try sut.addStorageTypeAttribute(
-            storageType: "mytype",
+        try storageType.addStorageTypeAttribute(
             attribute: Attribute(name: "mystring", type: .string, nullable: nullable)
         )
-        try sut.addStorageTypeAttribute(
-            storageType: "mytype",
+        try storageType.addStorageTypeAttribute(
             attribute: Attribute(name: "mydouble", type: .double, nullable: nullable)
         )
-        try sut.addStorageTypeAttribute(
-            storageType: "mytype",
+        try storageType.addStorageTypeAttribute(
             attribute: Attribute(name: "mybool", type: .bool, nullable: nullable)
         )
-        try sut.addStorageTypeAttribute(
-            storageType: "mytype",
+        try storageType.addStorageTypeAttribute(
             attribute: Attribute(name: "myuuid", type: .uuid, nullable: nullable)
         )
-        try sut.addStorageTypeAttribute(
-            storageType: "mytype",
+        try storageType.addStorageTypeAttribute(
             attribute: Attribute(name: "mydate", type: .date, nullable: nullable)
         )
+
+        return storageType
     }
 
     static func createItem() -> Item {

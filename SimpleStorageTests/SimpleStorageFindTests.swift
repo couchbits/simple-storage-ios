@@ -21,9 +21,9 @@ class SimpleStorageFindTests: XCTestCase {
 
     func test_find_byId_shouldReturnTheRecord() throws {
         //prepare
-        try TestUtils.createStorageType(sut: sut)
+        let storageType = try TestUtils.createStorageType(sut: sut)
         let item = TestUtils.createItem()
-        try sut.createOrUpdate(storageType: "mytype", item: item)
+        try storageType.createOrUpdate(item: item)
 
         //execute
         let persistedItem = try sut.find(storageType: "mytype", id: item.id)
@@ -41,12 +41,12 @@ class SimpleStorageFindTests: XCTestCase {
 
     func test_find_byId_shouldReturnTheRecordWithNullableTypes() throws {
         //prepare
-        try TestUtils.createStorageType(sut: sut, nullable: true)
+        let storageType = try TestUtils.createStorageType(sut: sut, nullable: true)
         let item = TestUtils.createItem()
-        try sut.createOrUpdate(storageType: "mytype", item: item)
+        try storageType.createOrUpdate(item: item)
 
         //execute
-        let persistedItem = try sut.find(storageType: "mytype", id: item.id)
+        let persistedItem = try storageType.find(id: item.id)
 
         //verify
         XCTAssertNotNil(persistedItem)
@@ -61,9 +61,9 @@ class SimpleStorageFindTests: XCTestCase {
 
     func test_find_byId_shouldReturnTheRecordWithNullTypes() throws {
         //prepare
-        try TestUtils.createStorageType(sut: sut, nullable: true)
+        let storageType = try TestUtils.createStorageType(sut: sut, nullable: true)
         let item = Item(id: UUID(), values: [:])
-        try sut.createOrUpdate(storageType: "mytype", item: item)
+        try storageType.createOrUpdate(item: item)
 
         //execute
         let persistedItem = try sut.find(storageType: "mytype", id: item.id)
@@ -81,14 +81,13 @@ class SimpleStorageFindTests: XCTestCase {
 
     func test_find_shouldReturnAllRows() throws {
         //prepare
-        try TestUtils.createStorageType(sut: sut, nullable: true)
-        try sut.createOrUpdate(
-            storageType: "mytype",
+        let storageType = try TestUtils.createStorageType(sut: sut, nullable: true)
+        try storageType.createOrUpdate(
             items: [TestUtils.createItem(), TestUtils.createItem(), TestUtils.createItem()]
         )
 
         //execute
-        let items = try sut.find(storageType: "mytype")
+        let items = try storageType.find()
 
         //verify
         XCTAssertEqual(items.count, 3)
@@ -96,9 +95,8 @@ class SimpleStorageFindTests: XCTestCase {
 
     func test_find_limit_shouldLimitTheResults() throws {
         //prepare
-        try TestUtils.createStorageType(sut: sut, nullable: true)
-        try sut.createOrUpdate(
-            storageType: "mytype",
+        let storageType = try TestUtils.createStorageType(sut: sut, nullable: true)
+        try storageType.createOrUpdate(
             items: [TestUtils.createItem(), TestUtils.createItem(), TestUtils.createItem()]
         )
 
@@ -111,12 +109,11 @@ class SimpleStorageFindTests: XCTestCase {
 
     func test_find_shouldSortByDefault() throws {
         //prepare
-        try TestUtils.createStorageType(sut: sut, nullable: true)
+        let storageType = try TestUtils.createStorageType(sut: sut, nullable: true)
         let item1 = TestUtils.createItem()
         let item2 = TestUtils.createItem()
         let item3 = TestUtils.createItem()
-        try sut.createOrUpdate(
-            storageType: "mytype",
+        try storageType.createOrUpdate(
             items: [item1, item2, item3]
         )
 
@@ -129,15 +126,14 @@ class SimpleStorageFindTests: XCTestCase {
 
     func test_find_shouldSortBy() throws {
         //prepare
-        try TestUtils.createStorageType(sut: sut, nullable: true)
+        let storageType = try TestUtils.createStorageType(sut: sut, nullable: true)
         var item1 = TestUtils.createItem()
         item1.values["myinteger"] = 1
         var item2 = TestUtils.createItem()
         item2.values["myinteger"] = 2
         var item3 = TestUtils.createItem()
         item3.values["myinteger"] = 3
-        try sut.createOrUpdate(
-            storageType: "mytype",
+        try storageType.createOrUpdate(
             items: [item1, item2, item3]
         )
 
@@ -153,21 +149,19 @@ class SimpleStorageFindTests: XCTestCase {
 
     func test_find_shouldApplyConstraints() throws {
         //prepare
-        try TestUtils.createStorageType(sut: sut, nullable: true)
+        let storageType = try TestUtils.createStorageType(sut: sut, nullable: true)
         var item1 = TestUtils.createItem()
         item1.values["myinteger"] = 1
         var item2 = TestUtils.createItem()
         item2.values["myinteger"] = 2
         var item3 = TestUtils.createItem()
         item3.values["myinteger"] = 3
-        try sut.createOrUpdate(
-            storageType: "mytype",
+        try storageType.createOrUpdate(
             items: [item1, item2, item3]
         )
 
         //execute
-        let items = try sut.find(
-            storageType: "mytype",
+        let items = try storageType.find(
             expression: Expression(
                 constraints: [
                     Constraint(attribute: "myinteger", value: 2, operator: .greaterThanOrEqual),
@@ -181,18 +175,18 @@ class SimpleStorageFindTests: XCTestCase {
     }
 
     func test_find_shouldReadTheRelationship() throws {
-        try TestUtils.createStorageType(sut: sut, nullable: true)
-        try sut.createStorageType(storageType: "myrelationship")
-        try sut.addStorageTypeAttribute(storageType: "myrelationship", attribute: Attribute(name: "mytype_id", type: .relationship("mytype"), nullable: false))
+        let storageType = try TestUtils.createStorageType(sut: sut, nullable: true)
+        let relationshipType = try SimpleStorageType(simpleStorage: sut, storageType: "myrelationship")
+        try relationshipType.addStorageTypeAttribute(attribute: Attribute(name: "mytype_id", type: .relationship("mytype"), nullable: false))
 
         let item = TestUtils.createItem()
-        try sut.createOrUpdate(storageType: "mytype", item: item)
+        try storageType.createOrUpdate(item: item)
 
         let relationshipItem = Item(values: ["mytype_id": item.id])
-        try sut.createOrUpdate(storageType: "myrelationship", item: relationshipItem)
+        try relationshipType.createOrUpdate(item: relationshipItem)
 
         //execute
-        let persistedRelationshipItem = try sut.find(storageType: "myrelationship", id: relationshipItem.id)
+        let persistedRelationshipItem = try relationshipType.find(id: relationshipItem.id)
 
         //verify
         XCTAssertEqual(try persistedRelationshipItem!.value(name: "mytype_id") as UUID, item.id)

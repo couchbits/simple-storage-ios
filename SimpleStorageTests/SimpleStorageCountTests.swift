@@ -20,14 +20,13 @@ class SimpleStorageCountTests: XCTestCase {
 
     func test_count_shouldReturnAll() throws {
         //prepare
-        try TestUtils.createStorageType(sut: sut, nullable: true)
-        try sut.createOrUpdate(
-            storageType: "mytype",
+        let storageType = try TestUtils.createStorageType(sut: sut, nullable: true)
+        try storageType.createOrUpdate(
             items: [TestUtils.createItem(), TestUtils.createItem(), TestUtils.createItem()]
         )
 
         //execute
-        let count = try sut.count(storageType: "mytype")
+        let count = try storageType.count()
 
         //verify
         XCTAssertEqual(count, 3)
@@ -35,21 +34,19 @@ class SimpleStorageCountTests: XCTestCase {
 
     func test_count_shouldApplyConstraint() throws {
         //prepare
-        try TestUtils.createStorageType(sut: sut, nullable: true)
+        let storageType = try TestUtils.createStorageType(sut: sut, nullable: true)
         var item1 = TestUtils.createItem()
         item1.values["myinteger"] = 1
         var item2 = TestUtils.createItem()
         item2.values["myinteger"] = 2
         var item3 = TestUtils.createItem()
         item3.values["myinteger"] = 3
-        try sut.createOrUpdate(
-            storageType: "mytype",
+        try storageType.createOrUpdate(
             items: [item1, item2, item3]
         )
 
         //execute
-        let count = try sut.count(
-            storageType: "mytype",
+        let count = try storageType.count(
             constraints: [
                 Constraint(attribute: "myinteger", value: 2, operator: .greaterThanOrEqual),
                 Constraint(attribute: "mystring", value: "any-string")

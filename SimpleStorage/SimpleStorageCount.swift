@@ -8,7 +8,7 @@
 import Foundation
 
 extension SimpleStorage {
-    public func count(storageType: String, constraints: [Constraint] = []) throws -> Int {
+    func count(storageType: String, constraints: [Constraint] = []) throws -> Int {
         var sql = "SELECT COUNT(*) FROM \(storageType)"
 
         let tableDescription = try self.tableDescription(storageType)

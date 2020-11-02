@@ -20,10 +20,10 @@ class SimpleStorageCreateOrUpdateTests: XCTestCase {
 
     func test_createOrUpdate_create_shouldAddNewRow() throws {
         //prepare
-        try sut.createStorageType(storageType: "mytype")
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try sut.createOrUpdate(storageType: "mytype", item: Item(id: UUID(), values: [:]))
+        try storageType.createOrUpdate(item: Item(id: UUID(), values: [:]))
 
         //verify
         XCTAssertEqual(try TestUtils.count(sut: sut, storageType: "mytype"), 1)
@@ -32,11 +32,12 @@ class SimpleStorageCreateOrUpdateTests: XCTestCase {
     func test_createOrUpdate_update_shouldUpdateExistingRow() throws {
         //prepare
         let id = UUID()
-        try sut.createStorageType(storageType: "mytype")
-        try sut.createOrUpdate(storageType: "mytype", item: Item(id: id, values: [:]))
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
+
+        try storageType.createOrUpdate(item: Item(id: id, values: [:]))
 
         //execute
-        try sut.createOrUpdate(storageType: "mytype", item: Item(id: id, values: [:]))
+        try storageType.createOrUpdate(item: Item(id: id, values: [:]))
 
         //verify
         XCTAssertEqual(try TestUtils.count(sut: sut, storageType: "mytype"), 1)
@@ -45,9 +46,10 @@ class SimpleStorageCreateOrUpdateTests: XCTestCase {
     func test_createOrUpdate_update_shouldOnlyTouchUpdatedAt() throws {
         //prepare
         let id = UUID()
-        try sut.createStorageType(storageType: "mytype")
-        try sut.createOrUpdate(storageType: "mytype", item: Item(id: id, values: [:]))
-        let before = try sut.find(storageType: "mytype", id: id)
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
+
+        try storageType.createOrUpdate(item: Item(id: id, values: [:]))
+        let before = try storageType.find(id: id)
 
         let expectation = self.expectation(description: "Update")
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
@@ -65,47 +67,47 @@ class SimpleStorageCreateOrUpdateTests: XCTestCase {
     }
 
     func test_createOrUpdate_shouldStoreTypes() throws {
-        try TestUtils.createStorageType(sut: sut)
+        let storageType = try TestUtils.createStorageType(sut: sut)
 
         //execute
-        try sut.createOrUpdate(storageType: "mytype", item: TestUtils.createItem())
+        try storageType.createOrUpdate(item: TestUtils.createItem())
 
         //verify
         XCTAssertEqual(try TestUtils.count(sut: sut, storageType: "mytype"), 1)
     }
 
     func test_createOrUpdate_shouldStoreNullableTypes() throws {
-        try TestUtils.createStorageType(sut: sut, nullable: true)
+        let storageType = try TestUtils.createStorageType(sut: sut, nullable: true)
 
         //execute
-        try sut.createOrUpdate(storageType: "mytype", item: TestUtils.createItem())
+        try storageType.createOrUpdate(item: TestUtils.createItem())
 
         //verify
         XCTAssertEqual(try TestUtils.count(sut: sut, storageType: "mytype"), 1)
     }
 
     func test_createOrUpdate_shouldStoreNullTypes() throws {
-        try TestUtils.createStorageType(sut: sut, nullable: true)
+        let storageType = try TestUtils.createStorageType(sut: sut, nullable: true)
 
         //execute
-        try sut.createOrUpdate(storageType: "mytype", item: Item(id: UUID(), values: [:]))
+        try storageType.createOrUpdate(item: Item(id: UUID(), values: [:]))
 
         //verify
         XCTAssertEqual(try TestUtils.count(sut: sut, storageType: "mytype"), 1)
     }
 
     func test_createOrUpdate_shouldStoreRelationship() throws {
-        try TestUtils.createStorageType(sut: sut, nullable: true)
-        try sut.createStorageType(storageType: "myrelationship")
-        try sut.addStorageTypeAttribute(storageType: "myrelationship", attribute: Attribute(name: "mytype_id", type: .relationship("mytype"), nullable: false))
+        let storageType = try TestUtils.createStorageType(sut: sut, nullable: true)
+        let relationshipType = try SimpleStorageType(simpleStorage: sut, storageType: "myrelationship")
+        try relationshipType.addStorageTypeAttribute(attribute: Attribute(name: "mytype_id", type: .relationship("mytype"), nullable: false))
 
         let item = TestUtils.createItem()
-        try sut.createOrUpdate(storageType: "mytype", item: item)
+        try storageType.createOrUpdate(item: item)
 
         let relationshipItem = Item(values: ["mytype_id": item.id])
 
         //execute
-        try sut.createOrUpdate(storageType: "myrelationship", item: relationshipItem)
+        try relationshipType.createOrUpdate(item: relationshipItem)
 
         //verify
         XCTAssertEqual(try TestUtils.count(sut: sut, storageType: "mytype"), 1)
