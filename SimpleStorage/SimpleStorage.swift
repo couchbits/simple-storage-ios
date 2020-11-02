@@ -8,7 +8,7 @@
 import Foundation
 import SQLite3
 
-class SimpleStorage {
+public class SimpleStorage {
     let dateProvider: DateProvider
     let sqlite: Sqlite
     let syncRunner = DefaultSyncRunner()

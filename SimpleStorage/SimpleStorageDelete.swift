@@ -8,11 +8,11 @@
 import Foundation
 
 extension SimpleStorage {
-    func delete(storageType: String, id: UUID) throws {
+    public func delete(storageType: String, id: UUID) throws {
         try delete(storageType: storageType, constraints: [Constraint(attribute: "id", value: id)])
     }
 
-    func delete(storageType: String, constraints: [Constraint] = []) throws {
+    public func delete(storageType: String, constraints: [Constraint] = []) throws {
         try syncRunner.run {
             var sql = "DELETE FROM \(storageType)"
 
