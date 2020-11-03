@@ -27,7 +27,7 @@ if (try myType.storageTypeVersion == 0) {
 }
 
 if (try myType.storageTypeVersion == 0) {
-    try storageType.removeAttribute(Attribute(name: "my-relationship", type: .relationship("other-type")))
+    try storageType.addAttribute(Attribute(name: "my-relationship", type: .relationship("other-type")))
 }
 ```
 
