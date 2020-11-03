@@ -41,11 +41,21 @@ public struct Item {
     }
 
     public func value(name: String) throws -> String {
-        return try storableTypeValue(name: name)
+        if let uuid = values[name] as? UUID {
+            return uuid.uuidString
+        } else {
+            return try storableTypeValue(name: name)
+        }
     }
 
     public func value(name: String) throws -> String? {
-        return try storableTypeValue(name: name)
+        guard let value = values[name] else { return nil }
+
+        if let uuid = value as? UUID {
+            return uuid.uuidString
+        } else {
+            return try storableTypeValue(name: name)
+        }
     }
 
     public func value(name: String) throws -> Int {
