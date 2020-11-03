@@ -7,9 +7,9 @@
 
 import Foundation
 
-public class SimpleStorageType {
+public class SimpleStorageType: Equatable {
     let simpleStorage: SimpleStorage
-    let storageType: String
+    public let storageType: String
 
     public init(simpleStorage: SimpleStorage, storageType: String) throws {
         self.simpleStorage = simpleStorage
@@ -64,5 +64,9 @@ public class SimpleStorageType {
 
     public func delete(constraints: [Constraint] = []) throws {
         try simpleStorage.delete(storageType: storageType, constraints: constraints)
+    }
+
+    public static func == (lhs: SimpleStorageType, rhs: SimpleStorageType) -> Bool {
+        return lhs.storageType == rhs.storageType
     }
 }

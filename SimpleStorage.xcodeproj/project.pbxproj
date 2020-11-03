@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		FF58F1A3254C7462002B61B8 /* SimpleStorateSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF58F1A2254C7462002B61B8 /* SimpleStorateSchema.swift */; };
 		FF6426A5254D64AA002D752B /* SimpleStorageCreateOrUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426A4254D64AA002D752B /* SimpleStorageCreateOrUpdate.swift */; };
-		FF6426A9254D947F002D752B /* StorableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426A8254D947F002D752B /* StorableType.swift */; };
+		FF6426A9254D947F002D752B /* StorableDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426A8254D947F002D752B /* StorableDataType.swift */; };
 		FF6426AF254D9962002D752B /* SyncRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426AE254D9962002D752B /* SyncRunner.swift */; };
 		FF6426B3254D9AA9002D752B /* SimpleStorageTableDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426B2254D9AA9002D752B /* SimpleStorageTableDescription.swift */; };
 		FF6426B7254DB171002D752B /* SimpleStorageCreateOrUpdateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426B6254DB171002D752B /* SimpleStorageCreateOrUpdateTests.swift */; };
@@ -50,7 +50,7 @@
 /* Begin PBXFileReference section */
 		FF58F1A2254C7462002B61B8 /* SimpleStorateSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorateSchema.swift; sourceTree = "<group>"; };
 		FF6426A4254D64AA002D752B /* SimpleStorageCreateOrUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageCreateOrUpdate.swift; sourceTree = "<group>"; };
-		FF6426A8254D947F002D752B /* StorableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorableType.swift; sourceTree = "<group>"; };
+		FF6426A8254D947F002D752B /* StorableDataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorableDataType.swift; sourceTree = "<group>"; };
 		FF6426AE254D9962002D752B /* SyncRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncRunner.swift; sourceTree = "<group>"; };
 		FF6426B2254D9AA9002D752B /* SimpleStorageTableDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageTableDescription.swift; sourceTree = "<group>"; };
 		FF6426B6254DB171002D752B /* SimpleStorageCreateOrUpdateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageCreateOrUpdateTests.swift; sourceTree = "<group>"; };
@@ -118,7 +118,7 @@
 				FFAAC5E4254C5EB800B27449 /* SimpleStorageError.swift */,
 				FF6426D1254EED63002D752B /* Attribute.swift */,
 				FF6426DB254EEDA3002D752B /* Item.swift */,
-				FF6426A8254D947F002D752B /* StorableType.swift */,
+				FF6426A8254D947F002D752B /* StorableDataType.swift */,
 				FF6426E6254EEDE0002D752B /* Constraint.swift */,
 				FF6426EC254EEDF0002D752B /* Expression.swift */,
 			);
@@ -306,7 +306,7 @@
 				FF6426A5254D64AA002D752B /* SimpleStorageCreateOrUpdate.swift in Sources */,
 				FF6426D2254EED63002D752B /* Attribute.swift in Sources */,
 				FF6426DC254EEDA3002D752B /* Item.swift in Sources */,
-				FF6426A9254D947F002D752B /* StorableType.swift in Sources */,
+				FF6426A9254D947F002D752B /* StorableDataType.swift in Sources */,
 				FF6426ED254EEDF0002D752B /* Expression.swift in Sources */,
 				FF58F1A3254C7462002B61B8 /* SimpleStorateSchema.swift in Sources */,
 				FFAAC5DF254C5DF700B27449 /* Sqlite.swift in Sources */,

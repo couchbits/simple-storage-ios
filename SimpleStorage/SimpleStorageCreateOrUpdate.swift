@@ -81,7 +81,7 @@ extension SimpleStorage {
         return try find(storageType: storageType, id: id) == nil
     }
 
-    func bindValues(columns: [TableDescription.Column], values: [String: StorableType], statement: OpaquePointer?) throws {
+    func bindValues(columns: [TableDescription.Column], values: [String: StorableDataType], statement: OpaquePointer?) throws {
         for (index, column) in columns.enumerated() {
             let index = index + 1
             if values[column.name] == nil && !column.nullable {

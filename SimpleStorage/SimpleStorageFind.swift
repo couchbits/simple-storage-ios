@@ -50,7 +50,7 @@ extension SimpleStorage {
         var items = [Item]()
 
         while sqlite3_step(statement) == SQLITE_ROW {
-            var values = [String: StorableType]()
+            var values = [String: StorableDataType]()
             for (index, column) in tableDescription.columns.enumerated() {
                 switch column.type {
                 case .integer:

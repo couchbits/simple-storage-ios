@@ -88,7 +88,7 @@ public class SimpleStorage {
     func bindConstraints(_ constraints: [Constraint], tableDescription: TableDescription, statement: OpaquePointer?) throws {
         let constraints = constraints.filter { $0.value != nil }
         var columns = [TableDescription.Column?]()
-        var values = [String: StorableType]()
+        var values = [String: StorableDataType]()
         for constraint in constraints {
             values[constraint.attribute] = constraint.value
             columns.append(tableDescription.columns.first { $0.name == constraint.attribute })

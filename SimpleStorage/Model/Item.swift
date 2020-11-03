@@ -9,9 +9,9 @@ import Foundation
 
 public struct Item {
     public let id: UUID
-    var values: [String: StorableType]
+    var values: [String: StorableDataType]
 
-    public init(values: [String: StorableType?]) {
+    public init(values: [String: StorableDataType?]) {
         if let id = values["id"] as? UUID {
             self.id = id
         } else if let idString = values["id"] as? String, let id = UUID(uuidString: idString) {
@@ -24,19 +24,19 @@ public struct Item {
         self.values = values
     }
 
-    public init(id: UUID, values: [String: StorableType?]) {
+    public init(id: UUID, values: [String: StorableDataType?]) {
         self.id = id
         var values = values.compactMapValues { $0 }
         values["id"] = id
         self.values = values
     }
 
-    private func storableTypeValue<T: StorableType>(name: String) throws -> T {
+    private func storableTypeValue<T: StorableDataType>(name: String) throws -> T {
         guard let value = values[name] as? T else { throw SimpleStorageError.invalidData("Value \(values[name] ?? "nil") is not of type \(T.self)") }
         return value
     }
 
-    private func storableTypeValue<T: StorableType>(name: String) throws -> T? {
+    private func storableTypeValue<T: StorableDataType>(name: String) throws -> T? {
         return values[name] as? T
     }
 

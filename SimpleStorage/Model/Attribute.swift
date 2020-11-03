@@ -25,6 +25,6 @@ public struct Attribute: Equatable {
         case uuid
         case bool
         case date
-        case relationship(String)
+        case relationship(SimpleStorageType)
     }
 }

@@ -9,10 +9,10 @@ import Foundation
 
 public struct Constraint: Equatable {
     public var attribute: String
-    public var value: StorableType?
+    public var value: StorableDataType?
     public var `operator`: Operator
 
-    public init(attribute: String, value: StorableType?, operator: Operator = .equal) {
+    public init(attribute: String, value: StorableDataType?, operator: Operator = .equal) {
         self.attribute = attribute
         self.value = value
         self.operator = `operator`

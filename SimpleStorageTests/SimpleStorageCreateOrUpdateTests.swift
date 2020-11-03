@@ -99,7 +99,7 @@ class SimpleStorageCreateOrUpdateTests: XCTestCase {
     func test_createOrUpdate_shouldStoreRelationship() throws {
         let storageType = try TestUtils.createStorageType(sut: sut, nullable: true)
         let relationshipType = try SimpleStorageType(simpleStorage: sut, storageType: "myrelationship")
-        try relationshipType.addAttribute(attribute: Attribute(name: "mytype_id", type: .relationship("mytype"), nullable: false))
+        try relationshipType.addAttribute(attribute: Attribute(name: "mytype_id", type: .relationship(storageType), nullable: false))
 
         let item = TestUtils.createItem()
         try storageType.createOrUpdate(item: item)

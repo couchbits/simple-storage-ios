@@ -164,10 +164,10 @@ class SimpleStorageTests: XCTestCase {
     func test_createAttribute_shouldAddRelationshipAttribute() throws {
         //prepare
         let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
-        _ = try SimpleStorageType(simpleStorage: sut, storageType: "myrelationshiptype")
+        let relationshipType = try SimpleStorageType(simpleStorage: sut, storageType: "myrelationshiptype")
 
         //execute
-        try storageType.addAttribute(attribute: Attribute(name: "myrelationship", type: .relationship("myrelationshiptype"), nullable: false))
+        try storageType.addAttribute(attribute: Attribute(name: "myrelationship", type: .relationship(relationshipType), nullable: false))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myrelationship", type: "TEXT", notNull: true))
@@ -176,10 +176,10 @@ class SimpleStorageTests: XCTestCase {
     func test_createAttribute_shouldAddRelationshipAttribute_Nullable() throws {
         //prepare
         let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
-        _ = try SimpleStorageType(simpleStorage: sut, storageType: "myrelationshiptype")
+        let relationshipType = try SimpleStorageType(simpleStorage: sut, storageType: "myrelationshiptype")
 
         //execute
-        try storageType.addAttribute(attribute: Attribute(name: "myrelationship", type: .relationship("myrelationshiptype"), nullable: true))
+        try storageType.addAttribute(attribute: Attribute(name: "myrelationship", type: .relationship(relationshipType), nullable: true))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myrelationship", type: "TEXT", notNull: false))
