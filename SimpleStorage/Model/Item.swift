@@ -19,12 +19,16 @@ public struct Item {
         } else {
             self.id = UUID()
         }
-        self.values = values.compactMapValues { $0 }
+        var values = values.compactMapValues { $0 }
+        values["id"] = id
+        self.values = values
     }
 
     public init(id: UUID, values: [String: StorableType?]) {
         self.id = id
-        self.values = values.compactMapValues { $0 }.filter { $0.key != "id" }
+        var values = values.compactMapValues { $0 }
+        values["id"] = id
+        self.values = values
     }
 
     private func storableTypeValue<T: StorableType>(name: String) throws -> T {
