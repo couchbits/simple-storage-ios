@@ -212,7 +212,7 @@ class SimpleStorageTests: XCTestCase {
         let storageType = try TestUtils.createStorageType(sut: sut)
 
         //execute
-        try storageType.remove()
+        try storageType.removeStorageType()
 
         //verify
         XCTAssertEqual(try table("mytype").count, 0)
