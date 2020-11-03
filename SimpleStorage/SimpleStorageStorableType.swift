@@ -13,12 +13,12 @@ public protocol SimpleStorageStorableType {
 }
 
 extension SimpleStorageType {
-    public func createOrUpdate<T: SimpleStorageStorableType>(value: T) throws {
-        try createOrUpdate(items: [T.map(value)])
+    public func createOrUpdate<T: SimpleStorageStorableType>(storableType: T) throws {
+        try createOrUpdate(items: [T.map(storableType)])
     }
 
-    public func createOrUpdate<T: SimpleStorageStorableType>(values: [T]) throws {
-        try createOrUpdate(items: values.map(T.map))
+    public func createOrUpdate<T: SimpleStorageStorableType>(storableTypes: [T]) throws {
+        try createOrUpdate(items: storableTypes.map(T.map))
     }
 
     public func find<T: SimpleStorageStorableType>(id: UUID) throws -> T? {
