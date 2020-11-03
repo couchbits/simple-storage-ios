@@ -26,6 +26,7 @@
 		FF642700254EF72A002D752B /* SimpleStorageCountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426FF254EF72A002D752B /* SimpleStorageCountTests.swift */; };
 		FF642704254EF760002D752B /* SimpleStorageDeleteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF642703254EF760002D752B /* SimpleStorageDeleteTests.swift */; };
 		FF6D233F255071C800A17C87 /* SimpleStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6D233E255071C800A17C87 /* SimpleStorageType.swift */; };
+		FF6D23432550788C00A17C87 /* SimpleStorageStorableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6D23422550788C00A17C87 /* SimpleStorageStorableType.swift */; };
 		FFAAC5C0254C5C4F00B27449 /* SimpleStorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFAAC5B6254C5C4F00B27449 /* SimpleStorage.framework */; };
 		FFAAC5C5254C5C4F00B27449 /* SimpleStorageSchemaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAAC5C4254C5C4F00B27449 /* SimpleStorageSchemaTests.swift */; };
 		FFAAC5C7254C5C4F00B27449 /* SimpleStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = FFAAC5B9254C5C4F00B27449 /* SimpleStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -66,6 +67,7 @@
 		FF6426FF254EF72A002D752B /* SimpleStorageCountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageCountTests.swift; sourceTree = "<group>"; };
 		FF642703254EF760002D752B /* SimpleStorageDeleteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageDeleteTests.swift; sourceTree = "<group>"; };
 		FF6D233E255071C800A17C87 /* SimpleStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageType.swift; sourceTree = "<group>"; };
+		FF6D23422550788C00A17C87 /* SimpleStorageStorableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageStorableType.swift; sourceTree = "<group>"; };
 		FFAAC5B6254C5C4F00B27449 /* SimpleStorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SimpleStorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFAAC5B9254C5C4F00B27449 /* SimpleStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleStorage.h; sourceTree = "<group>"; };
 		FFAAC5BA254C5C4F00B27449 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				FF6426F7254EF6C1002D752B /* SimpleStorageCount.swift */,
 				FF6426F1254EF5DE002D752B /* SimpleStorageDelete.swift */,
 				FF6D233E255071C800A17C87 /* SimpleStorageType.swift */,
+				FF6D23422550788C00A17C87 /* SimpleStorageStorableType.swift */,
 			);
 			path = SimpleStorage;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				FFAAC5D7254C5C9D00B27449 /* DateProvider.swift in Sources */,
 				FF6426BF254DB776002D752B /* SimpleStorageFind.swift in Sources */,
 				FF6426AF254D9962002D752B /* SyncRunner.swift in Sources */,
+				FF6D23432550788C00A17C87 /* SimpleStorageStorableType.swift in Sources */,
 				FF6426E7254EEDE0002D752B /* Constraint.swift in Sources */,
 				FFAAC5E5254C5EB800B27449 /* SimpleStorageError.swift in Sources */,
 				FF6426B3254D9AA9002D752B /* SimpleStorageTableDescription.swift in Sources */,
