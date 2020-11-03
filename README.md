@@ -3,9 +3,10 @@
 Sqlite Storage to store data very simpel
 
 - Store and read data very easily (`Int, Double, String, UUID, Bool, Date`)
-- Typesafe with `SimpleStorageStorableType` 
-- Migrations
 - Referential integrity with `.relationship`-Attribute
+- Automatically managed `created_at` and `updated_at` Attributes
+- Typesafe with `SimpleStorageStorableType`
+- Migrations
 
 ## Initialization
 ```
