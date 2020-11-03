@@ -7,22 +7,22 @@
 
 import Foundation
 
-class SimpleStorageType {
+public class SimpleStorageType {
     let simpleStorage: SimpleStorage
     let storageType: String
-    init(simpleStorage: SimpleStorage, storageType: String) throws {
+
+    public init(simpleStorage: SimpleStorage, storageType: String) throws {
         self.simpleStorage = simpleStorage
         self.storageType = storageType
 
         try simpleStorage.createStorageType(storageType: storageType)
     }
 
-    //Schema
     public func removeStorageType() throws {
         try simpleStorage.removeStorageType(storageType: storageType)
     }
 
-    public func addStorageTypeAttribute(attribute: Attribute) throws {
+    public func addAttribute(attribute: Attribute) throws {
         try simpleStorage.addStorageTypeAttribute(storageType: storageType, attribute: attribute)
     }
 

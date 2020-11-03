@@ -71,7 +71,7 @@ class SimpleStorageDeleteTests: XCTestCase {
     func test_delete_shouldRemoveTheRelationship() throws {
         let storageType = try TestUtils.createStorageType(sut: sut, nullable: true)
         let relationshipType = try SimpleStorageType(simpleStorage: sut, storageType: "myrelationship")
-        try relationshipType.addStorageTypeAttribute(attribute: Attribute(name: "mytype_id", type: .relationship("mytype"), nullable: false))
+        try relationshipType.addAttribute(attribute: Attribute(name: "mytype_id", type: .relationship("mytype"), nullable: false))
 
         let item = TestUtils.createItem()
         try storageType.createOrUpdate(item: item)

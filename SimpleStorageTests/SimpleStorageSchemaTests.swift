@@ -34,7 +34,7 @@ class SimpleStorageTests: XCTestCase {
         let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .string, nullable: false))
+        try storageType.addAttribute(attribute: Attribute(name: "myvalue", type: .string, nullable: false))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "TEXT", notNull: true))
@@ -45,7 +45,7 @@ class SimpleStorageTests: XCTestCase {
         let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .string, nullable: true))
+        try storageType.addAttribute(attribute: Attribute(name: "myvalue", type: .string, nullable: true))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "TEXT", notNull: false))
@@ -56,7 +56,7 @@ class SimpleStorageTests: XCTestCase {
         let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .uuid, nullable: false))
+        try storageType.addAttribute(attribute: Attribute(name: "myvalue", type: .uuid, nullable: false))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "TEXT", notNull: true))
@@ -67,7 +67,7 @@ class SimpleStorageTests: XCTestCase {
         let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .uuid, nullable: true))
+        try storageType.addAttribute(attribute: Attribute(name: "myvalue", type: .uuid, nullable: true))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "TEXT", notNull: false))
@@ -78,7 +78,7 @@ class SimpleStorageTests: XCTestCase {
         let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .integer, nullable: false))
+        try storageType.addAttribute(attribute: Attribute(name: "myvalue", type: .integer, nullable: false))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "INTEGER", notNull: true))
@@ -89,7 +89,7 @@ class SimpleStorageTests: XCTestCase {
         let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .integer, nullable: true))
+        try storageType.addAttribute(attribute: Attribute(name: "myvalue", type: .integer, nullable: true))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "INTEGER", notNull: false))
@@ -100,7 +100,7 @@ class SimpleStorageTests: XCTestCase {
         let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .bool, nullable: false))
+        try storageType.addAttribute(attribute: Attribute(name: "myvalue", type: .bool, nullable: false))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "INTEGER", notNull: true))
@@ -111,7 +111,7 @@ class SimpleStorageTests: XCTestCase {
         let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .bool, nullable: true))
+        try storageType.addAttribute(attribute: Attribute(name: "myvalue", type: .bool, nullable: true))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "INTEGER", notNull: false))
@@ -122,7 +122,7 @@ class SimpleStorageTests: XCTestCase {
         let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .double, nullable: false))
+        try storageType.addAttribute(attribute: Attribute(name: "myvalue", type: .double, nullable: false))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "REAL", notNull: true))
@@ -133,7 +133,7 @@ class SimpleStorageTests: XCTestCase {
         let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .double, nullable: true))
+        try storageType.addAttribute(attribute: Attribute(name: "myvalue", type: .double, nullable: true))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "REAL", notNull: false))
@@ -144,7 +144,7 @@ class SimpleStorageTests: XCTestCase {
         let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .date, nullable: false))
+        try storageType.addAttribute(attribute: Attribute(name: "myvalue", type: .date, nullable: false))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "REAL", notNull: true))
@@ -155,7 +155,7 @@ class SimpleStorageTests: XCTestCase {
         let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
 
         //execute
-        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myvalue", type: .date, nullable: true))
+        try storageType.addAttribute(attribute: Attribute(name: "myvalue", type: .date, nullable: true))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myvalue", type: "REAL", notNull: false))
@@ -167,7 +167,7 @@ class SimpleStorageTests: XCTestCase {
         _ = try SimpleStorageType(simpleStorage: sut, storageType: "myrelationshiptype")
 
         //execute
-        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myrelationship", type: .relationship("myrelationshiptype"), nullable: false))
+        try storageType.addAttribute(attribute: Attribute(name: "myrelationship", type: .relationship("myrelationshiptype"), nullable: false))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myrelationship", type: "TEXT", notNull: true))
@@ -179,7 +179,7 @@ class SimpleStorageTests: XCTestCase {
         _ = try SimpleStorageType(simpleStorage: sut, storageType: "myrelationshiptype")
 
         //execute
-        try storageType.addStorageTypeAttribute(attribute: Attribute(name: "myrelationship", type: .relationship("myrelationshiptype"), nullable: true))
+        try storageType.addAttribute(attribute: Attribute(name: "myrelationship", type: .relationship("myrelationshiptype"), nullable: true))
 
         //verify
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myrelationship", type: "TEXT", notNull: false))
@@ -212,7 +212,7 @@ class SimpleStorageTests: XCTestCase {
         let storageType = try TestUtils.createStorageType(sut: sut)
 
         //execute
-        try storageType.removeStorageType()
+        try storageType.remove()
 
         //verify
         XCTAssertEqual(try table("mytype").count, 0)

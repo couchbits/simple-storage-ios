@@ -13,22 +13,22 @@ class TestUtils {
     static func createStorageType(sut: SimpleStorage, nullable: Bool = false) throws -> SimpleStorageType {
         //prepare
         let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
-        try storageType.addStorageTypeAttribute(
+        try storageType.addAttribute(
             attribute: Attribute(name: "myinteger", type: .integer, nullable: nullable)
         )
-        try storageType.addStorageTypeAttribute(
+        try storageType.addAttribute(
             attribute: Attribute(name: "mystring", type: .string, nullable: nullable)
         )
-        try storageType.addStorageTypeAttribute(
+        try storageType.addAttribute(
             attribute: Attribute(name: "mydouble", type: .double, nullable: nullable)
         )
-        try storageType.addStorageTypeAttribute(
+        try storageType.addAttribute(
             attribute: Attribute(name: "mybool", type: .bool, nullable: nullable)
         )
-        try storageType.addStorageTypeAttribute(
+        try storageType.addAttribute(
             attribute: Attribute(name: "myuuid", type: .uuid, nullable: nullable)
         )
-        try storageType.addStorageTypeAttribute(
+        try storageType.addAttribute(
             attribute: Attribute(name: "mydate", type: .date, nullable: nullable)
         )
 
