@@ -8,12 +8,28 @@
 import Foundation
 
 public struct Item {
-    public var id: UUID
-    public var values: [String: StorableType]
+    public let id: UUID
+    var values: [String: StorableType]
 
-    public init(id: UUID? = nil, values: [String: StorableType?]) {
-        self.id = id ?? UUID()
-        self.values = values.compactMapValues { $0 }
+    public init(values: [String: StorableType?]) throws {
+        let nonNilableValues = values.compactMapValues { $0 }
+        self.values = nonNilableValues
+        self.id = try Item.id(values: nonNilableValues)
+    }
+
+    public init(id: UUID, values: [String: StorableType?]) {
+        self.id = id
+        self.values = values.compactMapValues { $0 }.filter { $0.key != "id" }
+    }
+
+    static func id(values: [String: StorableType]) throws -> UUID {
+        guard let value = values["id"] else { return UUID() }
+        if let id = value as? UUID {
+            return id
+        } else if let idString = value as? String, let id = UUID(uuidString: idString) {
+            return id
+        }
+        throw SimpleStorageError.invalidData("id has invalid type \(value.self)")
     }
 
     private func storableTypeValue<T: StorableType>(name: String) throws -> T {

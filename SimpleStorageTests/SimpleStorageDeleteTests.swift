@@ -76,7 +76,7 @@ class SimpleStorageDeleteTests: XCTestCase {
         let item = TestUtils.createItem()
         try storageType.createOrUpdate(item: item)
 
-        let relationshipItem = Item(values: ["mytype_id": item.id])
+        let relationshipItem = try Item(values: ["mytype_id": item.id])
         try relationshipType.createOrUpdate(item: relationshipItem)
 
         //execute
