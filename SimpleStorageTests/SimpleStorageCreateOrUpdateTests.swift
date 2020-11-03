@@ -104,7 +104,7 @@ class SimpleStorageCreateOrUpdateTests: XCTestCase {
         let item = TestUtils.createItem()
         try storageType.createOrUpdate(item: item)
 
-        let relationshipItem = try Item(values: ["mytype_id": item.id])
+        let relationshipItem = Item(values: ["mytype_id": item.id])
 
         //execute
         try relationshipType.createOrUpdate(item: relationshipItem)
