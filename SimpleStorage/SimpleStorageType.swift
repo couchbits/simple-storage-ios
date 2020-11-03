@@ -54,15 +54,15 @@ public class SimpleStorageType {
         return try simpleStorage.find(storageType: storageType, expression: expression)
     }
 
-    func count(constraints: [Constraint] = []) throws -> Int {
+    public func count(constraints: [Constraint] = []) throws -> Int {
         return try simpleStorage.count(storageType: storageType, constraints: constraints)
     }
 
-    func delete(id: UUID) throws {
+    public func delete(id: UUID) throws {
         try simpleStorage.delete(storageType: storageType, id: id)
     }
 
-    func delete(constraints: [Constraint] = []) throws {
+    public func delete(constraints: [Constraint] = []) throws {
         try simpleStorage.delete(storageType: storageType, constraints: constraints)
     }
 }
