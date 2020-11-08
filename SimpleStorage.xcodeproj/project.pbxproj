@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FF58F1A3254C7462002B61B8 /* SimpleStorateSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF58F1A2254C7462002B61B8 /* SimpleStorateSchema.swift */; };
+		FF58F1A3254C7462002B61B8 /* SimpleStorageSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF58F1A2254C7462002B61B8 /* SimpleStorageSchema.swift */; };
 		FF6426A5254D64AA002D752B /* SimpleStorageCreateOrUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426A4254D64AA002D752B /* SimpleStorageCreateOrUpdate.swift */; };
 		FF6426A9254D947F002D752B /* StorableDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426A8254D947F002D752B /* StorableDataType.swift */; };
 		FF6426AF254D9962002D752B /* SyncRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6426AE254D9962002D752B /* SyncRunner.swift */; };
@@ -48,7 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		FF58F1A2254C7462002B61B8 /* SimpleStorateSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorateSchema.swift; sourceTree = "<group>"; };
+		FF58F1A2254C7462002B61B8 /* SimpleStorageSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageSchema.swift; sourceTree = "<group>"; };
 		FF6426A4254D64AA002D752B /* SimpleStorageCreateOrUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageCreateOrUpdate.swift; sourceTree = "<group>"; };
 		FF6426A8254D947F002D752B /* StorableDataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorableDataType.swift; sourceTree = "<group>"; };
 		FF6426AE254D9962002D752B /* SyncRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncRunner.swift; sourceTree = "<group>"; };
@@ -159,7 +159,7 @@
 				FFAAC5B9254C5C4F00B27449 /* SimpleStorage.h */,
 				FFAAC5BA254C5C4F00B27449 /* Info.plist */,
 				FFAAC5D2254C5C7400B27449 /* SimpleStorage.swift */,
-				FF58F1A2254C7462002B61B8 /* SimpleStorateSchema.swift */,
+				FF58F1A2254C7462002B61B8 /* SimpleStorageSchema.swift */,
 				FF6426B2254D9AA9002D752B /* SimpleStorageTableDescription.swift */,
 				FF6426A4254D64AA002D752B /* SimpleStorageCreateOrUpdate.swift */,
 				FF6426BE254DB776002D752B /* SimpleStorageFind.swift */,
@@ -308,7 +308,7 @@
 				FF6426DC254EEDA3002D752B /* Item.swift in Sources */,
 				FF6426A9254D947F002D752B /* StorableDataType.swift in Sources */,
 				FF6426ED254EEDF0002D752B /* Expression.swift in Sources */,
-				FF58F1A3254C7462002B61B8 /* SimpleStorateSchema.swift in Sources */,
+				FF58F1A3254C7462002B61B8 /* SimpleStorageSchema.swift in Sources */,
 				FFAAC5DF254C5DF700B27449 /* Sqlite.swift in Sources */,
 				FFAAC5D3254C5C7400B27449 /* SimpleStorage.swift in Sources */,
 				FFAAC5DB254C5CCD00B27449 /* SimpleStorageConfiguration.swift in Sources */,

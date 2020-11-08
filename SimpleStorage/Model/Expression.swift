@@ -8,9 +8,9 @@
 import Foundation
 
 public struct Expression: Equatable {
-    public var constraints: [Constraint]
-    public var sortedBy: [SortBy]
-    public var limit: Limit?
+    public let constraints: [Constraint]
+    public let sortedBy: [SortBy]
+    public let limit: Limit?
 
     public init(constraints: [Constraint] = [], sortedBy: [SortBy] = [], limit: Limit? = nil) {
         self.constraints = constraints
@@ -21,12 +21,17 @@ public struct Expression: Equatable {
     public static var empty: Expression { return Expression() }
 
     public struct SortBy: Equatable {
-        public let attribute: String
-        public let sortOrder: SortOrder
+        let attribute: String
+        let sortOrder: SortOrder
 
         public enum SortOrder {
             case ascending
             case descending
+        }
+
+        public init(attribute: Attribute, sortOrder: SortOrder) {
+            self.attribute = attribute.name
+            self.sortOrder = sortOrder
         }
 
         public init(attribute: String, sortOrder: SortOrder) {
@@ -36,8 +41,8 @@ public struct Expression: Equatable {
     }
 
     public struct Limit: Equatable {
-        public let limit: Int
-        public let offset: Int?
+        let limit: Int
+        let offset: Int?
 
         public init(limit: Int, offset: Int? = nil) {
             self.limit = limit

@@ -23,7 +23,7 @@ public class SimpleStorageType: Equatable {
     }
 
     public func addAttribute(attribute: Attribute) throws {
-        try simpleStorage.addStorageTypeAttribute(storageType: storageType, attribute: attribute)
+        try simpleStorage.addAttribute(storageType: storageType, attribute: attribute)
     }
 
     public func removeAttribute(attribute: String) throws {

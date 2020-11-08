@@ -8,9 +8,15 @@
 import Foundation
 
 public struct Constraint: Equatable {
-    public var attribute: String
-    public var value: StorableDataType?
-    public var `operator`: Operator
+    var attribute: String
+    var value: StorableDataType?
+    var `operator`: Operator
+
+    public init(attribute: Attribute, value: StorableDataType?, operator: Operator = .equal) {
+        self.attribute = attribute.name
+        self.value = value
+        self.operator = `operator`
+    }
 
     public init(attribute: String, value: StorableDataType?, operator: Operator = .equal) {
         self.attribute = attribute

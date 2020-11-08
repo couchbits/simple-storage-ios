@@ -12,15 +12,20 @@ extension SimpleStorage {
         let sql = "CREATE TABLE IF NOT EXISTS \(storageType) (id TEXT NOT NULL PRIMARY KEY)"
 
         try sqlite.performStatement(sql: sql)
-        try addStorageTypeAttribute(storageType: storageType, attribute: Attribute(name: "created_at", type: .date, nullable: false))
-        try addStorageTypeAttribute(storageType: storageType, attribute: Attribute(name: "updated_at", type: .date, nullable: false))
+        try addAttribute(storageType: storageType, attribute: Attribute(name: "created_at", type: .date, nullable: false))
+        try addAttribute(storageType: storageType, attribute: Attribute(name: "updated_at", type: .date, nullable: false))
     }
 
     func removeStorageType(storageType: String) throws {
         try sqlite.performStatement(sql: "DROP TABLE \(storageType)")
     }
 
-    func addStorageTypeAttribute(storageType: String, attribute: Attribute) throws {
+    func addAttribute(storageType: String, attribute: Attribute) throws {
+        let tableDescription = try self.tableDescription(storageType)
+        guard tableDescription.columns.filter({ $0.name == attribute.name }).count == 0 else {
+            throw SimpleStorageError.migrationFailed("\(storageType) has already an attribute with name \(attribute.name)")
+        }
+
         let null = attribute.nullable ? "NULL" : "NOT NULL"
         let attributeDescription: String
         switch attribute.type {
@@ -78,7 +83,7 @@ extension SimpleStorage {
                     type = .double
                 }
 
-                try addStorageTypeAttribute(
+                try addAttribute(
                     storageType: temporaryStorageType,
                     attribute: Attribute(name: column.name, type: type, nullable: column.nullable)
                 )

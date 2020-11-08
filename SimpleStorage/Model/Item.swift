@@ -40,6 +40,10 @@ public struct Item {
         return values[name] as? T
     }
 
+    public mutating func setValue(name: String, value: StorableDataType) {
+        values[name] = value
+    }
+
     public func value(name: String) throws -> String {
         if let uuid = values[name] as? UUID {
             return uuid.uuidString
@@ -77,7 +81,8 @@ public struct Item {
     public func value(name: String) throws -> UUID {
         if let uuid = values[name] as? UUID { return uuid }
 
-        guard let uuidString: String = try storableTypeValue(name: name), let uuid = UUID(uuidString: uuidString) else {
+        guard let uuidString: String = try storableTypeValue(name: name),
+              let uuid = UUID(uuidString: uuidString) else {
             throw SimpleStorageError.invalidData("Value \(values[name] ?? "nil") is not of type UUID")
         }
 
@@ -91,7 +96,8 @@ public struct Item {
             return uuid
         }
 
-        guard let uuidString: String = try self.storableTypeValue(name: name), let uuid = UUID(uuidString: uuidString) else {
+        guard let uuidString: String = try self.storableTypeValue(name: name),
+              let uuid = UUID(uuidString: uuidString) else {
             throw SimpleStorageError.invalidData("Value \(values[name] ?? "nil") is not of type UUID")
         }
 
@@ -109,12 +115,23 @@ public struct Item {
     }
 
     public func value(name: String) throws -> Date {
+        if let date = values[name] as? Date { return date }
+
         let doubleValue: Double = try storableTypeValue(name: name)
         return Date(timeIntervalSince1970: doubleValue)
     }
 
     public func value(name: String) throws -> Date? {
-        guard let doubleValue: Double = try storableTypeValue(name: name) else { return nil }
+        guard let value = values[name] else { return nil }
+
+        if let date = value as? Date {
+            return date
+        }
+
+        guard let doubleValue: Double = try self.storableTypeValue(name: name) else {
+            throw SimpleStorageError.invalidData("Value \(values[name] ?? "nil") is not of type UUID")
+        }
+
         return Date(timeIntervalSince1970: doubleValue)
     }
 }

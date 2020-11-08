@@ -185,6 +185,20 @@ class SimpleStorageTests: XCTestCase {
         XCTAssertEqual(try table("mytype").last, TableColumn(name: "myrelationship", type: "TEXT", notNull: false))
     }
 
+    func test_createAttribute_shouldThrowMigrationErrorIfRowAlreadyExist() throws {
+        //prepare
+        let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")
+        try storageType.addAttribute(attribute: Attribute(name: "myvalue", type: .string, nullable: false))
+
+        //execute & verify
+        do {
+            try storageType.addAttribute(attribute: Attribute(name: "myvalue", type: .string, nullable: false))
+        } catch SimpleStorageError.migrationFailed {
+        } catch {
+            XCTFail("Expected MigrationError, got \(error)")
+        }
+    }
+
     func test_storageTypeVersion_shouldReturnIntially0() throws {
         //prepare
         let storageType = try SimpleStorageType(simpleStorage: sut, storageType: "mytype")

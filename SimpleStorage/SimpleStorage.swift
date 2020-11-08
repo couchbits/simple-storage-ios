@@ -24,12 +24,12 @@ public class SimpleStorage {
 
         try createStorageType(storageType: "storage_type_versions")
         if try storageTypeVersion(storageType: "storage_type_versions") == 0 {
-            try addStorageTypeAttribute(
+            try addAttribute(
                 storageType: "storage_type_versions",
                 attribute: Attribute(name: "storage_type", type: .string, nullable: false)
             )
 
-            try addStorageTypeAttribute(
+            try addAttribute(
                 storageType: "storage_type_versions",
                 attribute: Attribute(name: "version", type: .integer, nullable: false)
             )
@@ -58,16 +58,16 @@ public class SimpleStorage {
             case .notEqual:
                 return "\(constraint.attribute) != ?"
             case .greaterThan:
-                try checkConstraintNumeric(column, constraintOperator: constraint.operator)
+                try checkConstraintNumeric(column, operator: constraint.operator)
                 return "\(constraint.attribute) > ?"
             case .greaterThanOrEqual:
-                try checkConstraintNumeric(column, constraintOperator: constraint.operator)
+                try checkConstraintNumeric(column, operator: constraint.operator)
                 return "\(constraint.attribute) >= ?"
             case .lessThan:
-                try checkConstraintNumeric(column, constraintOperator: constraint.operator)
+                try checkConstraintNumeric(column, operator: constraint.operator)
                 return "\(constraint.attribute) < ?"
             case .lessThanOrEqual:
-                try checkConstraintNumeric(column, constraintOperator: constraint.operator)
+                try checkConstraintNumeric(column, operator: constraint.operator)
                 return "\(constraint.attribute) <= ?"
             }
         } else {
@@ -96,10 +96,10 @@ public class SimpleStorage {
         try bindValues(columns: columns.compactMap { $0 }, values: values, statement: statement)
     }
 
-    func checkConstraintNumeric(_ column: TableDescription.Column, constraintOperator: Constraint.Operator) throws {
+    func checkConstraintNumeric(_ column: TableDescription.Column, operator: Constraint.Operator) throws {
         switch column.type {
         case .text:
-            throw SimpleStorageError.invalidData("Operator \(constraintOperator) is not allowed on character fields")
+            throw SimpleStorageError.invalidData("Operator \(`operator`) is not allowed on character fields")
         case .integer, .real:
             return
         }
