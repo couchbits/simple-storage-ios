@@ -17,9 +17,9 @@ public class SimpleStorage {
         dateProvider = configuration.dateProvider
         switch configuration.type {
         case .inMemory:
-            sqlite = try Sqlite(path: ":memory:")
+            sqlite = try Sqlite(path: ":memory:", printSql: configuration.printSql)
         case .file(let url):
-            sqlite = try Sqlite(path: url.path)
+            sqlite = try Sqlite(path: url.path, printSql: configuration.printSql)
         }
 
         try createStorageType(storageType: "storage_type_versions")

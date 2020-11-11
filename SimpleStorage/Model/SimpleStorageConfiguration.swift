@@ -12,6 +12,8 @@ public struct SimpleStorageConfiguration {
     public var transactional: Bool = true
     public var dateProvider: DateProvider = SimpleDateProvider()
 
+    public var printSql: Bool = false
+
     public enum SimpleStorageType {
         case inMemory
         case file(url: URL)

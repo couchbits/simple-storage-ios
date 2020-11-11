@@ -59,10 +59,6 @@ extension SimpleStorage {
                         bindUUID(statement: statement, index: updateColumns.count + 1, value: item.id)
                     }
 
-                    if #available(iOS 10.0, *) {
-                        print(String(cString: sqlite3_expanded_sql(statement)))
-                    }
-
                     try sqlite.performStatement(statement: statement, finalize: false)
 
                     sqlite3_clear_bindings(statement)
