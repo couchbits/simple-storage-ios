@@ -12,8 +12,14 @@ extension SimpleStorage {
         let sql = "CREATE TABLE IF NOT EXISTS \(storageType) (id TEXT NOT NULL PRIMARY KEY)"
 
         try sqlite.performStatement(sql: sql)
-        try addAttribute(storageType: storageType, attribute: Attribute(name: "created_at", type: .date, nullable: false))
-        try addAttribute(storageType: storageType, attribute: Attribute(name: "updated_at", type: .date, nullable: false))
+
+        let tableDescription = try self.tableDescription(storageType)
+        if tableDescription.columns.first(where: { $0.name == "created_at"} ) == nil {
+            try addAttribute(storageType: storageType, attribute: Attribute(name: "created_at", type: .date, nullable: false))
+        }
+        if tableDescription.columns.first(where: { $0.name == "updated_at"} ) == nil {
+            try addAttribute(storageType: storageType, attribute: Attribute(name: "updated_at", type: .date, nullable: false))
+        }
     }
 
     func removeStorageType(storageType: String) throws {
