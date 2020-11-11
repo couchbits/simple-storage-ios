@@ -115,7 +115,7 @@ extension SimpleStorage {
     }
 
     func bindUUID(statement: OpaquePointer?, index: Int, value: UUID) {
-        bindString(statement: statement, index: index, value: value.uuidString)
+        bindString(statement: statement, index: index, value: value.uuidString.lowercased())
     }
 
     func bindInteger(statement: OpaquePointer?, index: Int, value: Int) {
