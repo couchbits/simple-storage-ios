@@ -57,7 +57,7 @@ extension SimpleStorage {
             if attribute.nullable {
                 attributeDescription = "TEXT NULL REFERENCES \(referencedStorageType.storageType)(id) ON UPDATE SET NULL ON DELETE SET NULL DEFAULT NULL"
             } else {
-                attributeDescription = "TEXT NOT NULL REFERENCES \(referencedStorageType.storageType)(id) ON UPDATE CASCADE ON DELETE CASCADE DEFAULT ''"
+                attributeDescription = "TEXT NULL REFERENCES \(referencedStorageType.storageType)(id) ON UPDATE CASCADE ON DELETE CASCADE DEFAULT NULL"
             }
         }
 

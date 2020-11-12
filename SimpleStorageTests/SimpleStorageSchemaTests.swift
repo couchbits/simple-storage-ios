@@ -170,7 +170,7 @@ class SimpleStorageTests: XCTestCase {
         try storageType.addAttribute(attribute: Attribute(name: "myrelationship", type: .relationship(relationshipType), nullable: false))
 
         //verify
-        XCTAssertEqual(try table("mytype").last, TableColumn(name: "myrelationship", type: "TEXT", notNull: true))
+        XCTAssertEqual(try table("mytype").last, TableColumn(name: "myrelationship", type: "TEXT", notNull: false))
     }
 
     func test_createAttribute_shouldAddRelationshipAttribute_Nullable() throws {
