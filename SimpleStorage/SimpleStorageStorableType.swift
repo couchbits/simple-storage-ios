@@ -9,7 +9,7 @@ import Foundation
 
 public protocol SimpleStorageStorableType {
     static func map(_ item: Item) throws -> Self
-    static func map(_ storableType: Self) -> Item
+    static func map(_ storableType: Self) throws -> Item
 }
 
 extension SimpleStorageType {
