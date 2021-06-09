@@ -27,17 +27,26 @@ extension SimpleStorage {
     }
 
     func mapType(_ type: String) throws -> TableDescription.Column.ColumnType {
-        switch type {
-        case "TEXT":
+        if isText(type: type) {
             return .text
-        case "INTEGER":
+        } else if isInteger(type: type) {
             return .integer
-        case "NUMERIC":
-            return .integer
-        case "REAL":
+        } else if isReal(type: type) {
             return .real
-        default:
+        } else {
             throw SimpleStorageError.invalidDefinition("Invalid type definition: \(type)")
         }
+    }
+    
+    func isText(type: String) -> Bool {
+        return type == "TEXT" || type.starts(with: "VARCHAR")
+    }
+    
+    func isInteger(type: String) -> Bool {
+        return type == "INTEGER" || type == "NUMERIC" || type.starts(with: "INT")
+    }
+    
+    func isReal(type: String) -> Bool {
+        return type == "REAL" || type == "DOUBLE"
     }
 }
