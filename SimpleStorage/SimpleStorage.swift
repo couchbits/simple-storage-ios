@@ -86,14 +86,13 @@ public class SimpleStorage {
     }
 
     func bindConstraints(_ constraints: [Constraint], tableDescription: TableDescription, statement: OpaquePointer?) throws {
-        let constraints = constraints.filter { $0.value != nil }
-        var columns = [TableDescription.Column?]()
-        var values = [String: StorableDataType]()
+        var columnValues = [(column: TableDescription.Column, value: StorableDataType?)]()
         for constraint in constraints {
-            values[constraint.attribute] = constraint.value
-            columns.append(tableDescription.columns.first { $0.name == constraint.attribute })
+            guard let column = tableDescription.columns.first(where: { $0.name == constraint.attribute }) else { continue }
+            columnValues.append((column: column, value: constraint.value))
         }
-        try bindValues(columns: columns.compactMap { $0 }, values: values, statement: statement)
+        
+        try bindValues(columnValues: columnValues, statement: statement)
     }
 
     func checkConstraintNumeric(_ column: TableDescription.Column, operator: Constraint.Operator) throws {

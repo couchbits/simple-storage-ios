@@ -173,6 +173,33 @@ class SimpleStorageFindTests: XCTestCase {
         //verify
         XCTAssertEqual(items.map { $0.id }, [item2.id, item3.id])
     }
+    
+    func test_find_shouldApplyConstraintsOnSameProperty() throws {
+        //prepare
+        let storageType = try TestUtils.createStorageType(sut: sut, nullable: true)
+        var item1 = TestUtils.createItem()
+        item1.values["myinteger"] = 1
+        var item2 = TestUtils.createItem()
+        item2.values["myinteger"] = 2
+        var item3 = TestUtils.createItem()
+        item3.values["myinteger"] = 3
+        try storageType.createOrUpdate(
+            items: [item1, item2, item3]
+        )
+
+        //execute
+        let items = try storageType.find(
+            expression: Expression(
+                constraints: [
+                    Constraint(attribute: "myinteger", value: 2, operator: .greaterThanOrEqual),
+                    Constraint(attribute: "myinteger", value: 2, operator: .lessThanOrEqual)
+                ]
+            )
+        )
+
+        //verify
+        XCTAssertEqual(items.map { $0.id }, [item2.id])
+    }
 
     func test_find_shouldReadTheRelationship() throws {
         let storageType = try TestUtils.createStorageType(sut: sut, nullable: true)

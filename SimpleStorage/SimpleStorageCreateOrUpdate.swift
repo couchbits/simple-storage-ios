@@ -78,13 +78,17 @@ extension SimpleStorage {
     }
 
     func bindValues(columns: [TableDescription.Column], values: [String: StorableDataType], statement: OpaquePointer?) throws {
-        for (index, column) in columns.enumerated() {
+        try bindValues(columnValues: zip(columns, values).map { (column: $0.0, value: values[$0.0.name]) }, statement: statement)
+    }
+    
+    func bindValues(columnValues: [(column: TableDescription.Column, value: StorableDataType?)], statement: OpaquePointer?) throws {
+        for (index, columnValue) in columnValues.enumerated() {
             let index = index + 1
-            if values[column.name] == nil && !column.nullable {
-                throw SimpleStorageError.invalidData("\(column.name) is nil but not nilable")
+            if columnValue.value == nil && !columnValue.column.nullable {
+                throw SimpleStorageError.invalidData("\(columnValue.column.name) is nil but not nilable")
             }
 
-            if let value = values[column.name] {
+            if let value = columnValue.value {
                 if let string = value as? String {
                     bindString(statement: statement, index: index, value: string)
                 } else if let uuid = value as? UUID {
@@ -98,7 +102,7 @@ extension SimpleStorage {
                 } else if let bool = value as? Bool {
                     bindBool(statement: statement, index: index, value: bool)
                 } else {
-                    throw SimpleStorageError.invalidData("Invalid type \(column.name): \(value.self)")
+                    throw SimpleStorageError.invalidData("Invalid type \(columnValue.column.name): \(value.self)")
                 }
             } else {
                 sqlite3_bind_null(statement, Int32(index))
