@@ -78,7 +78,7 @@ extension SimpleStorage {
     }
 
     func bindValues(columns: [TableDescription.Column], values: [String: StorableDataType], statement: OpaquePointer?) throws {
-        try bindValues(columnValues: zip(columns, values).map { (column: $0.0, value: values[$0.0.name]) }, statement: statement)
+        try bindValues(columnValues: columns.map { (colum: $0, value: values[$0.name]) }, statement: statement)
     }
     
     func bindValues(columnValues: [(column: TableDescription.Column, value: StorableDataType?)], statement: OpaquePointer?) throws {
